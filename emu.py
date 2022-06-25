@@ -13,11 +13,32 @@ def wrap16(b):
     return b & 0xffff
 
 
-class CPU():
+class Memory():
+    PERIPH = 0xF000
     def __init__(self):
-        self.mem = bytearray(MEMSIZE)
+        self.mem = [0] * MEMSIZE
         for b in range(MEMSIZE):
             self.mem[b] = 0xFF
+
+    def __getitem__(self, addr):
+        if addr < Memory.PERIPH:
+            return self.mem[addr]
+
+    def __setitem__(self, addr, value):
+        if isinstance(addr, slice):
+            for vi,ai in enumerate(range(addr.start, addr.stop)):
+                self.mem[ai] = value[vi]
+            return
+
+        if addr < Memory.PERIPH:
+            self.mem[addr] = value
+        elif addr == 0xF000: #uart
+            print(chr(value), end='')
+
+class CPU():
+    def __init__(self):
+        self.verbose = False
+        self.mem = Memory()
         self.halted = False
         self.pc = 0
         self.sp = 0
@@ -67,7 +88,7 @@ class CPU():
         }
 
     def halt(self):
-        print("Halted!")
+        #print("Halted!")
         self.halted = True
 
     def b16(self):
@@ -347,7 +368,12 @@ class CPU():
 
 
     def dumpmem(self, start, bytes):
-        print(binascii.hexlify(self.mem[start:start+bytes]))
+        for i in range(bytes):
+            if i % 16 == 0: print(f"\n{start+i:04x}  ", end="")
+            b = self.mem[start+i]
+            print(f"{b:02x} ", end="")
+        print("\n")
+        #print(binascii.hexlify(self.mem[start:start+bytes]))
     def dumpregs(self):
         print('----------')
         for reg in self.regs:
@@ -382,8 +408,9 @@ class CPU():
                 if oprange[0] <= self.ib <= oprange[1]:
                     name = opcode.__name__
                     opcode()
-                    self.this_instruction_bytes = ' '.join([f"{x:02x}" for x in self.this_instruction_bytes])
-                    print('{:04x}  {:9s} {}'.format(ipc, self.this_instruction_bytes, name))
+                    if self.verbose:
+                        self.this_instruction_bytes = ' '.join([f"{x:02x}" for x in self.this_instruction_bytes])
+                        print('{:04x}  {:9s} {}'.format(ipc, self.this_instruction_bytes, name))
                     break
 
     
@@ -391,6 +418,8 @@ class CPU():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="emulator")
     parser.add_argument('file')
+    parser.add_argument('-v', '--verbose', action="store_true")
+    parser.add_argument('-r', '--dump_registers', action="store_true")
     args = parser.parse_args()
 
     with open(args.file, 'rb') as f:
@@ -401,9 +430,13 @@ if __name__ == "__main__":
         sys.exit(-1)
 
     cpu = CPU()
+    cpu.verbose = args.verbose
     cpu.mem[0:len(data)] = data
 
     cpu.dumpmem(0,32)
     cpu.run()
-    cpu.dumpregs()
+
+    if args.dump_registers:
+        cpu.dumpregs()
+
     cpu.dumpmem(0,32)
