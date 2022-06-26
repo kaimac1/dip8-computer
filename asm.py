@@ -27,14 +27,14 @@ class Assembler():
 
     def write8(self, b):
         self.output.append(b)
-        print(f"{self.addr:04x}: wrote 0x{b:02x}")
+        print(f" [{self.addr:04x}: wrote 0x{b:02x}]")
         self.addr += 1
 
     def write16(self, dd):
         # Little endian
         self.output.append(dd & 0xFF)
         self.output.append(dd >> 8)
-        print(f"{self.addr:04x}: wrote 0x{dd:04x}")
+        print(f" [{self.addr:04x}: wrote 0x{dd:04x}]")
         self.addr += 2
 
 
@@ -44,9 +44,12 @@ class Assembler():
         return pstr[0] == '#'
 
     def get_literal(self, pstr):
-        if pstr[0] == '#': pstr = pstr[1:]
-        if pstr[0] == '$': val = int(pstr[1:], 16)
-        elif pstr[0] == '%': val = int(pstr[1:], 2)
+        if pstr[0] == '#': pstr = pstr[1:] #remove #
+
+        if pstr[0] == '$': val = int(pstr[1:], 16) # hex
+        elif pstr[0] == '%': val = int(pstr[1:], 2) # bin
+        elif pstr[0] == "'": val = ord(pstr[1])
+
         else:
             try:
                 val = int(pstr)
@@ -162,6 +165,19 @@ class Assembler():
         else:
             self.error("stc operand must be b")
 
+    def inst_inc(self, pstr):
+        if self.pass1:
+            return 1
+
+        idx = ['bh', 'bl', 'ch', 'cl'].index(pstr)
+        self.write8(0x48 + idx)
+
+    def inst_dec(self, pstr):
+        if self.pass1:
+            return 1
+
+        idx = ['bh', 'bl', 'ch', 'cl'].index(pstr)
+        self.write8(0x4c + idx)
 
     # Move
 
@@ -298,9 +314,16 @@ class Assembler():
 
     def inst_ldt(self, pstr):
         if self.pass1:
-            if self.is_literal(pstr): return 1
+            if self.is_literal(pstr): return 2
             self.error("operand to ldt must be literal")
         self.write8(0x0e)
+        self.write8(self.get_literal8(pstr))
+
+
+    def direc_byte(self, pstr):
+        if self.pass1:
+            return 1
+
         self.write8(self.get_literal8(pstr))
 
 
@@ -336,13 +359,19 @@ class Assembler():
             self.error(f"symbol already defined: {name}")
         self.syms[name] = value        
 
+    def is_directive(self, direc):
+        return (direc[0] == '.') and hasattr(self, "direc_" + direc[1:])
+    def run_directive(self, direc, pstr):
+        pstr, _ = self.get_word(pstr, ";")
+        print(f"{self.addr:04x}\t`{direc}`\t`{pstr}`")
+        return getattr(self, "direc_" + direc[1:])(pstr)
+
     def is_instruction(self, inst):
         return hasattr(self, "inst_" + inst)
-
     def run_instruction(self, inst, pstr):
         # Strip comments
         pstr, _ = self.get_word(pstr, ";")
-        print(f"inst: `{inst}`, pstr: `{pstr}`")
+        print(f"{self.addr:04x}\t`{inst}`\t`{pstr}`")
         return getattr(self, "inst_" + inst)(pstr)
 
     def asm_line(self, line):
@@ -355,6 +384,8 @@ class Assembler():
         method = "inst_" + first
         if self.is_instruction(first):  # unlabelled instruction
             return self.run_instruction(first, rest)
+        elif self.is_directive(first):
+            return self.run_directive(first, rest)
         elif rest is None:
             # just a label
             if self.pass1:
@@ -366,12 +397,18 @@ class Assembler():
         name = first
         middle, rest = self.get_word(rest)
 
-        if not self.is_instruction(middle):
-            self.error(f"invalid instruction: {middle}")
-        
         # Store symbol/label address
         if self.pass1:
             self.define_symbol(name, self.addr)
+
+        if self.is_instruction(middle):
+            return self.run_instruction(middle, rest)
+        elif self.is_directive(middle):
+            return self.run_directive(middle, rest)
+        else:
+            self.error(f"invalid instruction: {middle}")
+        
+
 
         return self.run_instruction(middle, rest)
         
