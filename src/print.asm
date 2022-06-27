@@ -1,6 +1,8 @@
+UART = $f000
+
 ;print a null-terminated string
 
-            ldc #$f000      ; uart
+            ldc #UART
             ldb #hello
 
 loop        lda b
@@ -11,10 +13,8 @@ loop        lda b
             inc bl
             jmp loop
 exit        
+
             
-
-
-
 ;print a length-prefixed string
 
             ldb #mystring
@@ -22,7 +22,7 @@ exit
             inc bl
 loop2       inc bl
             ldz b
-            stz $f000
+            stz UART
             dec cl
             ldt #0
             cmp cl, t
@@ -35,4 +35,4 @@ loop2       inc bl
 
 
 hello       .byte "Hello, world!", $0a, 0
-mystring    .string "Lorem ipsum"
+mystring    .string "Lorem ipsum dolor sit amet"

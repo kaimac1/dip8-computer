@@ -536,11 +536,11 @@ class Assembler():
         self.syms[name] = value        
 
     def is_directive(self, direc):
-        return (direc[0] == '.') and hasattr(self, "direc_" + direc[1:])
+        return isinstance(direc, str) and (direc[0] == '.') and hasattr(self, "direc_" + direc[1:])
     def run_directive(self, direc):
         return getattr(self, "direc_" + direc[1:])()
     def is_instruction(self, inst):
-        return hasattr(self, "inst_" + inst)
+        return isinstance(inst, str) and hasattr(self, "inst_" + inst)
     def run_instruction(self, inst):
         return getattr(self, "inst_" + inst)()
 
@@ -563,6 +563,14 @@ class Assembler():
                 self.define_symbol(word1, self.addr)
                 return 0
             return
+        elif token2.value == '=':
+            # symbol definition
+            if self.pass1:
+                token3 = self.tok.next()
+                value = self.get_literal(token3)
+                self.define_symbol(word1, value)
+                return 0
+            return
 
         # we have a labelled instruction or variable
         word2 = token2.value
@@ -577,8 +585,6 @@ class Assembler():
             return self.run_directive(word2)
         else:
             self.error(f"invalid instruction: {word2}")
-        
-        return self.run_instruction(word2)
         
 
 
