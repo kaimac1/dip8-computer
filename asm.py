@@ -3,6 +3,10 @@ import argparse
 import sys
 import string
 
+ANSI_RED = '\x1b[31m'
+ANSI_GREEN = '\x1b[92m'
+ANSI_RESET = '\x1b[0m'
+
 addrregs = ['b', 'c']
 
 class Token():
@@ -80,6 +84,15 @@ class Tokeniser():
             except:
                 return word
 
+    def get_string(self):
+        c = self.nextchar()
+        out = ""
+        while c != '"':
+            out += c
+            c = self.nextchar()
+        self.nextchar()
+        return out
+
     def get_symbol(self):
         c = self.char()
         self.nextchar()
@@ -98,8 +111,10 @@ class Tokeniser():
             return None
         elif is_literal_start(c):
             token = Token('literal', self.get_literal())
+        elif c == '"':
+            token = Token('string', self.get_string())
         elif is_symbol(c):
-            return Token('symbol', self.get_symbol())
+            token = Token('symbol', self.get_symbol())
         else:
             token = Token('text', self.get_word())
 
@@ -134,14 +149,14 @@ class Assembler():
 
     def write8(self, b):
         self.output.append(b)
-        print(f" [{self.addr:04x}: wrote 0x{b:02x}]")
+        print(f"{ANSI_GREEN}[0x{b:02x}]{ANSI_RESET} ", end='')
         self.addr += 1
 
     def write16(self, dd):
         # Little endian
         self.output.append(dd & 0xFF)
         self.output.append(dd >> 8)
-        print(f" [{self.addr:04x}: wrote 0x{dd:04x}]")
+        print(f"{ANSI_GREEN}[0x{dd:04x}]{ANSI_RESET} ", end='')
         self.addr += 2
 
     def get_literal(self, t):
@@ -448,12 +463,19 @@ class Assembler():
         
         if self.pass1:
             while t is not None:
-                num += 1
+                if t.type == 'string':
+                    num += len(t.value)
+                else:
+                    num += 1
                 t = self.tok.next()
             return num
 
         while t is not None:
-            self.write8(self.get_literal8(t))
+            if t.type == 'string':
+                for char in t.value:
+                    self.write8(ord(char))
+            else:
+                self.write8(self.get_literal8(t))
             t = self.tok.next()
 
 
@@ -463,7 +485,7 @@ class Assembler():
         lines = src.split('\n')
 
         # pass 1
-        print("PASS 1")
+        print("pass 1:")
         self.addr = 0
         self.pass1 = True
         for i, line in enumerate(lines):
@@ -474,14 +496,14 @@ class Assembler():
             self.addr += size
 
         # pass 2
-        print("\n\nPASS 2")
+        print("\n\npass 2:")
         self.output = bytearray()
         self.addr = 0
         self.pass1 = False
         self.line_num = 0
         for i, line in enumerate(lines):
             self.line_num = i+1
-            print(f"{self.addr:04x}\t", end='')
+            print(f"\n{self.addr:04x}\t", end='')
             self.asm_line(line)
             #print()
 

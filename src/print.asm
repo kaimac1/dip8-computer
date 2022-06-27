@@ -13,7 +13,5 @@ loop        lda b
 exit        
             .byte $ff       ; halt
 
-hello   .byte 'H' 'e' 'l' 'l' 'o' ',' ' '
-        .byte 'w' 'o' 'r' 'l' 'd' '!'
-        .byte $0a ; newline
-        .byte 0
+hello   .byte "Hello, world!", 0
+
