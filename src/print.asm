@@ -11,7 +11,28 @@ loop        lda b
             inc bl
             jmp loop
 exit        
+            
+
+
+
+;print a length-prefixed string
+
+            ldb #mystring
+            ldc b
+            inc bl
+loop2       inc bl
+            ldz b
+            stz $f000
+            dec cl
+            ldt #0
+            cmp cl, t
+            jnz loop2
+            ldt #0
+            cmp ch, t
+            jnz loop2
+
             .byte $ff       ; halt
 
-hello   .byte "Hello, world!", 0
 
+hello       .byte "Hello, world!", $0a, 0
+mystring    .string "Lorem ipsum"

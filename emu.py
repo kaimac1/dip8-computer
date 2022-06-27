@@ -33,7 +33,8 @@ class Memory():
         if addr < Memory.PERIPH:
             self.mem[addr] = value
         elif addr == 0xF000: #uart
-            print(chr(value), end='')
+            sys.stdout.write(chr(value))
+            sys.stdout.flush()
 
 class CPU():
     def __init__(self):
@@ -115,7 +116,7 @@ class CPU():
             self.regs[dest] = self.next()
 
     def common_staz(self, src):
-        nib = lonib(self.ib)
+        nib = lonib(self.ib) % 6
         if nib == 0:
             lo = self.next()
             hi = self.next()

@@ -441,9 +441,9 @@ class Assembler():
     def inst_ldz(self):
         return self.load_common(0x07)
     def inst_sta(self):
-        return self.load_common(0x10)
+        return self.store_common(0x10)
     def inst_stz(self):
-        return self.load_common(0x16)
+        return self.store_common(0x16)
 
     def inst_ldt(self):
         t = self.tok.next()
@@ -478,6 +478,26 @@ class Assembler():
                 self.write8(self.get_literal8(t))
             t = self.tok.next()
 
+    def direc_string(self):
+        t = self.tok.next()
+        length = 0
+        output = []
+
+        while t is not None:
+            if t.type == 'string':
+                length += len(t.value)
+                output += [ord(x) for x in t.value]
+            else:
+                length += 1
+                output += self.get_literal8(t)
+            t = self.tok.next()
+
+        if self.pass1:
+            return length + 2 #2 bytes to store length
+
+        self.write16(length)
+        for b in output:
+            self.write8(b)
 
 
 
