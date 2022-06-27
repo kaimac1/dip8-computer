@@ -13,18 +13,7 @@ loop        lda b
 exit        
             .byte $ff       ; halt
 
-hello   .byte 'H'
-        .byte 'e'
-        .byte 'l'
-        .byte 'l'
-        .byte 'o'
-        .byte ','
-        .byte ' '
-        .byte 'w'
-        .byte 'o'
-        .byte 'r'
-        .byte 'l'
-        .byte 'd'
-        .byte '!'
+hello   .byte 'H' 'e' 'l' 'l' 'o' ',' ' '
+        .byte 'w' 'o' 'r' 'l' 'd' '!'
         .byte $0a ; newline
         .byte 0

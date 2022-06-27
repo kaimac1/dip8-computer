@@ -144,8 +144,6 @@ class Assembler():
         print(f" [{self.addr:04x}: wrote 0x{dd:04x}]")
         self.addr += 2
 
-
-
     def get_literal(self, t):
         try:
             return int(t.value)
@@ -168,6 +166,7 @@ class Assembler():
         return t.type == 'text' and t.value in addrregs
     def get_address_reg(self, t):
         return addrregs.index(t.value)
+
 
 
     # Stack
@@ -193,6 +192,7 @@ class Assembler():
         if self.pass1:
             return 1
         self.write8(0x27 + self.get_pushpopreg(t))
+
 
 
     # Branch
@@ -224,6 +224,7 @@ class Assembler():
     def inst_ret(self):
         if self.pass1: return 1
         self.write8(0x3f)
+
 
 
     # Address regs
@@ -282,6 +283,8 @@ class Assembler():
         idx = ['bh', 'bl', 'ch', 'cl'].index(t.value)
         self.write8(0x4c + idx)
 
+
+
     # Move
 
     def get_movareg(self, reg):
@@ -315,6 +318,7 @@ class Assembler():
                 self.write8(0x67 + self.get_movregaz(ta.value))
             else:
                 self.error(f"invalid mov instruction")
+
 
     
     # ALU
@@ -352,6 +356,7 @@ class Assembler():
         return self.alu_common(0xe0)
     def inst_cmp(self):
         return self.alu_common(0xf0)
+
 
 
     # Load/store
@@ -434,12 +439,22 @@ class Assembler():
         self.write8(self.get_literal8(t))
 
 
+
+    # Directives
+
     def direc_byte(self):
         t = self.tok.next()
+        num = 0
+        
         if self.pass1:
-            return 1
+            while t is not None:
+                num += 1
+                t = self.tok.next()
+            return num
 
-        self.write8(self.get_literal8(t))
+        while t is not None:
+            self.write8(self.get_literal8(t))
+            t = self.tok.next()
 
 
 
