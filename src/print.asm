@@ -26,4 +26,5 @@ hello   .byte 'H'
         .byte 'l'
         .byte 'd'
         .byte '!'
+        .byte $0a ; newline
         .byte 0

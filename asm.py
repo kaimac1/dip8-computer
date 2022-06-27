@@ -1,8 +1,115 @@
 #!/bin/python3
 import argparse
 import sys
+import string
 
 addrregs = ['b', 'c']
+
+class Token():
+    def __init__(self, toktype, value):
+        self.type = toktype
+        self.value = value
+
+    def __repr__(self):
+        return f"{self.type}({repr(self.value)})"
+
+SYMBOLS = '+'
+
+def is_whitespace(char):
+    return char in [' ', '\t', ',']
+def is_symbol(char):
+    return char in SYMBOLS
+def is_wordsep(char):
+    return char and char in ' \t,' + SYMBOLS
+def is_literal_start(char):
+    return char in ['#', '$', '%', "'"]
+
+class Tokeniser():
+    def __init__(self, input):
+        self.str = input
+        self.pos = 0
+
+    def error(self, msg):
+        print(msg)
+        sys.exit()
+
+    def char(self):
+        if self.pos >= len(self.str):
+            return None
+        return self.str[self.pos]
+    def nextchar(self):
+        self.pos +=1
+        return self.char()
+
+    # Expect that the next char is c, and then move one past that
+    def expectchar(self, c):
+        self.pos += 1
+        if self.char() != c:
+            self.error(f"Expected {c} at column {self.pos+1}")
+        self.pos += 1
+
+    def get_word(self):
+        word = ''
+        while not is_wordsep(self.char()):
+            if not self.char(): break
+            word += self.char()
+            self.nextchar()
+        return word
+
+    def get_literal(self):
+        if self.char() == "'": # Character
+            v = ord(self.nextchar())
+            self.expectchar("'")
+            return v
+        
+        if self.char() == '#': # Ignore #
+            self.nextchar()
+
+        if self.char() == '$': # Hex
+            self.nextchar()
+            v = int(self.get_word(), 16)
+            return v
+        if self.char() == '%': # Binary
+            self.nextchar()
+            v = int(self.get_word(), 2)
+            return v
+        else:
+            word = self.get_word()
+            try:
+                return int(word)
+            except:
+                return word
+
+    def get_symbol(self):
+        c = self.char()
+        self.nextchar()
+        return c                
+    
+    def next(self):
+        while is_whitespace(self.char()):
+            self.pos += 1
+        start = self.pos
+
+        c = self.char()
+        if c is None:
+            return None
+        elif c == ';':
+            self.pos = len(self.str)
+            return None
+        elif is_literal_start(c):
+            token = Token('literal', self.get_literal())
+        elif is_symbol(c):
+            return Token('symbol', self.get_symbol())
+        else:
+            token = Token('text', self.get_word())
+
+        print(token, end=' ')
+        return token
+
+
+
+def is_literal(t):
+    return t.type == 'literal'
 
 class Assembler():
     def __init__(self):
@@ -39,144 +146,140 @@ class Assembler():
 
 
 
+    def get_literal(self, t):
+        try:
+            return int(t.value)
+        except:
+            name = t.value
+            if name in self.syms:
+                return self.syms[name]
+            else:
+                self.error(f"Undefined symbol: {name}")
 
-    def is_literal(self, pstr):
-        return pstr[0] == '#'
-
-    def get_literal(self, pstr):
-        if pstr[0] == '#': pstr = pstr[1:] #remove #
-
-        if pstr[0] == '$': val = int(pstr[1:], 16) # hex
-        elif pstr[0] == '%': val = int(pstr[1:], 2) # bin
-        elif pstr[0] == "'": val = ord(pstr[1])
-
-        else:
-            try:
-                val = int(pstr)
-            except:
-                if pstr not in self.syms:
-                    self.error(f"Undefined symbol: {pstr}")
-                val = self.syms[pstr]                    
+    def get_literal8(self, t):
+        val = self.get_literal(t) & 0xFF
         return val
 
-    def get_literal8(self, pstr):
-        val = self.get_literal(pstr) & 0xFF
-        return val
-
-    def get_literal16(self, pstr):
-        val = self.get_literal(pstr) & 0xFFFF
+    def get_literal16(self, t):
+        val = self.get_literal(t) & 0xFFFF
         return val
         
-
-
-
-
-    def is_address_reg(self, pstr):
-        return pstr in addrregs
-    def get_address_reg(self, pstr):
-        return addrregs.index(pstr)
+    def is_address_reg(self, t):
+        return t.type == 'text' and t.value in addrregs
+    def get_address_reg(self, t):
+        return addrregs.index(t.value)
 
 
     # Stack
 
-    def get_pushpopreg(self, pstr):
-        return ['a','b','c','x','y','z'].index(pstr)    
+    def get_pushpopreg(self, t):
+        return ['a','b','c','x','y','z'].index(t.value)
 
-    def inst_push(self, pstr):
+    def inst_push(self):
+        t = self.tok.next()
         if self.pass1:
-            if self.is_literal(pstr): size = 3
+            if is_literal(t): size = 3
             else: size = 1
             return size
 
-        if self.is_literal(pstr):
+        if is_literal(t):
             self.write8(0x20)
-            self.write16(self.get_literal16(pstr))
+            self.write16(self.get_literal16(t))
         else:
-            self.write8(0x21 + self.get_pushpopreg(pstr))
+            self.write8(0x21 + self.get_pushpopreg(t))
 
-    def inst_pop(self, pstr):
+    def inst_pop(self):
+        t = self.tok.next()
         if self.pass1:
             return 1
-        self.write8(0x27 + self.get_pushpopreg(pstr))
+        self.write8(0x27 + self.get_pushpopreg(t))
+
 
     # Branch
 
-    def jump_common(self, pstr, base):
+    def jump_common(self, base):
+        t = self.tok.next()
         if self.pass1:
-            if self.is_address_reg(pstr): size = 1
+            if self.is_address_reg(t): size = 1
             else: size = 3
             return size
 
-        if self.is_address_reg(pstr):
-            self.write8(base + 1 + self.get_address_reg(pstr))
+        if self.is_address_reg(t):
+            self.write8(base + 1 + self.get_address_reg(t))
         else:
             self.write8(base)
-            self.write16(self.get_literal16(pstr))
+            self.write16(self.get_literal16(t))
 
-    def inst_jmp(self, pstr):
-        return self.jump_common(pstr, 0x30)
-    def inst_jcs(self, pstr):
-        return self.jump_common(pstr, 0x33)
-    def inst_jcc(self, pstr):
-        return self.jump_common(pstr, 0x36)
-    def inst_jnz(self, pstr):
-        return self.jump_common(pstr, 0x39)
-    def inst_jz(self, pstr):
-        return self.jump_common(pstr, 0x3c)
+    def inst_jmp(self):
+        return self.jump_common(0x30)
+    def inst_jcs(self):
+        return self.jump_common(0x33)
+    def inst_jcc(self):
+        return self.jump_common(0x36)
+    def inst_jnz(self):
+        return self.jump_common(0x39)
+    def inst_jz(self):
+        return self.jump_common(0x3c)
 
-    def inst_ret(self, pstr):
+    def inst_ret(self):
         if self.pass1: return 1
         self.write8(0x3f)
 
+
     # Address regs
 
-    def ldbc_common(self, pstr, base):
+    def ldbc_common(self, base):
+        t = self.tok.next()
         if self.pass1:
-            if self.is_literal(pstr): size = 3
+            if is_literal(t): size = 3
             else: size = 1
             return size
 
-        if self.is_literal(pstr):
+        if is_literal(t):
             self.write8(base)
-            self.write16(self.get_literal16(pstr))
+            self.write16(self.get_literal16(t))
         else:
-            self.write8(base + 1 + self.get_address_reg(pstr))
+            self.write8(base + 1 + self.get_address_reg(t))
 
-    def inst_ldb(self, pstr):
-        return self.ldbc_common(pstr, 0x40)
-    def inst_ldc(self, pstr):
-        return self.ldbc_common(pstr, 0x44)
+    def inst_ldb(self):
+        return self.ldbc_common(0x40)
+    def inst_ldc(self):
+        return self.ldbc_common(0x44)
 
-    def inst_stb(self, pstr):
+    def inst_stb(self):
+        t = self.tok.next()
         if self.pass1:
             return 1
 
-        if pstr == 'c':
+        if t.value == 'c':
             self.write8(0x43)
         else:
             self.error("stb operand must be c")
 
-    def inst_stc(self, pstr):
+    def inst_stc(self):
+        t = self.tok.next()
         if self.pass1:
             return 1
 
-        if pstr == 'b':
+        if t.value == 'b':
             self.write8(0x47)
         else:
             self.error("stc operand must be b")
 
-    def inst_inc(self, pstr):
+    def inst_inc(self):
+        t = self.tok.next()
         if self.pass1:
             return 1
 
-        idx = ['bh', 'bl', 'ch', 'cl'].index(pstr)
+        idx = ['bh', 'bl', 'ch', 'cl'].index(t.value)
         self.write8(0x48 + idx)
 
-    def inst_dec(self, pstr):
+    def inst_dec(self):
+        t = self.tok.next()
         if self.pass1:
             return 1
 
-        idx = ['bh', 'bl', 'ch', 'cl'].index(pstr)
+        idx = ['bh', 'bl', 'ch', 'cl'].index(t.value)
         self.write8(0x4c + idx)
 
     # Move
@@ -190,26 +293,26 @@ class Assembler():
     def get_movregaz(self, reg):
         return ['bh', 'bl', 'ch', 'cl', 'x', 'y'].index(reg)
 
-    def inst_mov(self, pstr):
+    def inst_mov(self):
         if self.pass1:
             return 1
 
-        a, rest = self.get_word(pstr, ",")
-        b, _    = self.get_word(rest, ";")
+        ta = self.tok.next()
+        tb = self.tok.next()
 
-        if a is None or b is None:
+        if ta is None or tb is None:
             self.error("mov requires two operands")
-        if a == 'a':
-            self.write8(0x50 + self.get_movareg(b))
-        elif a == 't':
-            self.write8(0x70 + self.get_movtreg(b))
-        elif a == 'z':
-            self.write8(0x60 + self.get_movzreg(b))
+        if ta.value == 'a':
+            self.write8(0x50 + self.get_movareg(tb.value))
+        elif ta.value == 't':
+            self.write8(0x70 + self.get_movtreg(tb.value))
+        elif ta.value == 'z':
+            self.write8(0x60 + self.get_movzreg(tb.value))
         else:
-            if b == 'a':
-                self.write8(0x57 + self.get_movregaz(a))
-            elif b == 'z':
-                self.write8(0x67 + self.get_movregaz(a))
+            if tb.value == 'a':
+                self.write8(0x57 + self.get_movregaz(ta.value))
+            elif tb.value == 'z':
+                self.write8(0x67 + self.get_movregaz(ta.value))
             else:
                 self.error(f"invalid mov instruction")
 
@@ -219,112 +322,124 @@ class Assembler():
     def get_alureg(self, reg):
         return ['a', 'bh', 'bl', 'ch', 'cl', 'x', 'y', 'z'].index(reg)
 
-    def alu_common(self, pstr, base):
+    def alu_common(self, base):
         if self.pass1:
             return 1
 
-        a, rest = self.get_word(pstr, ",")
-        b, _    = self.get_word(rest, ";")
-        if a is None or b is None:
+        ta = self.tok.next()
+        tb = self.tok.next()
+        if ta is None or tb is None:
             self.error("alu instructions require two operands")
-        if b != 't':
+        if tb.value != 't':
             self.error("alu instructions require the 2nd operand to be 't'")
 
-        self.write8(base + self.get_alureg(a))
+        self.write8(base + self.get_alureg(ta.value))
 
 
-    def inst_add(self, pstr):
-        return self.alu_common(pstr, 0x80)
-    def inst_sub(self, pstr):
-        return self.alu_common(pstr, 0x90)
-    def inst_adc(self, pstr):
-        return self.alu_common(pstr, 0xa0)
-    def inst_sbc(self, pstr):
-        return self.alu_common(pstr, 0xb0)
-    def inst_and(self, pstr):
-        return self.alu_common(pstr, 0xc0)
-    def inst_or(self, pstr):
-        return self.alu_common(pstr, 0xd0)
-    def inst_xor(self, pstr):
-        return self.alu_common(pstr, 0xe0)
-    def inst_cmp(self, pstr):
-        return self.alu_common(pstr, 0xf0)
+    def inst_add(self):
+        return self.alu_common(0x80)
+    def inst_sub(self):
+        return self.alu_common(0x90)
+    def inst_adc(self):
+        return self.alu_common(0xa0)
+    def inst_sbc(self):
+        return self.alu_common(0xb0)
+    def inst_and(self):
+        return self.alu_common(0xc0)
+    def inst_or(self):
+        return self.alu_common(0xd0)
+    def inst_xor(self):
+        return self.alu_common(0xe0)
+    def inst_cmp(self):
+        return self.alu_common(0xf0)
 
 
     # Load/store
 
-    def is_pointer(self, pstr):
-        return pstr[0] == "*"
+    def is_pointer(self, t):
+        return t.type == 'text' and t.value[0] == "*"
+    def get_pointer(self, t):
+        name = t.value[1:]
+        if name in self.syms:
+            return self.syms[name] & 0xFFFF
+        else:
+            self.error(f"Undefined symbol: {name}")        
 
-    def is_address_reg_plus_t(self, pstr):
-        ar, rest = self.get_word(pstr, "+")
-        t, _ = self.get_word(rest)
-        return (ar in addrregs) and (t == 't')
 
-    def load_common(self, pstr, base):
+    def is_address_reg_plus_t(self):
+        t = self.tok.next()
+        if t and t.type == 'symbol' and t.value == '+':
+            t2 = self.tok.next()
+            return t2.type == 'text' and t2.value == 't'
+
+    def load_common(self, base):
+        t = self.tok.next()
         if self.pass1:
-            if self.is_literal(pstr): size = 2
-            elif self.is_pointer(pstr): size = 3
-            elif self.is_address_reg(pstr): size = 1
-            elif self.is_address_reg_plus_t(pstr): size = 1
+            if is_literal(t): size = 2
+            elif self.is_pointer(t): size = 3
+            elif self.is_address_reg(t): size = 1
             else: size = 3
             return size
 
-        if self.is_literal(pstr):
+        if is_literal(t):
             self.write8(base + 0x06)
-            self.write8(self.get_literal8(pstr))
-        elif self.is_pointer(pstr):
+            self.write8(self.get_literal8(t))
+        elif self.is_pointer(t):
             self.write8(base + 0x01)
-            self.write16(self.get_literal16(pstr[1:]))
-        elif self.is_address_reg(pstr):
-            self.write8(base+ 0x02 + self.get_address_reg(pstr))
-        elif self.is_address_reg_plus_t(pstr):
-            self.write8(base + 0x04 + self.get_address_reg(pstr[0]))
+            self.write16(self.get_pointer(t))
+        elif self.is_address_reg(t):
+            if self.is_address_reg_plus_t():
+                self.write8(base + 0x04 + self.get_address_reg(t))
+            else:
+                self.write8(base+ 0x02 + self.get_address_reg(t))
         else: # absolute
             self.write8(base + 0x00)
-            self.write16(self.get_literal16(pstr))
+            self.write16(self.get_literal16(t))
 
-    def store_common(self, pstr, base):
+    def store_common(self, base):
+        t = self.tok.next()
         if self.pass1:
-            if self.is_pointer(pstr): size = 3
-            elif self.is_address_reg(pstr): size = 1
-            elif self.is_address_reg_plus_t(pstr): size = 1
+            if self.is_pointer(t): size = 3
+            elif self.is_address_reg(t): size = 1
             else: size = 3
             return size
 
-        if self.is_pointer(pstr):
+        if self.is_pointer(t):
             self.write8(base + 0x01)
-            self.write16(self.get_literal16(pstr[1:]))
-        elif self.is_address_reg(pstr):
-            self.write8(base+ 0x02 + self.get_address_reg(pstr))
-        elif self.is_address_reg_plus_t(pstr):
-            self.write8(base + 0x04 + self.get_address_reg(pstr[0]))
+            self.write16(self.get_pointer(t))
+        elif self.is_address_reg(t):
+            if self.is_address_reg_plus_t():
+                self.write8(base + 0x04 + self.get_address_reg(t))
+            else:
+                self.write8(base+ 0x02 + self.get_address_reg(t))
         else: # absolute
             self.write8(base + 0x00)
-            self.write16(self.get_literal16(pstr))
+            self.write16(self.get_literal16(t))
 
-    def inst_lda(self, pstr):
-        return self.load_common(pstr, 0x00)
-    def inst_ldz(self, pstr):
-        return self.load_common(pstr, 0x07)
-    def inst_sta(self, pstr):
-        return self.load_common(pstr, 0x10)
-    def inst_stz(self, pstr):
-        return self.load_common(pstr, 0x16)
+    def inst_lda(self):
+        return self.load_common(0x00)
+    def inst_ldz(self):
+        return self.load_common(0x07)
+    def inst_sta(self):
+        return self.load_common(0x10)
+    def inst_stz(self):
+        return self.load_common(0x16)
 
-    def inst_ldt(self, pstr):
+    def inst_ldt(self):
+        t = self.tok.next()
         if self.pass1:
-            if self.is_literal(pstr): return 2
+            if is_literal(t): return 2
             self.error("operand to ldt must be literal")
         self.write8(0x0e)
-        self.write8(self.get_literal8(pstr))
+        self.write8(self.get_literal8(t))
 
 
-    def direc_byte(self, pstr):
+    def direc_byte(self):
+        t = self.tok.next()
         if self.pass1:
             return 1
 
-        self.write8(self.get_literal8(pstr))
+        self.write8(self.get_literal8(t))
 
 
 
@@ -338,7 +453,9 @@ class Assembler():
         self.pass1 = True
         for i, line in enumerate(lines):
             self.line_num = i+1
+            print(f"{self.addr:04x}\t", end='')
             size = self.asm_line(line)
+            print()
             self.addr += size
 
         # pass 2
@@ -349,7 +466,9 @@ class Assembler():
         self.line_num = 0
         for i, line in enumerate(lines):
             self.line_num = i+1
+            print(f"{self.addr:04x}\t", end='')
             self.asm_line(line)
+            #print()
 
         return self.output
 
@@ -361,56 +480,48 @@ class Assembler():
 
     def is_directive(self, direc):
         return (direc[0] == '.') and hasattr(self, "direc_" + direc[1:])
-    def run_directive(self, direc, pstr):
-        pstr, _ = self.get_word(pstr, ";")
-        print(f"{self.addr:04x}\t`{direc}`\t`{pstr}`")
-        return getattr(self, "direc_" + direc[1:])(pstr)
-
+    def run_directive(self, direc):
+        return getattr(self, "direc_" + direc[1:])()
     def is_instruction(self, inst):
         return hasattr(self, "inst_" + inst)
-    def run_instruction(self, inst, pstr):
-        # Strip comments
-        pstr, _ = self.get_word(pstr, ";")
-        print(f"{self.addr:04x}\t`{inst}`\t`{pstr}`")
-        return getattr(self, "inst_" + inst)(pstr)
+    def run_instruction(self, inst):
+        return getattr(self, "inst_" + inst)()
 
     def asm_line(self, line):
-        line = line.strip()
-        if line == "": return 0
+        self.tok = Tokeniser(line)
 
-        first, rest = self.get_word(line)
-        if first[0] == ";": return 0 # comment
+        token1 = self.tok.next()
+        if token1 is None: return 0
 
-        method = "inst_" + first
-        if self.is_instruction(first):  # unlabelled instruction
-            return self.run_instruction(first, rest)
-        elif self.is_directive(first):
-            return self.run_directive(first, rest)
-        elif rest is None:
-            # just a label
+        word1 = token1.value
+        if self.is_instruction(word1):  # unlabelled instruction
+            return self.run_instruction(word1)
+        elif self.is_directive(word1):
+            return self.run_directive(word1)
+        
+        token2 = self.tok.next()
+        if token2 is None:
+            # token1 is just a label
             if self.pass1:
-                self.define_symbol(first, self.addr)
+                self.define_symbol(word1, self.addr)
                 return 0
             return
 
         # we have a labelled instruction or variable
-        name = first
-        middle, rest = self.get_word(rest)
+        word2 = token2.value
 
         # Store symbol/label address
         if self.pass1:
-            self.define_symbol(name, self.addr)
+            self.define_symbol(word1, self.addr)
 
-        if self.is_instruction(middle):
-            return self.run_instruction(middle, rest)
-        elif self.is_directive(middle):
-            return self.run_directive(middle, rest)
+        if self.is_instruction(word2):
+            return self.run_instruction(word2)
+        elif self.is_directive(word2):
+            return self.run_directive(word2)
         else:
-            self.error(f"invalid instruction: {middle}")
+            self.error(f"invalid instruction: {word2}")
         
-
-
-        return self.run_instruction(middle, rest)
+        return self.run_instruction(word2)
         
 
 
