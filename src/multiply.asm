@@ -7,17 +7,11 @@
         mov cl, x
         mov z, #1
 loop    mov a, y        ; add if y & z
-        mov t, z
-        and a, t
+        and a, z
         jz noadd
-        mov t, cl       ; b += c
-        add bl, t
-        mov t, ch
-        adc bh, t
-noadd   mov t, cl       ; c *= 2
-        add cl, t
-        mov t, ch
-        adc ch, t
-        mov t, z        ; z *= 2
-        add z, t
+        add bl, cl      ; b += c
+        adc bh, ch
+noadd   add cl, cl      ; c *= 2
+        adc ch, ch
+        add z, z        ; z *= 2
         jcc loop
