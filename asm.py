@@ -488,7 +488,11 @@ class Assembler():
         if not allow_redefine:
             if name in self.syms:
                 self.error(f"symbol already defined: {name}")
-        self.syms[name] = value        
+
+        if name == '*': # PC
+            self.addr = value
+        else:
+            self.syms[name] = value        
 
     def is_directive(self, direc):
         return isinstance(direc, str) and (direc[0] == '.') and hasattr(self, "direc_" + direc[1:])

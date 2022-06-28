@@ -1,34 +1,68 @@
+
+            ldb #hello
+            call printn
+
+            ldb #mystring
+            call prints
+
+            mov a, #$3f
+            call printah
+
+            .byte $ff ; halt
+
+hello       .byte "Hello, world!", $0a, 0
+mystring    .string "The value of register a is: $"
+
+
+
+
 UART = $f000
 
 ;print a null-terminated string
+; b: string to print 
 
-            ldc #UART
-            ldb #hello
-loop        lda b
+printn      ldc #UART
+pnloop      lda b
             cmp a, #0
-            jz exit
+            jz pnexit
             sta c
             inc bl
-            jmp loop
-exit        
+            jmp pnloop
+pnexit      ret
 
             
 ;print a length-prefixed string
+; b: string to print
 
-            ldb #mystring
-            ldc b           ; c = string length (16 bits)
+prints      ldc b           ; c = string length (16 bits)
             inc bl
-loop2       inc bl
+psloop      inc bl
             ldz b
             stz UART
             dec cl
             cmp cl, #0
-            jnz loop2
+            jnz psloop
             cmp ch, #0
-            jnz loop2
+            jnz psloop
+            ret
 
-            .byte $ff       ; halt
 
+;print an 8-bit hexadecimal value
+; a: number to print
 
-hello       .byte "Hello, world!", $0a, 0
-mystring    .string "Lorem ipsum dolor sit amet"
+printah     ldb #hexdigits
+            mov cl, #0
+ahloop      cmp a, #16      ; while a >= 16
+            jcc ahout       
+            sub a, #16
+            inc cl
+            jmp ahloop
+ahout       mov t, cl       ; cl = hi nib
+            ldz b+t
+            stz UART
+            mov t, a        ; a = low nib
+            ldz b+t
+            stz UART
+            ret
+
+hexdigits   .byte "0123456789abcdef"
