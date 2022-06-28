@@ -166,9 +166,11 @@ class CPU():
             self.sp = wrap16(self.sp + 1)
             self.mem[self.sp] = hi
             self.sp = wrap16(self.sp + 1)
+            self.operands = f"${hi<<8|lo:04x}"
         else:
             regs = ['a', 'b', 'c', 'x', 'y', 'z']
             self.pushreg(regs[nib - 1])
+            self.operands = regs[nib-1]
 
     def popreg(self, reg):
         if reg in ['a', 'x', 'y', 'z', 'bh', 'bl', 'ch', 'cl']:
@@ -192,11 +194,17 @@ class CPU():
             lo = self.next()
             hi = self.next()
             addr = lo | (hi << 8)
-            if do: self.pc = addr
+            if do:
+                self.pc = addr
+                self.operands = f"${addr:04x}"
         elif nib == 1:
-            if do: self.pc = self.b16()
+            if do:
+                self.pc = self.b16()
+                self.operands = 'b'
         elif nib == 2:
-            if do: self.pc = self.c16()
+            if do:
+                self.pc = self.c16()
+                self.operands = 'c'
 
     def jmp(self):
         self.dojump(True)

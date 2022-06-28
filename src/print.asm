@@ -5,8 +5,7 @@ UART = $f000
             ldc #UART
             ldb #hello
 loop        lda b
-            mov t, #0
-            cmp a, t
+            cmp a, #0
             jz exit
             sta c
             inc bl
@@ -23,11 +22,9 @@ loop2       inc bl
             ldz b
             stz UART
             dec cl
-            mov t, #0
-            cmp cl, t
+            cmp cl, #0
             jnz loop2
-            mov t, #0
-            cmp ch, t
+            cmp ch, #0
             jnz loop2
 
             .byte $ff       ; halt

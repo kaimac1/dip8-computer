@@ -274,6 +274,13 @@ class Assembler():
     def get_movreg(self, reg):
         return ['a', 'bh', 'bl', 'ch', 'cl', 'x', 'y', 'z'].index(reg)
 
+    def movt_literal(self, t):
+        self.write8(0x98)
+        self.write8(self.get_literal8(t))
+    def movt_register(self, t):
+        offset = self.get_movreg(t.value)
+        self.write8(0x90 + offset)
+
     def inst_mov(self):
         ta = self.tok.next()
         tb = self.tok.next()
@@ -285,12 +292,9 @@ class Assembler():
 
         if ta.value == 't':
             if tb.type == 'literal':
-                self.write8(0x98)
-                self.write8(self.get_literal8(tb))
+                self.movt_literal(tb)
             else:
-                offset = self.get_movreg(tb.value)
-                self.write8(0x90 + offset)
-            
+                self.movt_register(tb)
         else:
             dest = self.get_movreg(ta.value)
             if tb.type == 'literal':
@@ -312,12 +316,21 @@ class Assembler():
         ta = self.tok.next()
         tb = self.tok.next()
         if ta is None or tb is None:
-            self.error("alu instructions require two operands")
-        if tb.value != 't':
-            self.error("alu instructions require the 2nd operand to be 't'")
+            self.error("ALU instructions require two operands.")
+
+        # accept 
+        # alu reg, t
+        # alu reg, #literal     -> mov t, #literal; alu reg, t
+        # alu reg, reg2         -> mov t, reg2;     alu reg, t
+        if tb.type == 'literal':
+            self.movt_literal(tb)
+        elif tb.type == 'text':
+            if tb.value != 't':
+                self.movt_register(tb)
+        else:
+            self.error("Invalid ALU instruction.")
 
         self.write8(base + self.get_alureg(ta.value))
-
 
     def inst_add(self):
         self.alu_common(0xa0)
@@ -395,6 +408,22 @@ class Assembler():
 
 
 
+    # Pseudoinstructions
+
+    def inst_call(self):
+        t = self.tok.next()
+        call_addr = self.get_literal16(t)
+        ret_addr = self.addr + 6
+        # push ret_addr
+        self.write8(0x20)
+        self.write16(ret_addr)
+        # jmp call_addr
+        self.write8(0x30)
+        self.write16(call_addr)
+
+
+
+
     # Directives
 
     def direc_byte(self):
@@ -437,9 +466,7 @@ class Assembler():
         for i, line in enumerate(lines):
             self.line_num = i+1
             self.nbytes = 0
-            print(f"{self.addr:04x}\t", end='')
             self.asm_line(line)
-            print()
             self.addr += self.nbytes
 
         # pass 2
