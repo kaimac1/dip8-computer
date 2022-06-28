@@ -8,6 +8,8 @@ MEMSIZE = 65536
 # Low nibble
 def lonib(b):
     return b & 0x0f
+def hinib(b):
+    return b >> 4
 
 def wrap16(b):
     return b & 0xffff
@@ -52,38 +54,39 @@ class CPU():
         self.regs = dict(zip(self.regnames, [0] * len(self.regnames)))
 
         self.opcodes = {
-            (0x00, 0x06): self.lda,
-            (0x07, 0x0d): self.ldz,
-            (0x0e, 0x0e): self.ldt,
+            (0x00, 0x05): self.lda,
+            (0x06, 0x0b): self.ldz,
             (0x10, 0x15): self.sta,
             (0x16, 0x1b): self.stz,
+            
             (0x20, 0x26): self.push,
             (0x27, 0x2c): self.pop,
+            
             (0x30, 0x32): self.jmp,
             (0x33, 0x35): self.jcs,
             (0x36, 0x38): self.jcc,
             (0x39, 0x3b): self.jnz,
             (0x3c, 0x3e): self.jz,
             (0x3f, 0x3f): self.ret,
+            
             (0x40, 0x42): self.ldb,
             (0x43, 0x43): self.stb,
             (0x44, 0x46): self.ldc,
             (0x47, 0x47): self.stc,
             (0x48, 0x4b): self.inc,
             (0x4c, 0x4f): self.dec,
-            (0x50, 0x56): self.mova,
-            (0x57, 0x5c): self.movfroma,
-            (0x60, 0x66): self.movz,
-            (0x67, 0x6c): self.movfromz,
-            (0x70, 0x77): self.movt,
-            (0x80, 0x87): self.add,
-            (0x90, 0x97): self.sub,
-            (0xa0, 0xa7): self.adc,
-            (0xb0, 0xb7): self.sbc,
+            
+            (0x50, 0x8f): self.mov,
+            (0x90, 0x98): self.movt,
+            
+            (0xa0, 0xa7): self.add,
+            (0xa8, 0xaf): self.sub,
+            (0xb0, 0xb7): self.adc,
+            (0xb8, 0xbf): self.sbc,
             (0xc0, 0xc7): self.opand,
-            (0xd0, 0xd7): self.opor,
-            (0xe0, 0xe7): self.xor,
-            (0xf0, 0xf7): self.cmp,
+            (0xc8, 0xcf): self.opor,
+            (0xd0, 0xd7): self.xor,
+            (0xd8, 0xdf): self.cmp,
 
             (0xff, 0xff): self.halt,
         }
@@ -98,22 +101,25 @@ class CPU():
         return self.regs['ch'] << 8 | self.regs['cl']
         
     def common_ldaz(self, dest):
-        nib = lonib(self.ib) % 7
+        nib = lonib(self.ib) % 6
         if nib == 0:
             lo = self.next()
             hi = self.next()
             addr = lo | (hi << 8)
             self.regs[dest] = self.mem[addr]
+            self.operands = addr
         elif nib == 2:
             self.regs[dest] = self.mem[self.b16()]
+            self.operands = 'b'
         elif nib == 3:
             self.regs[dest] = self.mem[self.c16()]
+            self.operands = 'c'
         elif nib == 4:
             self.regs[dest] = self.mem[self.b16() + self.t]
+            self.operands = 'b+t'
         elif nib == 5:
             self.regs[dest] = self.mem[self.c16() + self.t]
-        elif nib == 6:
-            self.regs[dest] = self.next()
+            self.operands = 'c+t'
 
     def common_staz(self, src):
         nib = lonib(self.ib) % 6
@@ -215,9 +221,6 @@ class CPU():
         addr = lo | (hi << 8)
         self.pc = addr
 
-    def ldt(self):
-        self.t = self.next()
-
     def common_ldbc(self, dest):
         nib = lonib(self.ib) % 4
         if nib == 0:
@@ -274,38 +277,40 @@ class CPU():
             elif reg == 'cl': self.decreg('ch')
 
 
-    def movtoaz(self, dest):
-        regs = ['bh', 'bl', 'ch', 'cl', 'x', 'y', '?']
-        regs[-1] = 'a' if dest == 'z' else 'z'
-        nib = lonib(self.ib)
-        src = regs[nib]
-        self.regs[dest] = self.regs[src]
+    # mov
 
-    def movfromaz(self, src):
-        regs = ['bh', 'bl', 'ch', 'cl', 'x', 'y']
-        idx = lonib(self.ib) - 7
-        dest = regs[idx]
-        self.regs[dest] = self.regs[src]
-
-    def mova(self):
-        self.movtoaz('a')
-    def movz(self):
-        self.movtoaz('z')
-    def movfroma(self):
-        self.movfromaz('a')
-    def movfromz(self):
-        self.movfromaz('z')
+    def mov(self):
+        regs = ['a', 'bh', 'bl', 'ch', 'cl', 'x', 'y', 'z']
+        dest = (self.ib - 0x50) // 8
+        src = lonib(self.ib) % 8
+        if src == dest: # load literal
+            literal = self.next()
+            self.regs[regs[dest]] = literal
+            self.operands = f"{regs[dest]}, {literal}"
+        else:
+            self.regs[regs[dest]] = self.regs[regs[src]]
+            self.operands = f"{regs[dest]}, {regs[src]}"
 
     def movt(self):
-        regs = ['bh', 'bl', 'ch', 'cl', 'x', 'y', 'z', 'a']
+        self.name = 'mov'
+        regs = ['a', 'bh', 'bl', 'ch', 'cl', 'x', 'y', 'z']
         idx = lonib(self.ib)
-        src = regs[idx]
-        self.t = self.regs[src]
+        if idx == 8: # load literal
+            literal = self.next()
+            self.t = literal
+            self.operands = f"t, {literal}"
+        else:
+            src = regs[idx]
+            self.t = self.regs[src]
+            self.operands = f"t, {src}"
 
+
+    # alu
 
     def aluarg(self):
         regs = ['a', 'bh', 'bl', 'ch', 'cl', 'x', 'y', 'z']
-        reg = regs[lonib(self.ib)]
+        reg = regs[lonib(self.ib) % 8]
+        self.operands = f"{reg}, t"
         return reg
 
     def flags(self, reg):
@@ -342,11 +347,13 @@ class CPU():
         self.flags(reg)
 
     def opand(self):
+        self.name = 'and'
         reg = self.aluarg()
         self.regs[reg] = self.regs[reg] & self.t
         self.flags(reg)
 
     def opor(self):
+        self.name = 'or'
         reg = self.aluarg()
         self.regs[reg] = self.regs[reg] | self.t
         self.flags(reg)
@@ -399,19 +406,19 @@ class CPU():
     def run(self):
         while not self.halted:
             self.this_instruction_bytes = []
+            self.operands = ""
             ipc = self.pc
             self.ib = self.next()
-            name = '???'
 
             for oprange in self.opcodes:
                 opcode = self.opcodes[oprange]
 
                 if oprange[0] <= self.ib <= oprange[1]:
-                    name = opcode.__name__
+                    self.name = opcode.__name__
                     opcode()
                     if self.verbose:
                         self.this_instruction_bytes = ' '.join([f"{x:02x}" for x in self.this_instruction_bytes])
-                        print('{:04x}  {:9s} {}'.format(ipc, self.this_instruction_bytes, name))
+                        print(f'{ipc:04x}  {self.this_instruction_bytes:9s} {self.name} {self.operands}')
                     break
 
     

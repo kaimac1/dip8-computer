@@ -131,28 +131,25 @@ class Assembler():
         self.pidx = 0
         self.syms = {}
 
-    def get_word(self, text, sep=" "):
-        if text == None:
-            return None, None
-        if sep in text:
-            spacepos = text.index(sep)
-            word = text[0:spacepos].strip()
-            rest = text[spacepos+1:].strip()
-        else:
-            word = text
-            rest = None
-        return word, rest        
-
     def error(self, msg):
         print(f"Error on line {self.line_num}: {msg}")
         sys.exit()
 
     def write8(self, b):
+        if self.pass1:
+            # pass 1 - don't write anything, just calculate size
+            self.nbytes += 1
+            return
+
         self.output.append(b)
         print(f"{ANSI_GREEN}[0x{b:02x}]{ANSI_RESET} ", end='')
         self.addr += 1
 
     def write16(self, dd):
+        if self.pass1:
+            self.nbytes += 2
+            return
+
         # Little endian
         self.output.append(dd & 0xFF)
         self.output.append(dd >> 8)
@@ -167,6 +164,8 @@ class Assembler():
             if name in self.syms:
                 return self.syms[name]
             else:
+                if self.pass1: # don't complain on pass1 if the symbol is not defined yet
+                    return 0
                 self.error(f"Undefined symbol: {name}")
 
     def get_literal8(self, t):
@@ -191,11 +190,6 @@ class Assembler():
 
     def inst_push(self):
         t = self.tok.next()
-        if self.pass1:
-            if is_literal(t): size = 3
-            else: size = 1
-            return size
-
         if is_literal(t):
             self.write8(0x20)
             self.write16(self.get_literal16(t))
@@ -204,8 +198,6 @@ class Assembler():
 
     def inst_pop(self):
         t = self.tok.next()
-        if self.pass1:
-            return 1
         self.write8(0x27 + self.get_pushpopreg(t))
 
 
@@ -214,11 +206,6 @@ class Assembler():
 
     def jump_common(self, base):
         t = self.tok.next()
-        if self.pass1:
-            if self.is_address_reg(t): size = 1
-            else: size = 3
-            return size
-
         if self.is_address_reg(t):
             self.write8(base + 1 + self.get_address_reg(t))
         else:
@@ -226,18 +213,17 @@ class Assembler():
             self.write16(self.get_literal16(t))
 
     def inst_jmp(self):
-        return self.jump_common(0x30)
+        self.jump_common(0x30)
     def inst_jcs(self):
-        return self.jump_common(0x33)
+        self.jump_common(0x33)
     def inst_jcc(self):
-        return self.jump_common(0x36)
+        self.jump_common(0x36)
     def inst_jnz(self):
-        return self.jump_common(0x39)
+        self.jump_common(0x39)
     def inst_jz(self):
-        return self.jump_common(0x3c)
+        self.jump_common(0x3c)
 
     def inst_ret(self):
-        if self.pass1: return 1
         self.write8(0x3f)
 
 
@@ -246,11 +232,6 @@ class Assembler():
 
     def ldbc_common(self, base):
         t = self.tok.next()
-        if self.pass1:
-            if is_literal(t): size = 3
-            else: size = 1
-            return size
-
         if is_literal(t):
             self.write8(base)
             self.write16(self.get_literal16(t))
@@ -258,15 +239,12 @@ class Assembler():
             self.write8(base + 1 + self.get_address_reg(t))
 
     def inst_ldb(self):
-        return self.ldbc_common(0x40)
+        self.ldbc_common(0x40)
     def inst_ldc(self):
-        return self.ldbc_common(0x44)
+        self.ldbc_common(0x44)
 
     def inst_stb(self):
         t = self.tok.next()
-        if self.pass1:
-            return 1
-
         if t.value == 'c':
             self.write8(0x43)
         else:
@@ -274,9 +252,6 @@ class Assembler():
 
     def inst_stc(self):
         t = self.tok.next()
-        if self.pass1:
-            return 1
-
         if t.value == 'b':
             self.write8(0x47)
         else:
@@ -284,17 +259,11 @@ class Assembler():
 
     def inst_inc(self):
         t = self.tok.next()
-        if self.pass1:
-            return 1
-
         idx = ['bh', 'bl', 'ch', 'cl'].index(t.value)
         self.write8(0x48 + idx)
 
     def inst_dec(self):
         t = self.tok.next()
-        if self.pass1:
-            return 1
-
         idx = ['bh', 'bl', 'ch', 'cl'].index(t.value)
         self.write8(0x4c + idx)
 
@@ -302,37 +271,35 @@ class Assembler():
 
     # Move
 
-    def get_movareg(self, reg):
-        return ['bh', 'bl', 'ch', 'cl', 'x', 'y', 'z'].index(reg)
-    def get_movtreg(self, reg):
-        return ['bh', 'bl', 'ch', 'cl', 'x', 'y', 'z', 'a'].index(reg)
-    def get_movzreg(self, reg):
-        return ['bh', 'bl', 'ch', 'cl', 'x', 'y', 'a'].index(reg)
-    def get_movregaz(self, reg):
-        return ['bh', 'bl', 'ch', 'cl', 'x', 'y'].index(reg)
+    def get_movreg(self, reg):
+        return ['a', 'bh', 'bl', 'ch', 'cl', 'x', 'y', 'z'].index(reg)
 
     def inst_mov(self):
-        if self.pass1:
-            return 1
-
         ta = self.tok.next()
         tb = self.tok.next()
 
         if ta is None or tb is None:
             self.error("mov requires two operands")
-        if ta.value == 'a':
-            self.write8(0x50 + self.get_movareg(tb.value))
-        elif ta.value == 't':
-            self.write8(0x70 + self.get_movtreg(tb.value))
-        elif ta.value == 'z':
-            self.write8(0x60 + self.get_movzreg(tb.value))
-        else:
-            if tb.value == 'a':
-                self.write8(0x57 + self.get_movregaz(ta.value))
-            elif tb.value == 'z':
-                self.write8(0x67 + self.get_movregaz(ta.value))
+        if ta.value == tb.value:
+            self.error(f"invalid mov instruction")
+
+        if ta.value == 't':
+            if tb.type == 'literal':
+                self.write8(0x98)
+                self.write8(self.get_literal8(tb))
             else:
-                self.error(f"invalid mov instruction")
+                offset = self.get_movreg(tb.value)
+                self.write8(0x90 + offset)
+            
+        else:
+            dest = self.get_movreg(ta.value)
+            if tb.type == 'literal':
+                src = self.get_movreg(ta.value)
+                self.write8(0x50 + 0x08*dest + src)
+                self.write8(self.get_literal8(tb))
+            else:
+                src = self.get_movreg(tb.value)
+                self.write8(0x50 + 0x08*dest + src)
 
 
     
@@ -342,9 +309,6 @@ class Assembler():
         return ['a', 'bh', 'bl', 'ch', 'cl', 'x', 'y', 'z'].index(reg)
 
     def alu_common(self, base):
-        if self.pass1:
-            return 1
-
         ta = self.tok.next()
         tb = self.tok.next()
         if ta is None or tb is None:
@@ -356,21 +320,21 @@ class Assembler():
 
 
     def inst_add(self):
-        return self.alu_common(0x80)
+        self.alu_common(0xa0)
     def inst_sub(self):
-        return self.alu_common(0x90)
+        self.alu_common(0xa8)
     def inst_adc(self):
-        return self.alu_common(0xa0)
+        self.alu_common(0xb0)
     def inst_sbc(self):
-        return self.alu_common(0xb0)
+        self.alu_common(0xb8)
     def inst_and(self):
-        return self.alu_common(0xc0)
+        self.alu_common(0xc0)
     def inst_or(self):
-        return self.alu_common(0xd0)
+        self.alu_common(0xc8)
     def inst_xor(self):
-        return self.alu_common(0xe0)
+        self.alu_common(0xd0)
     def inst_cmp(self):
-        return self.alu_common(0xf0)
+        self.alu_common(0xd8)
 
 
 
@@ -394,17 +358,7 @@ class Assembler():
 
     def load_common(self, base):
         t = self.tok.next()
-        if self.pass1:
-            if is_literal(t): size = 2
-            elif self.is_pointer(t): size = 3
-            elif self.is_address_reg(t): size = 1
-            else: size = 3
-            return size
-
-        if is_literal(t):
-            self.write8(base + 0x06)
-            self.write8(self.get_literal8(t))
-        elif self.is_pointer(t):
+        if self.is_pointer(t):
             self.write8(base + 0x01)
             self.write16(self.get_pointer(t))
         elif self.is_address_reg(t):
@@ -418,12 +372,6 @@ class Assembler():
 
     def store_common(self, base):
         t = self.tok.next()
-        if self.pass1:
-            if self.is_pointer(t): size = 3
-            elif self.is_address_reg(t): size = 1
-            else: size = 3
-            return size
-
         if self.is_pointer(t):
             self.write8(base + 0x01)
             self.write16(self.get_pointer(t))
@@ -437,21 +385,13 @@ class Assembler():
             self.write16(self.get_literal16(t))
 
     def inst_lda(self):
-        return self.load_common(0x00)
+        self.load_common(0x00)
     def inst_ldz(self):
-        return self.load_common(0x07)
+        self.load_common(0x06)
     def inst_sta(self):
-        return self.store_common(0x10)
+        self.store_common(0x10)
     def inst_stz(self):
-        return self.store_common(0x16)
-
-    def inst_ldt(self):
-        t = self.tok.next()
-        if self.pass1:
-            if is_literal(t): return 2
-            self.error("operand to ldt must be literal")
-        self.write8(0x0e)
-        self.write8(self.get_literal8(t))
+        self.store_common(0x16)
 
 
 
@@ -459,17 +399,6 @@ class Assembler():
 
     def direc_byte(self):
         t = self.tok.next()
-        num = 0
-        
-        if self.pass1:
-            while t is not None:
-                if t.type == 'string':
-                    num += len(t.value)
-                else:
-                    num += 1
-                t = self.tok.next()
-            return num
-
         while t is not None:
             if t.type == 'string':
                 for char in t.value:
@@ -492,9 +421,6 @@ class Assembler():
                 output += self.get_literal8(t)
             t = self.tok.next()
 
-        if self.pass1:
-            return length + 2 #2 bytes to store length
-
         self.write16(length)
         for b in output:
             self.write8(b)
@@ -510,10 +436,11 @@ class Assembler():
         self.pass1 = True
         for i, line in enumerate(lines):
             self.line_num = i+1
+            self.nbytes = 0
             print(f"{self.addr:04x}\t", end='')
-            size = self.asm_line(line)
+            self.asm_line(line)
             print()
-            self.addr += size
+            self.addr += self.nbytes
 
         # pass 2
         print("\n\npass 2:")
@@ -530,9 +457,10 @@ class Assembler():
         return self.output
 
 
-    def define_symbol(self, name, value):
-        if name in self.syms:
-            self.error(f"symbol already defined: {name}")
+    def define_symbol(self, name, value, allow_redefine=False):
+        if not allow_redefine:
+            if name in self.syms:
+                self.error(f"symbol already defined: {name}")
         self.syms[name] = value        
 
     def is_directive(self, direc):
@@ -548,28 +476,28 @@ class Assembler():
         self.tok = Tokeniser(line)
 
         token1 = self.tok.next()
-        if token1 is None: return 0
+        if token1 is None: return
 
         word1 = token1.value
         if self.is_instruction(word1):  # unlabelled instruction
-            return self.run_instruction(word1)
+            self.run_instruction(word1)
+            return
         elif self.is_directive(word1):
-            return self.run_directive(word1)
+            self.run_directive(word1)
+            return
         
         token2 = self.tok.next()
         if token2 is None:
             # token1 is just a label
             if self.pass1:
                 self.define_symbol(word1, self.addr)
-                return 0
             return
         elif token2.value == '=':
             # symbol definition
-            if self.pass1:
-                token3 = self.tok.next()
-                value = self.get_literal(token3)
-                self.define_symbol(word1, value)
-                return 0
+            # redefine on pass2
+            token3 = self.tok.next()
+            value = self.get_literal(token3)
+            self.define_symbol(word1, value, allow_redefine=True)
             return
 
         # we have a labelled instruction or variable
@@ -580,9 +508,11 @@ class Assembler():
             self.define_symbol(word1, self.addr)
 
         if self.is_instruction(word2):
-            return self.run_instruction(word2)
+            self.run_instruction(word2)
+            return
         elif self.is_directive(word2):
-            return self.run_directive(word2)
+            self.run_directive(word2)
+            return
         else:
             self.error(f"invalid instruction: {word2}")
         
