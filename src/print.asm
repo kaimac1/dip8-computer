@@ -4,7 +4,6 @@ UART = $f000
 
             ldc #UART
             ldb #hello
-
 loop        lda b
             mov t, #0
             cmp a, t
@@ -18,7 +17,7 @@ exit
 ;print a length-prefixed string
 
             ldb #mystring
-            ldc b
+            ldc b           ; c = string length (16 bits)
             inc bl
 loop2       inc bl
             ldz b
