@@ -184,9 +184,10 @@ class CPU():
             self.popreg('cl')
 
     def pop(self):
-        nib = lonib(self.ib)
+        idx = lonib(self.ib) - 7
         regs = ['a', 'b', 'c', 'x', 'y', 'z']
-        self.popreg(regs[nib - 1])
+        self.popreg(regs[idx])
+        self.operands = regs[idx]
 
     def dojump(self, do):
         nib = lonib(self.ib) % 3
