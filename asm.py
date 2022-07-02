@@ -17,7 +17,7 @@ class Token():
     def __repr__(self):
         return f"{self.type}({repr(self.value)})"
 
-SYMBOLS = '+'
+SYMBOLS = '+[]'
 
 def is_whitespace(char):
     return char in [' ', '\t', ',']
@@ -186,19 +186,19 @@ class Assembler():
     # Stack
 
     def get_pushpopreg(self, t):
-        return ['a','b','c','x','y','z'].index(t.value)
+        return ['x', 'y', 'b', 'c'].index(t.value)
 
     def inst_push(self):
         t = self.tok.next()
         if is_literal(t):
-            self.write8(0x20)
+            self.write8(0x38)
             self.write16(self.get_literal16(t))
         else:
-            self.write8(0x21 + self.get_pushpopreg(t))
+            self.write8(0x30 + self.get_pushpopreg(t))
 
     def inst_pop(self):
         t = self.tok.next()
-        self.write8(0x27 + self.get_pushpopreg(t))
+        self.write8(0x34 + self.get_pushpopreg(t))
 
 
 
@@ -206,80 +206,78 @@ class Assembler():
 
     def jump_common(self, base):
         t = self.tok.next()
-        if self.is_address_reg(t):
-            self.write8(base + 1 + self.get_address_reg(t))
+        if t.value == 'b':
+            self.write8(base + 1)
         else:
             self.write8(base)
             self.write16(self.get_literal16(t))
 
     def inst_jmp(self):
-        self.jump_common(0x30)
+        self.jump_common(0x14)
     def inst_jcs(self):
-        self.jump_common(0x33)
+        self.jump_common(0x16)
     def inst_jcc(self):
-        self.jump_common(0x36)
-    def inst_jnz(self):
-        self.jump_common(0x39)
+        self.jump_common(0x18)
     def inst_jz(self):
-        self.jump_common(0x3c)
-
+        self.jump_common(0x1a)
+    def inst_jnz(self):
+        self.jump_common(0x1c)
     def inst_ret(self):
-        self.write8(0x3f)
+        self.write8(0x1e)
 
 
 
-    # Address regs
+    # Load / store
 
-    def ldbc_common(self, base):
+    def ldst_common(self, base):
         t = self.tok.next()
-        if is_literal(t):
-            self.write8(base)
-            self.write16(self.get_literal16(t))
-        else:
-            self.write8(base + 1 + self.get_address_reg(t))
+        if t:
+            self.gen_adr(t)
+        self.write8(base)
 
+    def inst_ldx(self):
+        self.ldst_common(0x20)
+    def inst_ldy(self):
+        self.ldst_common(0x22)
     def inst_ldb(self):
-        self.ldbc_common(0x40)
+        self.ldst_common(0x24)
     def inst_ldc(self):
-        self.ldbc_common(0x44)
+        self.ldst_common(0x26)
 
+    def inst_stx(self):
+        self.ldst_common(0x28)
+    def inst_sty(self):
+        self.ldst_common(0x2a)
     def inst_stb(self):
-        t = self.tok.next()
-        if t.value == 'c':
-            self.write8(0x43)
-        else:
-            self.error("stb operand must be c")
-
+        self.ldst_common(0x2c)
     def inst_stc(self):
-        t = self.tok.next()
-        if t.value == 'b':
-            self.write8(0x47)
-        else:
-            self.error("stc operand must be b")
+        self.ldst_common(0x2e)
 
-    def inst_inc(self):
+    def inst_stl(self):
+        # stl #L
+        # stl #L, MEM   -> adr MEM; stl #L
         t = self.tok.next()
-        idx = ['bh', 'bl', 'ch', 'cl'].index(t.value)
-        self.write8(0x48 + idx)
+        t2 = self.tok.next()
+        if t2:
+            self.gen_adr(t2)
+        self.write8(0x1f)
+        self.write8(self.get_literal(t))
 
-    def inst_dec(self):
-        t = self.tok.next()
-        idx = ['bh', 'bl', 'ch', 'cl'].index(t.value)
-        self.write8(0x4c + idx)
-
+    def inst_ldt(self):
+        self.write8(0x6f)
 
 
     # Move
 
     def get_movreg(self, reg):
-        return ['a', 'bh', 'bl', 'ch', 'cl', 'x', 'y', 'z'].index(reg)
+        return ['bh', 'bl', 'ch', 'cl', 'x', 'y'].index(reg)
 
     def movt_literal(self, t):
-        self.write8(0x98)
+        self.write8(0x6a)
         self.write8(self.get_literal8(t))
     def movt_register(self, t):
         offset = self.get_movreg(t.value)
-        self.write8(0x90 + offset)
+        self.write8(0x64 + offset)
 
     def inst_mov(self):
         ta = self.tok.next()
@@ -290,6 +288,31 @@ class Assembler():
         if ta.value == tb.value:
             self.error(f"invalid mov instruction")
 
+        # sp moves
+        if ta.value == 'sp' or tb.value == 'sp':
+            if ta.value == 'sp':
+                b_or_c = ['b', 'c'].index(tb.value)
+                self.write8(0x39 + b_or_c)
+            else:
+                b_or_c = ['b', 'c'].index(ta.value)
+                self.write8(0x3b + b_or_c)
+            return
+
+        # b/c
+        if ta.value in ['b', 'c']:
+            if tb.type == 'literal':
+                b_or_c = ['b', 'c'].index(ta.value)
+                self.write8(0x6d + b_or_c)
+                self.write16(self.get_literal16(tb))
+            else:
+                if ta.value == 'b' and tb.value == 'c':
+                    self.write8(0x6b)
+                elif ta.value == 'c' and tb.value == 'b':
+                    self.write8(0x6c)
+                else:
+                    self.error("Bad.")
+            return
+
         if ta.value == 't':
             if tb.type == 'literal':
                 self.movt_literal(tb)
@@ -299,112 +322,146 @@ class Assembler():
             dest = self.get_movreg(ta.value)
             if tb.type == 'literal':
                 src = self.get_movreg(ta.value)
-                self.write8(0x50 + 0x08*dest + src)
+                self.write8(0x40 + 0x06*dest + src)
                 self.write8(self.get_literal8(tb))
             else:
                 src = self.get_movreg(tb.value)
-                self.write8(0x50 + 0x08*dest + src)
+                self.write8(0x40 + 0x06*dest + src)
+
 
 
     
     # ALU
 
     def get_alureg(self, reg):
-        return ['a', 'bh', 'bl', 'ch', 'cl', 'x', 'y', 'z'].index(reg)
+        return ['x', 'y', 'bh', 'bl', 'ch', 'cl', 'sh', 'sl'].index(reg)
 
-    def alu_common(self, base):
+    def alu_common(self, base, ta, tb):
+        # accept 
+        # alu reg, t
+        # alu reg, m
+        # alu reg, #literal     -> mov t, #literal; alu reg, t
+        # alu reg, reg2         -> mov t, reg2;     alu reg, t
+        # alu reg, [ADDR]       -> adr ADDR;        alu reg, m
+        m = 0
+        if tb.type == 'literal':
+            self.movt_literal(tb)
+        elif tb.type == 'text':
+            if tb.value == 'm':
+                m = 1
+            elif tb.value != 't':
+                self.movt_register(tb)
+        elif tb.type == 'symbol' and tb.value == '[':
+            tc = self.tok.next()
+            self.gen_adr(tc)
+            m = 1
+        else:
+            self.error("Invalid ALU instruction.")
+
+        self.write8(base + 2*self.get_alureg(ta.value) + m)
+
+    def arith_common(self, base):
+        ta = self.tok.next()
+        tb = self.tok.next()
+        if ta is None or tb is None:
+            self.error("ALU instructions require two operands.")
+        self.alu_common(base, ta, tb)
+
+    def logic_common(self, base):
         ta = self.tok.next()
         tb = self.tok.next()
         if ta is None or tb is None:
             self.error("ALU instructions require two operands.")
 
-        # accept 
-        # alu reg, t
-        # alu reg, #literal     -> mov t, #literal; alu reg, t
-        # alu reg, reg2         -> mov t, reg2;     alu reg, t
-        if tb.type == 'literal':
-            self.movt_literal(tb)
-        elif tb.type == 'text':
-            if tb.value != 't':
-                self.movt_register(tb)
-        else:
-            self.error("Invalid ALU instruction.")
-
-        self.write8(base + self.get_alureg(ta.value))
+        if ta.value in ['sh', 'sl']:
+            self.error("Cannot perform logic operations on SP registers.")
+        self.alu_common(base, ta, tb)
 
     def inst_add(self):
-        self.alu_common(0xa0)
+        self.arith_common(0x70)
     def inst_sub(self):
-        self.alu_common(0xa8)
+        self.arith_common(0x80)
     def inst_adc(self):
-        self.alu_common(0xb0)
+        self.arith_common(0x90)
     def inst_sbc(self):
-        self.alu_common(0xb8)
-    def inst_and(self):
-        self.alu_common(0xc0)
-    def inst_or(self):
-        self.alu_common(0xc8)
-    def inst_xor(self):
-        self.alu_common(0xd0)
+        self.arith_common(0xa0)
     def inst_cmp(self):
-        self.alu_common(0xd8)
+        self.arith_common(0xb0)
 
+    def inst_and(self):
+        self.logic_common(0xc0)
+    def inst_or(self):
+        self.logic_common(0xd0)
+    def inst_xor(self):
+        self.logic_common(0xe0)
 
-
-    # Load/store
-
-    def is_pointer(self, t):
-        return t.type == 'text' and t.value[0] == "*"
-    def get_pointer(self, t):
-        name = t.value[1:]
-        if name in self.syms:
-            return self.syms[name] & 0xFFFF
-        else:
-            self.error(f"Undefined symbol: {name}")        
-
-
-    def is_address_reg_plus_t(self):
+    def inst_inc(self):
         t = self.tok.next()
-        if t and t.type == 'symbol' and t.value == '+':
+        regs = ['x', 'y', 'b', 'c']
+        if t.value not in regs:
+            self.error("Invalid operand.")
+        self.write8(0xf0 + regs.index(t.value))
+
+    def inst_dec(self):
+        t = self.tok.next()
+        regs = ['x', 'y', 'b', 'c']
+        if t.value not in regs:
+            self.error("Invalid operand.")
+        self.write8(0xf4 + regs.index(t.value))
+
+
+
+    # Address
+
+    def get_adrarg(self, t):
+        return ['b', 'c', 'sp'].index(t.value)
+
+    def gen_adr(self, t):
+        if t.value in ['b', 'c', 'sp']:
             t2 = self.tok.next()
-            return t2.type == 'text' and t2.value == 't'
-
-    def load_common(self, base):
-        t = self.tok.next()
-        if self.is_pointer(t):
-            self.write8(base + 0x01)
-            self.write16(self.get_pointer(t))
-        elif self.is_address_reg(t):
-            if self.is_address_reg_plus_t():
-                self.write8(base + 0x04 + self.get_address_reg(t))
+            if (not t2) or (t2.value == ']'): # no offset
+                self.write8(0x01 + self.get_adrarg(t))
+            elif t2.type == 'symbol' and t2.value == '+': # offset
+                t3 = self.tok.next()
+                if t3.value == 'x':
+                    self.write8(0x0a + self.get_adrarg(t))
+                elif t3.value == 'y':
+                    self.write8(0x0d + self.get_adrarg(t))
+                elif t3.value == 'b':
+                    if t.value != 'sp':
+                        self.error("Bad addressing mode.")
+                    self.write8(0x10)
+                elif t3.value == 'c':
+                    if t.value == 'sp':
+                        self.write8(0x11)
+                    elif t.value == 'b':
+                        self.write8(0x12)
+                    else:
+                        self.error("Bad addressing mode.")
+                else:
+                    offset = self.get_literal(t3)
+                    if 0 <= offset <= 255:
+                        self.write8(0x04 + self.get_adrarg(t))
+                        self.write8(offset)
+                    elif 0 <= offset <= 65535:
+                        self.write8(0x07 + self.get_adrarg(t))
+                        self.write16(offset)
+                    else:
+                        self.error("Offset out of range.")
             else:
-                self.write8(base+ 0x02 + self.get_address_reg(t))
-        else: # absolute
-            self.write8(base + 0x00)
-            self.write16(self.get_literal16(t))
+                self.error("Bad addressing mode.")
+        else: # immediate
+            addr = self.get_literal(t)
+            self.write8(0x00)
+            self.write16(addr)
 
-    def store_common(self, base):
+    def inst_adr(self):
         t = self.tok.next()
-        if self.is_pointer(t):
-            self.write8(base + 0x01)
-            self.write16(self.get_pointer(t))
-        elif self.is_address_reg(t):
-            if self.is_address_reg_plus_t():
-                self.write8(base + 0x04 + self.get_address_reg(t))
-            else:
-                self.write8(base+ 0x02 + self.get_address_reg(t))
-        else: # absolute
-            self.write8(base + 0x00)
-            self.write16(self.get_literal16(t))
+        self.gen_adr(t)
 
-    def inst_lda(self):
-        self.load_common(0x00)
-    def inst_ldz(self):
-        self.load_common(0x06)
-    def inst_sta(self):
-        self.store_common(0x10)
-    def inst_stz(self):
-        self.store_common(0x16)
+    def inst_adra(self):
+        self.write8(0x13)
+
 
 
 
@@ -415,10 +472,10 @@ class Assembler():
         call_addr = self.get_literal16(t)
         ret_addr = self.addr + 6
         # push ret_addr
-        self.write8(0x20)
+        self.write8(0x38)
         self.write16(ret_addr)
         # jmp call_addr
-        self.write8(0x30)
+        self.write8(0x14)
         self.write16(call_addr)
 
 
@@ -450,7 +507,7 @@ class Assembler():
                 output += self.get_literal8(t)
             t = self.tok.next()
 
-        self.write16(length)
+        self.write8(length)
         for b in output:
             self.write8(b)
 

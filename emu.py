@@ -25,6 +25,8 @@ class Memory():
     def __getitem__(self, addr):
         if addr < Memory.PERIPH:
             return self.mem[addr]
+        else:
+            return 0
 
     def __setitem__(self, addr, value):
         if isinstance(addr, slice):
@@ -44,50 +46,57 @@ class CPU():
         self.mem = Memory()
         self.halted = False
         self.pc = 0
-        self.sp = 0
+        self.a = 0
         self.t = 0
         self.C = 0
         self.Z = 0
         self.N = 0
 
-        self.regnames = ['a', 'bh', 'bl', 'ch', 'cl', 'x', 'y', 'z']
+        self.regnames = ['bh', 'bl', 'ch', 'cl', 'x', 'y', 'sh', 'sl']
         self.regs = dict(zip(self.regnames, [0] * len(self.regnames)))
 
         self.opcodes = {
-            (0x00, 0x05): self.lda,
-            (0x06, 0x0b): self.ldz,
-            (0x10, 0x15): self.sta,
-            (0x16, 0x1b): self.stz,
-            
-            (0x20, 0x26): self.push,
-            (0x27, 0x2c): self.pop,
-            
-            (0x30, 0x32): self.jmp,
-            (0x33, 0x35): self.jcs,
-            (0x36, 0x38): self.jcc,
-            (0x39, 0x3b): self.jnz,
-            (0x3c, 0x3e): self.jz,
-            (0x3f, 0x3f): self.ret,
-            
-            (0x40, 0x42): self.ldb,
-            (0x43, 0x43): self.stb,
-            (0x44, 0x46): self.ldc,
-            (0x47, 0x47): self.stc,
-            (0x48, 0x4b): self.inc,
-            (0x4c, 0x4f): self.dec,
-            
-            (0x50, 0x8f): self.mov,
-            (0x90, 0x98): self.movt,
-            
-            (0xa0, 0xa7): self.add,
-            (0xa8, 0xaf): self.sub,
-            (0xb0, 0xb7): self.adc,
-            (0xb8, 0xbf): self.sbc,
-            (0xc0, 0xc7): self.opand,
-            (0xc8, 0xcf): self.opor,
-            (0xd0, 0xd7): self.xor,
-            (0xd8, 0xdf): self.cmp,
+            (0x00, 0x12): self.adr,
+            (0x13, 0x13): self.adra,
 
+            (0x14, 0x15): self.jmp,
+            (0x16, 0x17): self.jcs,
+            (0x18, 0x19): self.jcc,
+            (0x1a, 0x1b): self.jz,
+            (0x1c, 0x1d): self.jnz,
+            (0x1e, 0x1e): self.ret,
+
+            (0x1f, 0x1f): self.stl,
+            (0x20, 0x21): self.ldx,
+            (0x22, 0x23): self.ldy,
+            (0x24, 0x25): self.ldb,
+            (0x26, 0x27): self.ldc,
+            (0x28, 0x29): self.stx,
+            (0x2a, 0x2b): self.sty,
+            (0x2c, 0x2d): self.stb,
+            (0x2e, 0x2f): self.stc,
+
+            (0x30, 0x33): self.push,
+            (0x34, 0x37): self.pop,
+            (0x38, 0x38): self.pushl,
+            (0x39, 0x3c): self.movstack,
+            
+            (0x40, 0x63): self.mov,
+            (0x64, 0x6a): self.movt,
+            (0x6b, 0x6e): self.movbc,
+            (0x6f, 0x6f): self.ldt,
+            
+            (0x70, 0x7f): self.add,
+            (0x80, 0x8f): self.sub,
+            (0x90, 0x9f): self.adc,
+            (0xa0, 0xaf): self.sbc,
+            (0xb0, 0xbf): self.cmp,
+            # (0xc0, 0xcf): self.opand,
+            # (0xd0, 0xdf): self.opor,
+            # (0xe0, 0xef): self.xor,
+            (0xf0, 0xf3): self.inc,
+            (0xf4, 0xf7): self.dec,
+            
             (0xff, 0xff): self.halt,
         }
 
@@ -99,57 +108,105 @@ class CPU():
         return self.regs['bh'] << 8 | self.regs['bl']
     def c16(self):
         return self.regs['ch'] << 8 | self.regs['cl']
-        
-    def common_ldaz(self, dest):
-        nib = lonib(self.ib) % 6
-        if nib == 0:
-            lo = self.next()
-            hi = self.next()
-            addr = lo | (hi << 8)
-            self.regs[dest] = self.mem[addr]
-            self.operands = addr
-        elif nib == 2:
-            self.regs[dest] = self.mem[self.b16()]
-            self.operands = 'b'
-        elif nib == 3:
-            self.regs[dest] = self.mem[self.c16()]
-            self.operands = 'c'
-        elif nib == 4:
-            self.regs[dest] = self.mem[self.b16() + self.t]
-            self.operands = 'b+t'
-        elif nib == 5:
-            self.regs[dest] = self.mem[self.c16() + self.t]
-            self.operands = 'c+t'
+    def sp16(self):
+        return self.regs['sh'] << 8 | self.regs['sl']
 
-    def common_staz(self, src):
-        nib = lonib(self.ib) % 6
-        if nib == 0:
-            lo = self.next()
-            hi = self.next()
-            addr = lo | (hi << 8)
-            self.mem[addr] = self.regs[src]
-        elif nib == 2:
-            self.mem[self.b16()] = self.regs[src]
-        elif nib == 3:
-            self.mem[self.c16()] = self.regs[src]
-        elif nib == 4:
-            self.mem[self.b16() + self.t] = self.regs[src]
-        elif nib == 5:
-            self.mem[self.c16() + self.t] = self.regs[src]
+    def getreg(self, reg):
+        if reg == 'b':
+            return self.b16()
+        elif reg == 'c':
+            return self.c16()
+        elif reg == 'sp':
+            return self.sp16()
+        else:
+            return self.regs[reg]
 
-    def lda(self):
-        self.common_ldaz('a')
-    def ldz(self):
-        self.common_ldaz('z')
-    def sta(self):
-        self.common_staz('a')
-    def stz(self):
-        self.common_staz('z')
+    def adr(self):
+        r = ['b', 'c', 'sp']
+        mode = self.ib - 0x00
+        if mode == 0:
+            al = self.next()
+            ah = self.next()
+            self.a = ah<<8 | al
+            self.operands = f"${self.a:04x}"
+
+        elif mode < 4:
+            self.a = self.getreg(r[mode-1])
+        elif mode < 7:
+            offset = self.next()
+            self.a = self.getreg(r[mode-4])
+        elif mode < 10:
+            ol = self.next()
+            oh = self.next()
+            offset = oh<<8 | ol
+            self.a = self.getreg(r[mode-7]) + offset
+        elif mode < 0xd:
+            self.a = self.getreg(r[mode-0xa]) + self.regs['x']
+        elif mode < 0x10:
+            self.a = self.getreg(r[mode-0xd]) + self.regs['y']
+        elif mode == 0x10:
+            self.a = self.sp16() + self.b16()
+        elif mode == 0x11:
+            self.a = self.sp16() + self.c16()
+        elif mode == 0x12:
+            self.a = self.b16() + self.c16()
+
+    def adra(self):
+        lo = self.mem[self.a]
+        hi = self.mem[self.a+1]
+        self.a = hi<<8 | lo
+
+    def stl(self):
+        value = self.next()
+        self.mem[self.a] = value
+        self.operands = f"${value:02x}"
+
+    def ldx(self):
+        self.regs['x'] = self.mem[self.a]
+    def ldy(self):
+        self.regs['y'] = self.mem[self.a]
+    def ldb(self):
+        self.regs['bl'] = self.mem[self.a]
+        self.a += 1
+        self.regs['bh'] = self.mem[self.a]
+    def ldc(self):
+        self.regs['cl'] = self.mem[self.a]
+        self.a += 1
+        self.regs['ch'] = self.mem[self.a]
+
+    def stx(self):
+        self.mem[self.a] = self.regs['x']
+    def sty(self):
+        self.mem[self.a] = self.regs['y']
+    def stb(self):
+        self.mem[self.a] = self.regs['bl']
+        self.a += 1
+        self.mem[self.a] = self.regs['bh']
+    def stc(self):
+        self.mem[self.a] = self.regs['cl']
+        self.a += 1
+        self.mem[self.a] = self.regs['ch']
+
+
+    def stack_pop(self):
+        self.incsp()
+        return self.mem[self.sp16()]
+    def stack_push(self, v):
+        self.mem[self.sp16()] = v
+        self.decsp()
+
+    def incsp(self):
+        self.regs['sl'] = (self.regs['sl'] + 1) % 256
+        if self.regs['sl'] == 0:
+            self.regs['sh'] = (self.regs['sh'] + 1) % 256
+    def decsp(self):
+        self.regs['sl'] = (self.regs['sl'] - 1) % 256
+        if self.regs['sl'] == 255:
+            self.regs['sh'] = (self.regs['sh'] - 1) % 256
 
     def pushreg(self, reg):
-        if reg in ['a', 'x', 'y', 'z', 'bh', 'bl', 'ch', 'cl']:
-            self.mem[self.sp] = self.regs[reg]
-            self.sp = wrap16(self.sp + 1)
+        if reg in ['x', 'y', 'bh', 'bl', 'ch', 'cl']:
+            self.stack_push(self.regs[reg])
         elif reg == 'b':
             self.pushreg('bl')
             self.pushreg('bh')
@@ -157,25 +214,9 @@ class CPU():
             self.pushreg('cl')
             self.pushreg('ch')
 
-    def push(self):
-        nib = lonib(self.ib)
-        if nib == 0:
-            lo = self.next()
-            hi = self.next()
-            self.mem[self.sp] = lo
-            self.sp = wrap16(self.sp + 1)
-            self.mem[self.sp] = hi
-            self.sp = wrap16(self.sp + 1)
-            self.operands = f"${hi<<8|lo:04x}"
-        else:
-            regs = ['a', 'b', 'c', 'x', 'y', 'z']
-            self.pushreg(regs[nib - 1])
-            self.operands = regs[nib-1]
-
     def popreg(self, reg):
-        if reg in ['a', 'x', 'y', 'z', 'bh', 'bl', 'ch', 'cl']:
-            self.sp = wrap16(self.sp - 1)
-            self.regs[reg] = self.mem[self.sp]
+        if reg in ['x', 'y', 'bh', 'bl', 'ch', 'cl']:
+            self.regs[reg] = self.stack_pop()
         elif reg == 'b':
             self.popreg('bh')
             self.popreg('bl')
@@ -183,14 +224,48 @@ class CPU():
             self.popreg('ch')
             self.popreg('cl')
 
+
+    def push(self):
+        nib = lonib(self.ib)
+        regs = ['x', 'y', 'b', 'c']
+        self.pushreg(regs[nib])
+        self.operands = regs[nib]
+
+    def pushl(self):
+        lo = self.next()
+        hi = self.next()
+        self.stack_push(lo)
+        self.stack_push(hi)
+        self.operands = f"${hi<<8|lo:04x}"
+
     def pop(self):
-        idx = lonib(self.ib) - 7
-        regs = ['a', 'b', 'c', 'x', 'y', 'z']
+        idx = lonib(self.ib) - 4
+        regs = ['x', 'y', 'b', 'c']
         self.popreg(regs[idx])
         self.operands = regs[idx]
 
+    def movstack(self):
+        self.name = 'mov'
+        if self.ib == 0x39:
+            self.regs['sh'] = self.regs['bh']
+            self.regs['sl'] = self.regs['bl']
+            self.operands = 'sp, b'
+        elif self.ib == 0x3a:
+            self.regs['sh'] = self.regs['ch']
+            self.regs['sl'] = self.regs['cl']
+            self.operands = 'sp, c'
+        elif self.ib == 0x3b:
+            self.regs['bh'] = self.regs['sh']
+            self.regs['bl'] = self.regs['sl']
+            self.operands = 'b, sp'
+        elif self.ib == 0x3c:
+            self.regs['ch'] = self.regs['sh']
+            self.regs['cl'] = self.regs['sl']
+            self.operands = 'c, sp'
+
+
     def dojump(self, do):
-        nib = lonib(self.ib) % 3
+        nib = lonib(self.ib) % 2
         if nib == 0:
             lo = self.next()
             hi = self.next()
@@ -202,10 +277,6 @@ class CPU():
             if do:
                 self.pc = self.b16()
                 self.operands = 'b'
-        elif nib == 2:
-            if do:
-                self.pc = self.c16()
-                self.operands = 'c'
 
     def jmp(self):
         self.dojump(True)
@@ -223,75 +294,18 @@ class CPU():
         self.dojump(self.Z)
 
     def ret(self):
-        self.sp = wrap16(self.sp - 1)
-        hi = self.mem[self.sp]
-        self.sp = wrap16(self.sp - 1)
-        lo = self.mem[self.sp]
+        hi = self.stack_pop()
+        lo = self.stack_pop()
         addr = lo | (hi << 8)
         self.pc = addr
-
-    def common_ldbc(self, dest):
-        nib = lonib(self.ib) % 4
-        if nib == 0:
-            lo = self.next()
-            hi = self.next()
-            self.regs[dest + 'l'] = lo
-            self.regs[dest + 'h'] = hi
-        elif nib == 1:
-            addr = self.b16()
-            self.regs[dest + 'l'] = self.mem[addr]
-            self.regs[dest + 'h'] = self.mem[addr + 1]
-        elif nib == 2:
-            addr = self.c16()
-            self.regs[dest + 'l'] = self.mem[addr]
-            self.regs[dest + 'h'] = self.mem[addr + 1]
-
-    def ldb(self):
-        self.common_ldbc('b')
-    def ldc(self):
-        self.common_ldbc('c')
-
-    def stb(self): #stb c
-        addr = self.c16()
-        self.mem[addr] = self.regs['bl']
-        self.mem[addr+1] = self.regs['bh']
-
-    def stc(self): # stc b
-        addr = self.b16()
-        self.mem[addr] = self.regs['cl']
-        self.mem[addr+1] = self.regs['ch']
-
-
-    def increg(self, reg):
-        self.regs[reg] = (self.regs[reg] + 1) % 256
-    def decreg(self, reg):
-        self.regs[reg] = (self.regs[reg] - 1) % 256
-
-    def inc(self):
-        idx = lonib(self.ib) - 8
-        regs = ['bh', 'bl', 'ch', 'cl']
-        reg = regs[idx]
-        self.increg(reg)
-        if self.regs[reg] == 0: # overflow
-            if reg == 'bl': self.increg('bh')
-            elif reg == 'cl': self.increg('ch')
-
-    def dec(self):
-        idx = lonib(self.ib) - 0xc
-        regs = ['bh', 'bl', 'ch', 'cl']
-        reg = regs[idx]
-        self.decreg(reg)
-        if self.regs[reg] == 255: # underflow
-            if reg == 'bl': self.decreg('bh')
-            elif reg == 'cl': self.decreg('ch')
 
 
     # mov
 
     def mov(self):
-        regs = ['a', 'bh', 'bl', 'ch', 'cl', 'x', 'y', 'z']
-        dest = (self.ib - 0x50) // 8
-        src = lonib(self.ib) % 8
+        regs = ['bh', 'bl', 'ch', 'cl', 'x', 'y']
+        dest = (self.ib - 0x40) // 6
+        src  = (self.ib - 0x40) %  6
         if src == dest: # load literal
             literal = self.next()
             self.regs[regs[dest]] = literal
@@ -302,9 +316,9 @@ class CPU():
 
     def movt(self):
         self.name = 'mov'
-        regs = ['a', 'bh', 'bl', 'ch', 'cl', 'x', 'y', 'z']
-        idx = lonib(self.ib)
-        if idx == 8: # load literal
+        regs = ['bh', 'bl', 'ch', 'cl', 'x', 'y']
+        idx = lonib(self.ib) - 4
+        if idx == 6: # load literal
             literal = self.next()
             self.t = literal
             self.operands = f"t, {literal}"
@@ -313,14 +327,41 @@ class CPU():
             self.t = self.regs[src]
             self.operands = f"t, {src}"
 
+    def movbc(self):
+        self.name = 'mov'
+        if self.ib == 0x6b:
+            self.regs['bh'] = self.regs['ch']
+            self.regs['bl'] = self.regs['cl']
+            self.operands = "b, c"
+        elif self.ib == 0x6c:
+            self.regs['ch'] = self.regs['bh']
+            self.regs['cl'] = self.regs['bl']
+            self.operands = "c, b"
+        elif self.ib == 0x6d:
+            self.regs['bl'] = self.next()
+            self.regs['bh'] = self.next()
+            self.operands = f"b, ${self.b16():04x}"
+        elif self.ib == 0x6e:
+            self.regs['cl'] = self.next()
+            self.regs['ch'] = self.next()
+            self.operands = f"c, ${self.c16():04x}"
+
+    def ldt(self):
+        self.t = self.mem[self.a]
 
     # alu
 
-    def aluarg(self):
-        regs = ['a', 'bh', 'bl', 'ch', 'cl', 'x', 'y', 'z']
-        reg = regs[lonib(self.ib) % 8]
-        self.operands = f"{reg}, t"
-        return reg
+    def aluargs(self):
+        regs = ['x', 'y', 'bh', 'bl', 'ch', 'cl', 'sh', 'sl']
+        reg = regs[lonib(self.ib // 2) % 8]
+        if self.ib % 2 == 0:
+            v2 = self.t
+            self.operands = f"{reg}, t"
+        else:
+            v2 = self.mem[self.a]
+            self.operands = f"{reg}, m"
+        return reg, v2
+
 
     def flags(self, reg):
         val = self.regs[reg]
@@ -328,31 +369,37 @@ class CPU():
         self.N = bool(val & 0x80)
 
     def add(self):
-        reg = self.aluarg()
-        q = self.regs[reg] + self.t
+        reg, v2 = self.aluargs()
+        q = self.regs[reg] + v2
         self.C = (q > 255)
         self.regs[reg] = q % 256
         self.flags(reg)
 
     def sub(self):
-        reg = self.aluarg()
-        q = self.regs[reg] + ~self.t + 1
-        self.C = (self.regs[reg] >= self.t)
+        reg, v2 = self.aluargs()
+        q = self.regs[reg] + ~v2 + 1
+        self.C = (self.regs[reg] >= v2)
         self.regs[reg] = q % 256
         self.flags(reg)
 
     def adc(self):
-        reg = self.aluarg()
-        q = self.regs[reg] + self.t + int(self.C)
+        reg, v2 = self.aluargs()
+        q = self.regs[reg] + v2 + int(self.C)
         self.C = (q > 255)
         self.regs[reg] = q % 256
         self.flags(reg)
 
     def sbc(self):
-        reg = self.aluarg()
-        q = self.regs[reg] + ~self.t + int(self.C)
-        self.C = (self.regs[reg] >= self.t)
+        reg, v2 = self.aluargs()
+        q = self.regs[reg] + ~v2 + int(self.C)
+        self.C = (self.regs[reg] >= v2)
         self.regs[reg] = q % 256
+        self.flags(reg)
+
+    def cmp(self): # subtract without storing result
+        reg, v2 = self.aluargs()
+        q = self.regs[reg] + ~v2 + 1
+        self.C = (self.regs[reg] >= v2)
         self.flags(reg)
 
     def opand(self):
@@ -372,12 +419,25 @@ class CPU():
         self.regs[reg] = self.regs[reg] ^ self.t
         self.flags(reg)
 
-    def cmp(self): # subtract without storing result
-        reg = self.aluarg()
-        q = self.regs[reg] + ~self.t + 1
-        self.C = (self.regs[reg] >= self.t)
+    def inc(self):
+        r = ['x', 'y', 'bl', 'cl']
+        idx = self.ib % 4
+        reg = r[idx]
+        self.regs[reg] = (self.regs[reg] + 1) % 256
         self.flags(reg)
+        if idx == 2 and self.regs['bl'] == 0: self.regs['bh'] = (self.regs['bh'] + 1) % 256
+        if idx == 3 and self.regs['cl'] == 0: self.regs['ch'] = (self.regs['ch'] + 1) % 256
+        self.operands = reg
 
+    def dec(self):
+        r = ['x', 'y', 'bl', 'cl']
+        idx = self.ib % 4
+        reg = r[idx]
+        self.regs[reg] = (self.regs[reg] - 1) % 256
+        self.flags(reg)
+        if idx == 2 and self.regs['bl'] == 255: self.regs['bh'] = (self.regs['bh'] - 1) % 256
+        if idx == 3 and self.regs['cl'] == 255: self.regs['ch'] = (self.regs['ch'] - 1) % 256
+        self.operands = reg
 
 
 
@@ -398,11 +458,12 @@ class CPU():
             print('{0:3s} 0x{1:02x}  {1}'.format(reg, val))
         print('----------')
         print(f"flags  {'C' if self.C else '.'}{'Z' if self.Z else '.'}{'N' if self.N else '.'}")
+        print('    a  0x{0:04x}  {0}'.format(self.a))
         print('    t  0x{0:02x}    {0}'.format(self.t))
         print('    b  0x{0:04x}  {0}'.format(self.regs['bh']<<8 | self.regs['bl']))
         print('    c  0x{0:04x}  {0}'.format(self.regs['ch']<<8 | self.regs['cl']))
         print('   pc  0x{0:04x}  {0}'.format(self.pc))
-        print('   sp  0x{0:04x}  {0}'.format(self.sp))
+        print('   sp  0x{0:04x}  {0}'.format(self.sp16()))
         
 
     def next(self):
@@ -419,16 +480,22 @@ class CPU():
             ipc = self.pc
             self.ib = self.next()
 
+            execd = False
             for oprange in self.opcodes:
                 opcode = self.opcodes[oprange]
 
                 if oprange[0] <= self.ib <= oprange[1]:
                     self.name = opcode.__name__
                     opcode()
+                    execd = True
                     if self.verbose:
                         self.this_instruction_bytes = ' '.join([f"{x:02x}" for x in self.this_instruction_bytes])
                         print(f'{ipc:04x}  {self.this_instruction_bytes:9s} {self.name} {self.operands}')
                     break
+
+            if not execd:
+                print(f"Invalid opcode {self.ib:02x}, halted.")
+                return
 
     
 
@@ -450,10 +517,12 @@ if __name__ == "__main__":
     cpu.verbose = args.verbose
     cpu.mem[0:len(data)] = data
 
-    cpu.dumpmem(0,32)
+    if cpu.verbose:
+        cpu.dumpmem(0,32)
     cpu.run()
 
     if args.dump_registers:
         cpu.dumpregs()
 
-    cpu.dumpmem(0,32)
+    if cpu.verbose:
+        cpu.dumpmem(0,32)
