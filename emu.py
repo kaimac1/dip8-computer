@@ -91,9 +91,9 @@ class CPU():
             (0x90, 0x9f): self.adc,
             (0xa0, 0xaf): self.sbc,
             (0xb0, 0xbf): self.cmp,
-            # (0xc0, 0xcf): self.opand,
-            # (0xd0, 0xdf): self.opor,
-            # (0xe0, 0xef): self.xor,
+            (0xc0, 0xcb): self.opand,
+            (0xd0, 0xdb): self.opor,
+            (0xe0, 0xeb): self.xor,
             (0xf0, 0xf3): self.inc,
             (0xf4, 0xf7): self.dec,
             
@@ -404,19 +404,19 @@ class CPU():
 
     def opand(self):
         self.name = 'and'
-        reg = self.aluarg()
-        self.regs[reg] = self.regs[reg] & self.t
+        reg, v2 = self.aluargs()
+        self.regs[reg] = self.regs[reg] & v2
         self.flags(reg)
 
     def opor(self):
         self.name = 'or'
-        reg = self.aluarg()
-        self.regs[reg] = self.regs[reg] | self.t
+        reg, v2 = self.aluargs()
+        self.regs[reg] = self.regs[reg] | v2
         self.flags(reg)
 
     def xor(self):
-        reg = self.aluarg()
-        self.regs[reg] = self.regs[reg] ^ self.t
+        reg, v2 = self.aluargs()
+        self.regs[reg] = self.regs[reg] ^ v2
         self.flags(reg)
 
     def inc(self):
