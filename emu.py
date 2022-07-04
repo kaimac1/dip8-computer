@@ -363,8 +363,7 @@ class CPU():
         return reg, v2
 
 
-    def flags(self, reg):
-        val = self.regs[reg]
+    def flags(self, val):
         self.Z = (val == 0)
         self.N = bool(val & 0x80)
 
@@ -373,58 +372,58 @@ class CPU():
         q = self.regs[reg] + v2
         self.C = (q > 255)
         self.regs[reg] = q % 256
-        self.flags(reg)
+        self.flags(self.regs[reg])
 
     def sub(self):
         reg, v2 = self.aluargs()
         q = self.regs[reg] + ~v2 + 1
         self.C = (self.regs[reg] >= v2)
         self.regs[reg] = q % 256
-        self.flags(reg)
+        self.flags(self.regs[reg])
 
     def adc(self):
         reg, v2 = self.aluargs()
         q = self.regs[reg] + v2 + int(self.C)
         self.C = (q > 255)
         self.regs[reg] = q % 256
-        self.flags(reg)
+        self.flags(self.regs[reg])
 
     def sbc(self):
         reg, v2 = self.aluargs()
         q = self.regs[reg] + ~v2 + int(self.C)
         self.C = (self.regs[reg] >= v2)
         self.regs[reg] = q % 256
-        self.flags(reg)
+        self.flags(self.regs[reg])
 
     def cmp(self): # subtract without storing result
         reg, v2 = self.aluargs()
         q = self.regs[reg] + ~v2 + 1
         self.C = (self.regs[reg] >= v2)
-        self.flags(reg)
+        self.flags(q)
 
     def opand(self):
         self.name = 'and'
         reg, v2 = self.aluargs()
         self.regs[reg] = self.regs[reg] & v2
-        self.flags(reg)
+        self.flags(self.regs[reg])
 
     def opor(self):
         self.name = 'or'
         reg, v2 = self.aluargs()
         self.regs[reg] = self.regs[reg] | v2
-        self.flags(reg)
+        self.flags(self.regs[reg])
 
     def xor(self):
         reg, v2 = self.aluargs()
         self.regs[reg] = self.regs[reg] ^ v2
-        self.flags(reg)
+        self.flags(self.regs[reg])
 
     def inc(self):
         r = ['x', 'y', 'bl', 'cl']
         idx = self.ib % 4
         reg = r[idx]
         self.regs[reg] = (self.regs[reg] + 1) % 256
-        self.flags(reg)
+        self.flags(self.regs[reg])
         if idx == 2 and self.regs['bl'] == 0: self.regs['bh'] = (self.regs['bh'] + 1) % 256
         if idx == 3 and self.regs['cl'] == 0: self.regs['ch'] = (self.regs['ch'] + 1) % 256
         self.operands = reg
@@ -434,7 +433,7 @@ class CPU():
         idx = self.ib % 4
         reg = r[idx]
         self.regs[reg] = (self.regs[reg] - 1) % 256
-        self.flags(reg)
+        self.flags(self.regs[reg])
         if idx == 2 and self.regs['bl'] == 255: self.regs['bh'] = (self.regs['bh'] - 1) % 256
         if idx == 3 and self.regs['cl'] == 255: self.regs['ch'] = (self.regs['ch'] - 1) % 256
         self.operands = reg

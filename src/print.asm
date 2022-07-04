@@ -45,9 +45,12 @@ psloop      inc b
 
 
 ;print an 8-bit hexadecimal value
-; x: number to print
+; x   number to print
+; y   clobbered
+; bc  saved
 
-printxh     mov b, #hexdigits
+printxh     push b
+            mov b, #hexdigits
             mov y, #0
 xhloop      cmp x, #16      ; while x >= 16
             jcc xhout
@@ -58,6 +61,7 @@ xhout       ldy b+y         ; y = hi nib
             sty UART
             ldy b+x         ; x = low nib
             sty UART
+            pop b
             ret
 
 hexdigits   .byte "0123456789abcdef"

@@ -611,7 +611,7 @@ class Assembler():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="DIP8 assembler")
     parser.add_argument('srcfile')
-    parser.add_argument('outfile')
+    parser.add_argument('outfile', nargs='?', default='out.bin')
     args = parser.parse_args()
 
     with open(args.srcfile, 'r') as f:

@@ -1,16 +1,16 @@
-; multiply two 8-bit values together and print the 16-bit result
-
+; multiply two 8-bit values together and print the 16-bit result in decimal
 
             ; set up stack pointer
             mov b, #$1000
             mov sp, b
 
+
             ldx var1
-            call printxh
+            call printdx
             mov b, #string1
             call prints
             ldx var2
-            call printxh
+            call printdx
             mov b, #string2
             call prints
 
@@ -18,17 +18,14 @@
             ldy var2
             call mulxy      ; multiply
 
-            mov x, bh
-            call printxh
-            mov x, bl
-            call printxh
+            call printdb
 
             .byte $ff
-string1     .string " multiplied by "
-string2     .string " is "
+string1     .string " x "
+string2     .string " = "
 
-var1        .byte 123
-var2        .byte 234
+var1        .byte 70
+var2        .byte 69
 
 
 
@@ -65,27 +62,53 @@ mnoadd      add cl, cl      ; c *= 2
 
 UART = $f000
 
-;print an 8-bit hexadecimal value
-; x   number to print
-; y   clobbered
-; bc  saved
+nonzero     .byte 0
 
-printxh     push b
-            mov b, #hexdigits
-            mov y, #0
-xhloop      cmp x, #16      ; while x >= 16
-            jcc xhout
-            sub x, #16
+dodigit     mov y, #0
+calcloop    cmp bh, ch
+            jnz calc2
+            cmp bl, cl
+calc2       jcc calcout
+            sub bl, cl
+            sbc bh, ch
             inc y
-            jmp xhloop
-xhout       ldy b+y         ; y = hi nib
+            jmp calcloop
+calcout     cmp y, #0
+            jz  checknz         ; if y == 0: checknz
+            stl #1, nonzero     ; if y != 0: nonzero=1
+            jmp calcwrite
+checknz     mov c, #0
+            cmp cl, [nonzero]
+            jz  calcret
+calcwrite   add y, '0'          ; create ascii code
             sty UART
-            ldy b+x         ; x = low nib
-            sty UART
-            pop b
+calcret     ret
+
+;print an 8-bit value as decimal
+; x   number to print
+
+printdx     stl #0, nonzero
+            mov b, #0
+            add bl, x
+            jmp print8bit
+
+;print an 16-bit value as decimal
+; b   number to print
+
+printdb     stl #0, nonzero
+            mov c, #10000
+            call dodigit
+            mov c, #1000
+            call dodigit
+print8bit   mov c, #100
+            call dodigit
+            mov c, #10
+            call dodigit
+            mov c, #1
+            call dodigit
             ret
 
-hexdigits   .byte "0123456789abcdef"
+
 
 
 
