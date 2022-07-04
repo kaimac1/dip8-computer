@@ -4,7 +4,6 @@
             mov b, #$1000
             mov sp, b
 
-
             ldx var1
             call printdx
             mov b, #string1
@@ -26,8 +25,6 @@ string2     .string " = "
 
 var1        .byte 70
 var2        .byte 69
-
-
 
 
 
@@ -58,11 +55,7 @@ mnoadd      add cl, cl      ; c *= 2
 
 
 
-
-
 UART = $f000
-
-nonzero     .byte 0
 
 dodigit     mov y, #0
 calcloop    cmp bh, ch
@@ -74,12 +67,10 @@ calc2       jcc calcout
             inc y
             jmp calcloop
 calcout     cmp y, #0
-            jz  checknz         ; if y == 0: checknz
-            stl #1, nonzero     ; if y != 0: nonzero=1
-            jmp calcwrite
-checknz     mov c, #0
-            cmp cl, [nonzero]
+            jnz skipcheck
+            cmp x, #0
             jz  calcret
+skipcheck   mov x, #1
 calcwrite   add y, '0'          ; create ascii code
             sty UART
 calcret     ret
@@ -87,15 +78,15 @@ calcret     ret
 ;print an 8-bit value as decimal
 ; x   number to print
 
-printdx     stl #0, nonzero
-            mov b, #0
-            add bl, x
+printdx     mov bh, #0
+            mov bl, x
+            mov x, #0
             jmp print8bit
 
 ;print an 16-bit value as decimal
 ; b   number to print
 
-printdb     stl #0, nonzero
+printdb     mov x, #0
             mov c, #10000
             call dodigit
             mov c, #1000
