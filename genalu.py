@@ -25,13 +25,13 @@ def opadc(a, b, c):
 # subtract
 def opsub(a, b, c):
     r = a + ~b + 1
-    cout = a >= b
+    cout = (r >= 0)
     q = r % 16
     return (q, {C:cout, K:1})
 
 def opsbc(a, b, c):
     r = a + ~b + c
-    cout = (a >= b)    
+    cout = (r >= 0)
     q = r % 16
     return (q, {C:cout, K:1})
 
@@ -70,16 +70,16 @@ def opdec(a, b, c):
     q = r % 16
     return (q, {C: cout, K:1})
 
-# increment if carry
+# increment if carry set
 def opci(a, b, c):
     r = a + c
     q = r % 16
     return (q, {C: r>15, K:1})
 
-# decrement if carry
+# decrement if carry clear
 def opcd(a, b, c):
-    r = a - c
-    cout = a >= c
+    r = a + ~0 + c
+    cout = r >= 0
     q = r % 16
     return (q, {C: cout, K:1})
 

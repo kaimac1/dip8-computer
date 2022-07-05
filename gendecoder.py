@@ -4,7 +4,7 @@ import binascii
 from decoder_spec import *
 
 #flags = ['C', 'N', 'Z']
-cyclebits = 3
+cyclebits = 4
 inbits = 16
 HALT = 0xFF
 
