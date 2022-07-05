@@ -2,7 +2,7 @@
 # The register and ALU selection signals (selx, opadd, etc) get multiplexed into
 # 3-bit register and ALU selection words
 
-raw_signals = 'next aout pcinc pcwr irwr memrd memwr alwr ahwr ainc regoe regwr twr alu aluint'
+raw_signals = 'next aout pcinc pcwr irwr memrd memwr alwr ahwr ainc regoe regwr twr alu setflags'
 
 regsel = ['selbh', 'selbl', 'selch', 'selcl', 'selx', 'sely', 'selsh', 'selsl']
 alusel = ['opa', 'opb', 'opadd', 'opsub', 'opadc', 'opsbc', 'opand', 'opor', 'opxor', 'opci', 'opinc', 'opdec', 'opcd']
@@ -36,7 +36,7 @@ output_signals = [
 '!ainc',
 '!alu',
 'twr',
-'!aluint'
+'!setflags'
 ]
 
 t0 = ['pcinc', 'memrd', 'irwr']
@@ -69,27 +69,27 @@ inst[0x03] = '''adr sp
 
 inst[0x04] = '''adr b + #L
     pcinc   memrd   twr
-    regoe   selbl   alu     aluint  opadd   alwr
-    regoe   selbh   alu     aluint  opci    ahwr'''
+    regoe   selbl   alu     opadd   alwr
+    regoe   selbh   alu     opci    ahwr'''
 inst[0x05] = '''adr c + #L
     pcinc   memrd   twr
-    regoe   selcl   alu     aluint  opadd   alwr
-    regoe   selch   alu     aluint  opci    ahwr'''
+    regoe   selcl   alu     opadd   alwr
+    regoe   selch   alu     opci    ahwr'''
 inst[0x06] = '''adr sp + #L
     pcinc   memrd   twr
-    regoe   selsl   alu     aluint  opadd   alwr
-    regoe   selsh   alu     aluint  opci    ahwr'''
+    regoe   selsl   alu     opadd   alwr
+    regoe   selsh   alu     opci    ahwr'''
 
 inst[0x07] = '''adr b + #LL
     pcinc   memrd   twr
-    regoe   selbl   alu     aluint  opadd   alwr
+    regoe   selbl   alu     opadd   alwr
     pcinc   memrd   twr
-    regoe   selbh   alu     aluint  opadc   ahwr'''
+    regoe   selbh   alu     opadc   ahwr'''
 inst[0x08] = '''adr c + #LL
     pcinc   memrd   twr
     regoe   selcl   alu     opadd   alwr
     pcinc   memrd   twr
-    regoe   selch   alu     opadc    ahwr'''
+    regoe   selch   alu     opadc   ahwr'''
 inst[0x09] = '''adr sp + #LL
     pcinc   memrd   twr
     regoe   selsl   alu     opadd   alwr
@@ -315,4 +315,4 @@ inst[0x6a] = '''mov t, #L       \n      pcinc   memrd   twr'''
 
 # arithmetic
 
-inst[0x70] = '''add x, t        \n      regoe   regwr   selx    alu     opadd'''
+inst[0x70] = '''add x, t        \n      regoe   regwr   selx    alu     opadd   setflags'''

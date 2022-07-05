@@ -104,8 +104,8 @@ opcd        #12
 
 print(f"{len(ops)} operators defined")
 
-def create_address(a, b, opsel, user, cu, ci):
-    return (a << 0) | (b << 4) | (user << 8) | (opsel << 9) | (ci << 13) | (cu << 14)
+def create_address(a, b, opsel, user, cu, ci, highsel):
+    return (a << 0) | (b << 4) | (user << 8) | (opsel << 9) | (ci << 13) | (cu << 14) | (highsel << 15)
 
 def create_data(q, cout, clken):
     z = q == 0
@@ -122,23 +122,29 @@ def create_logisim_file(filename, rom):
 def main():
     rom = [0] * 2**inbits
 
-    for user in range(2):
-        for cu in range(2):
-            for ci in range(2):
+    for highsel in range(2):
+        for nsetflags in range(2):
+            for cu in range(2):
+                for ci in range(2):
 
-                for opnum,op in enumerate(ops):
-                    for a in range(16):
-                        for b in range(16):
+                    for opnum,op in enumerate(ops):
+                        for a in range(16):
+                            for b in range(16):
 
-                            # USER pin selects user carry (Cu) vs internal carry (Ci)
-                            carryin = cu if user else ci
-                            q, flags = op(a,b,carryin)
+                                # nSETFLAGS pin selects user carry (Cu) vs internal carry (Ci)
+                                carryin = ci if nsetflags else cu
+                                q, flags = op(a,b,carryin)
 
-                            if not user: flags[K] = 0
+                                # upper IC outputs clk enable for user flags
+                                # lower IC outputs clk enable for internal carry
+                                if highsel:
+                                    clken = flags[K] & ~nsetflags
+                                else:
+                                    clken = flags[K] & nsetflags
 
-                            addr = create_address(a, b, opnum, user, cu, ci)
-                            data = create_data(q, flags[C], flags[K])
-                            rom[addr] = data
+                                addr = create_address(a, b, opnum, nsetflags, cu, ci, highsel)
+                                data = create_data(q, flags[C], clken)
+                                rom[addr] = data
 
     create_logisim_file("alu.rom", rom)
 
