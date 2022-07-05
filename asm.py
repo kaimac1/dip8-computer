@@ -238,20 +238,37 @@ class Assembler():
     def inst_ldx(self):
         self.ldst_common(0x20)
     def inst_ldy(self):
-        self.ldst_common(0x22)
+        self.ldst_common(0x21)
     def inst_ldb(self):
-        self.ldst_common(0x24)
+        self.ldst_common(0x22)
     def inst_ldc(self):
+        self.ldst_common(0x23)
+    def inst_ldbh(self):
+        self.ldst_common(0x24)
+    def inst_ldbl(self):
+        self.ldst_common(0x25)
+    def inst_ldch(self):
         self.ldst_common(0x26)
+    def inst_ldcl(self):
+        self.ldst_common(0x27)
 
     def inst_stx(self):
         self.ldst_common(0x28)
     def inst_sty(self):
-        self.ldst_common(0x2a)
+        self.ldst_common(0x29)
     def inst_stb(self):
-        self.ldst_common(0x2c)
+        self.ldst_common(0x2a)
     def inst_stc(self):
+        self.ldst_common(0x2b)
+    def inst_stbh(self):
+        self.ldst_common(0x2c)
+    def inst_stbl(self):
+        self.ldst_common(0x2d)
+    def inst_stch(self):
         self.ldst_common(0x2e)
+    def inst_stcl(self):
+        self.ldst_common(0x2f)        
+
 
     def inst_stl(self):
         # stl #L
@@ -334,31 +351,32 @@ class Assembler():
     # ALU
 
     def get_alureg(self, reg):
-        return ['x', 'y', 'bh', 'bl', 'ch', 'cl', 'sh', 'sl'].index(reg)
+        return ['x', 'y', 'bh', 'bl', 'ch', 'cl'].index(reg)
 
     def alu_common(self, base, ta, tb):
         # accept 
         # alu reg, t
-        # alu reg, m
-        # alu reg, #literal     -> mov t, #literal; alu reg, t
+        # alu reg, #literal
+        # alu reg, m            -> ldt;             alu reg, t
         # alu reg, reg2         -> mov t, reg2;     alu reg, t
-        # alu reg, [ADDR]       -> adr ADDR;        alu reg, m
-        m = 0
+        # alu reg, [ADDR]       -> adr ADDR; ldt;   alu reg, t
+        lit = 0
         if tb.type == 'literal':
-            self.movt_literal(tb)
+            lit = 1
         elif tb.type == 'text':
             if tb.value == 'm':
-                m = 1
+                self.inst_ldt()
             elif tb.value != 't':
                 self.movt_register(tb)
         elif tb.type == 'symbol' and tb.value == '[':
-            tc = self.tok.next()
-            self.gen_adr(tc)
-            m = 1
+            self.gen_adr(self.tok.next())
+            self.inst_ldt()
         else:
             self.error("Invalid ALU instruction.")
 
-        self.write8(base + 2*self.get_alureg(ta.value) + m)
+        self.write8(base + 2*self.get_alureg(ta.value) + lit)
+        if lit:
+            self.write8(self.get_literal8(tb))
 
     def arith_common(self, base):
         ta = self.tok.next()
@@ -368,14 +386,7 @@ class Assembler():
         self.alu_common(base, ta, tb)
 
     def logic_common(self, base):
-        ta = self.tok.next()
-        tb = self.tok.next()
-        if ta is None or tb is None:
-            self.error("ALU instructions require two operands.")
-
-        if ta.value in ['sh', 'sl']:
-            self.error("Cannot perform logic operations on SP registers.")
-        self.alu_common(base, ta, tb)
+        self.arith_common(base)
 
     def inst_add(self):
         self.arith_common(0x70)

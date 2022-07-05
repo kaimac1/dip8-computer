@@ -67,14 +67,22 @@ class CPU():
             (0x1e, 0x1e): self.ret,
 
             (0x1f, 0x1f): self.stl,
-            (0x20, 0x21): self.ldx,
-            (0x22, 0x23): self.ldy,
-            (0x24, 0x25): self.ldb,
-            (0x26, 0x27): self.ldc,
-            (0x28, 0x29): self.stx,
-            (0x2a, 0x2b): self.sty,
-            (0x2c, 0x2d): self.stb,
-            (0x2e, 0x2f): self.stc,
+            (0x20, 0x20): self.ldx,
+            (0x21, 0x21): self.ldy,
+            (0x22, 0x22): self.ldb,
+            (0x23, 0x23): self.ldc,
+            (0x24, 0x24): self.ldbh,
+            (0x25, 0x25): self.ldbl,
+            (0x26, 0x26): self.ldch,
+            (0x27, 0x27): self.ldcl,
+            (0x28, 0x28): self.stx,
+            (0x29, 0x29): self.sty,
+            (0x2a, 0x2a): self.stb,
+            (0x2b, 0x2b): self.stc,
+            (0x2c, 0x2c): self.stbh,
+            (0x2d, 0x2d): self.stbl,
+            (0x2e, 0x2e): self.stch,
+            (0x2f, 0x2f): self.stcl,
 
             (0x30, 0x33): self.push,
             (0x34, 0x37): self.pop,
@@ -173,6 +181,14 @@ class CPU():
         self.regs['cl'] = self.mem[self.a]
         self.a += 1
         self.regs['ch'] = self.mem[self.a]
+    def ldbh(self):
+        self.regs['bh'] = self.mem[self.a]
+    def ldbl(self):
+        self.regs['bl'] = self.mem[self.a]
+    def ldch(self):
+        self.regs['ch'] = self.mem[self.a]
+    def ldcl(self):
+        self.regs['cl'] = self.mem[self.a]
 
     def stx(self):
         self.mem[self.a] = self.regs['x']
@@ -186,6 +202,14 @@ class CPU():
         self.mem[self.a] = self.regs['cl']
         self.a += 1
         self.mem[self.a] = self.regs['ch']
+    def stbh(self):
+        self.mem[self.a] = self.regs['bh']
+    def stbl(self):
+        self.mem[self.a] = self.regs['bl']
+    def stch(self):
+        self.mem[self.a] = self.regs['ch']
+    def stcl(self):
+        self.mem[self.a] = self.regs['cl']
 
 
     def stack_pop(self):
@@ -352,14 +376,14 @@ class CPU():
     # alu
 
     def aluargs(self):
-        regs = ['x', 'y', 'bh', 'bl', 'ch', 'cl', 'sh', 'sl']
+        regs = ['x', 'y', 'bh', 'bl', 'ch', 'cl']
         reg = regs[lonib(self.ib // 2) % 8]
         if self.ib % 2 == 0:
             v2 = self.t
             self.operands = f"{reg}, t"
         else:
-            v2 = self.mem[self.a]
-            self.operands = f"{reg}, m"
+            v2 = self.next()
+            self.operands = f"{reg}, {v2}"
         return reg, v2
 
 
