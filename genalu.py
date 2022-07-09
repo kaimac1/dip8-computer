@@ -10,7 +10,7 @@ K = 1 #clock flags
 
 # add 
 def opadd(a, b, c):
-    r = a + b
+    r = a + b + c
     q = r % 16
     return (q, {C:r>15, K:1})
 
@@ -22,7 +22,7 @@ def opadc(a, b, c):
 
 # subtract
 def opsub(a, b, c):
-    r = a + ~b + 1
+    r = a + ~b + c
     cout = (r >= 0)
     q = r % 16
     return (q, {C:cout, K:1})
@@ -131,6 +131,12 @@ def main():
 
                                 # nSETFLAGS pin selects user carry (Cu) vs internal carry (Ci)
                                 carryin = ci if nsetflags else cu
+
+                                # Force carry of low IC for add/sub opcodes
+                                if highsel == 0:
+                                    if op == opadd: carryin = 0
+                                    if op == opsub: carryin = 1
+
                                 q, flags = op(a,b,carryin)
 
                                 # upper IC outputs clk enable for user flags
