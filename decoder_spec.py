@@ -2,7 +2,7 @@
 # The register and ALU selection signals (selx, opadd, etc) get multiplexed into
 # 3-bit register and ALU selection words
 
-raw_signals = 'next aout pcinc pcwr irwr memrd memwr alwr ahwr ainc regoe regwr twr alu setflags'
+raw_signals = 'next aout pcinc pcwr irwr memrd memwr alwr ahwr ainc regoe regwr twr alu setflags brk'
 
 regsel = ['selbh', 'selbl', 'selch', 'selcl', 'selx', 'sely', 'selsh', 'selsl']
 alusel = ['opa', 'opb', 'opadd', 'opsub', 'opadc', 'opsbc', 'opand', 'opor', 'opxor', 'opci', 'opinc', 'opdec', 'opcd']
@@ -36,7 +36,8 @@ output_signals = [
 '!ainc',
 '!alu',
 'twr',
-'!setflags'
+'!setflags',
+'!brk'
 ]
 
 # T0 (fetch) signals
@@ -62,11 +63,9 @@ GenerateAH      = 'regoe alu ahwr'              # write AH from register <op> t
 # Instructions
 inst = {}
 
-# the t0 fetch signals above are not added automatically to the halt instruction,
-# so it never fetches the next instruction.
-inst[0xff] = '''halt
-    '''
 
+inst[0xff] = '''brk
+    brk'''
 
 # address generation
 

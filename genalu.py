@@ -5,9 +5,7 @@ import binascii
 
 inbits = 16
 C = 0
-Z = 1
-V = 2
-K = 3 #clock flags
+K = 1 #clock flags
 
 
 # add 

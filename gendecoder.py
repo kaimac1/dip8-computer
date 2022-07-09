@@ -43,9 +43,7 @@ def main():
         sections = lines[1:]
 
         # Add T0 fetch signals
-        timing = []
-        if opcode != HALT:
-            timing.append(t0)
+        timing = [t0]
 
         for s in sections:
             sigsout = []
@@ -72,8 +70,7 @@ def main():
             timing.append(sigsout)
 
         # Add asynchronous next signal after instruction sequence
-        if opcode != HALT:
-            timing.append(['next'])
+        timing.append(['next'])
 
         instructions[opcode] = timing
 
