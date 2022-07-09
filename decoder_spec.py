@@ -167,6 +167,47 @@ inst[0x14] = f'''jmp ADDR
     {LoadLiteral} alwr
     {LoadLiteral} ahwr
     aout pcwr'''
+inst[0x15] = f'''jmp a
+    aout pcwr'''
+
+inst[0x16] = f'''jcs ADDR
+    {LoadLiteral} alwr
+    {LoadLiteral} ahwr
+    (CS) aout pcwr'''
+inst[0x17] = f'''jcs a
+    (CS) aout pcwr'''
+
+inst[0x18] = f'''jcc ADDR
+    {LoadLiteral} alwr
+    {LoadLiteral} ahwr
+    (CC) aout pcwr'''
+inst[0x19] = f'''jcc a
+    (CC) aout pcwr'''
+
+inst[0x1a] = f'''jz ADDR
+    {LoadLiteral} alwr
+    {LoadLiteral} ahwr
+    (Z) aout pcwr'''
+inst[0x1b] = f'''jz a
+    (Z) aout pcwr'''    
+
+inst[0x1c] = f'''jnz ADDR
+    {LoadLiteral} alwr
+    {LoadLiteral} ahwr
+    (NZ) aout pcwr'''
+inst[0x1d] = f'''jnz a
+    (NZ) aout pcwr'''
+
+inst[0x1e] = f'''ret
+    {ModifyRegister} selsl opinc alwr
+    {ModifyRegister} selsh opci  ahwr
+    aout    memrd   twr
+    {ModifyRegister} selsl opinc alwr
+    {ModifyRegister} selsh opci  ahwr
+    aout    memrd   ahwr
+    alu     opb     alwr
+    aout pcwr'''
+
 
 
 
@@ -205,16 +246,6 @@ inst[0x2b] = f'''stc
 
 
 # stack
-
-inst[0x1e] = f'''ret
-    {ModifyRegister} selsl opinc alwr
-    {ModifyRegister} selsh opci  ahwr
-    aout    memrd   twr
-    {ModifyRegister} selsl opinc alwr
-    {ModifyRegister} selsh opci  ahwr
-    aout    memrd   ahwr
-    alu     opb     alwr
-    aout pcwr'''
 
 inst[0x30] = f'''push x
     {AddressSPL}
@@ -417,3 +448,80 @@ inst[0x87] = f'''sub bl, #L      \n      {LoadLiteral} twr      \n      {ModifyR
 inst[0x89] = f'''sub ch, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selch opsub   setflags'''
 inst[0x8b] = f'''sub cl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selcl opsub   setflags'''
 
+inst[0x90] = f'''adc x, t        \n      {ModifyRegister} selx  opadc   setflags'''
+inst[0x92] = f'''adc y, t        \n      {ModifyRegister} sely  opadc   setflags'''
+inst[0x94] = f'''adc bh, t       \n      {ModifyRegister} selbh opadc   setflags'''
+inst[0x96] = f'''adc bl, t       \n      {ModifyRegister} selbl opadc   setflags'''
+inst[0x98] = f'''adc ch, t       \n      {ModifyRegister} selch opadc   setflags'''
+inst[0x9a] = f'''adc cl, t       \n      {ModifyRegister} selcl opadc   setflags'''
+inst[0x91] = f'''adc x, #L       \n      {LoadLiteral} twr      \n      {ModifyRegister} selx  opadc   setflags'''
+inst[0x93] = f'''adc y, #L       \n      {LoadLiteral} twr      \n      {ModifyRegister} sely  opadc   setflags'''
+inst[0x95] = f'''adc bh, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selbh opadc   setflags'''
+inst[0x97] = f'''adc bl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selbl opadc   setflags'''
+inst[0x99] = f'''adc ch, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selch opadc   setflags'''
+inst[0x9b] = f'''adc cl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selcl opadc   setflags'''
+
+inst[0xa0] = f'''sbc x, t        \n      {ModifyRegister} selx  opsbc   setflags'''
+inst[0xa2] = f'''sbc y, t        \n      {ModifyRegister} sely  opsbc   setflags'''
+inst[0xa4] = f'''sbc bh, t       \n      {ModifyRegister} selbh opsbc   setflags'''
+inst[0xa6] = f'''sbc bl, t       \n      {ModifyRegister} selbl opsbc   setflags'''
+inst[0xa8] = f'''sbc ch, t       \n      {ModifyRegister} selch opsbc   setflags'''
+inst[0xaa] = f'''sbc cl, t       \n      {ModifyRegister} selcl opsbc   setflags'''
+inst[0xa1] = f'''sbc x, #L       \n      {LoadLiteral} twr      \n      {ModifyRegister} selx  opsbc   setflags'''
+inst[0xa3] = f'''sbc y, #L       \n      {LoadLiteral} twr      \n      {ModifyRegister} sely  opsbc   setflags'''
+inst[0xa5] = f'''sbc bh, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selbh opsbc   setflags'''
+inst[0xa7] = f'''sbc bl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selbl opsbc   setflags'''
+inst[0xa9] = f'''sbc ch, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selch opsbc   setflags'''
+inst[0xab] = f'''sbc cl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selcl opsbc   setflags'''
+
+inst[0xb0] = f'''cmp x, t        \n      regoe alu selx  opsub   setflags'''
+inst[0xb2] = f'''cmp y, t        \n      regoe alu sely  opsub   setflags'''
+inst[0xb4] = f'''cmp bh, t       \n      regoe alu selbh opsub   setflags'''
+inst[0xb6] = f'''cmp bl, t       \n      regoe alu selbl opsub   setflags'''
+inst[0xb8] = f'''cmp ch, t       \n      regoe alu selch opsub   setflags'''
+inst[0xba] = f'''cmp cl, t       \n      regoe alu selcl opsub   setflags'''
+inst[0xb1] = f'''cmp x, #L       \n      {LoadLiteral} twr      \n      regoe alu selx  opsub   setflags'''
+inst[0xb3] = f'''cmp y, #L       \n      {LoadLiteral} twr      \n      regoe alu sely  opsub   setflags'''
+inst[0xb5] = f'''cmp bh, #L      \n      {LoadLiteral} twr      \n      regoe alu selbh opsub   setflags'''
+inst[0xb7] = f'''cmp bl, #L      \n      {LoadLiteral} twr      \n      regoe alu selbl opsub   setflags'''
+inst[0xb9] = f'''cmp ch, #L      \n      {LoadLiteral} twr      \n      regoe alu selch opsub   setflags'''
+inst[0xbb] = f'''cmp cl, #L      \n      {LoadLiteral} twr      \n      regoe alu selcl opsub   setflags'''
+
+inst[0xc0] = f'''and x, t        \n      {ModifyRegister} selx  opand'''
+inst[0xc2] = f'''and y, t        \n      {ModifyRegister} sely  opand'''
+inst[0xc4] = f'''and bh, t       \n      {ModifyRegister} selbh opand'''
+inst[0xc6] = f'''and bl, t       \n      {ModifyRegister} selbl opand'''
+inst[0xc8] = f'''and ch, t       \n      {ModifyRegister} selch opand'''
+inst[0xca] = f'''and cl, t       \n      {ModifyRegister} selcl opand'''
+inst[0xc1] = f'''and x, #L       \n      {LoadLiteral} twr      \n      {ModifyRegister} selx  opand'''
+inst[0xc3] = f'''and y, #L       \n      {LoadLiteral} twr      \n      {ModifyRegister} sely  opand'''
+inst[0xc5] = f'''and bh, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selbh opand'''
+inst[0xc7] = f'''and bl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selbl opand'''
+inst[0xc9] = f'''and ch, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selch opand'''
+inst[0xcb] = f'''and cl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selcl opand'''
+
+inst[0xd0] = f'''or x, t        \n      {ModifyRegister} selx  opor'''
+inst[0xd2] = f'''or y, t        \n      {ModifyRegister} sely  opor'''
+inst[0xd4] = f'''or bh, t       \n      {ModifyRegister} selbh opor'''
+inst[0xd6] = f'''or bl, t       \n      {ModifyRegister} selbl opor'''
+inst[0xd8] = f'''or ch, t       \n      {ModifyRegister} selch opor'''
+inst[0xda] = f'''or cl, t       \n      {ModifyRegister} selcl opor'''
+inst[0xd1] = f'''or x, #L       \n      {LoadLiteral} twr      \n      {ModifyRegister} selx  opor'''
+inst[0xd3] = f'''or y, #L       \n      {LoadLiteral} twr      \n      {ModifyRegister} sely  opor'''
+inst[0xd5] = f'''or bh, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selbh opor'''
+inst[0xd7] = f'''or bl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selbl opor'''
+inst[0xd9] = f'''or ch, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selch opor'''
+inst[0xdb] = f'''or cl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selcl opor'''
+
+inst[0xe0] = f'''xor x, t        \n      {ModifyRegister} selx  opxor'''
+inst[0xe2] = f'''xor y, t        \n      {ModifyRegister} sely  opxor'''
+inst[0xe4] = f'''xor bh, t       \n      {ModifyRegister} selbh opxor'''
+inst[0xe6] = f'''xor bl, t       \n      {ModifyRegister} selbl opxor'''
+inst[0xe8] = f'''xor ch, t       \n      {ModifyRegister} selch opxor'''
+inst[0xea] = f'''xor cl, t       \n      {ModifyRegister} selcl opxor'''
+inst[0xe1] = f'''xor x, #L       \n      {LoadLiteral} twr      \n      {ModifyRegister} selx  opxor'''
+inst[0xe3] = f'''xor y, #L       \n      {LoadLiteral} twr      \n      {ModifyRegister} sely  opxor'''
+inst[0xe5] = f'''xor bh, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selbh opxor'''
+inst[0xe7] = f'''xor bl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selbl opxor'''
+inst[0xe9] = f'''xor ch, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selch opxor'''
+inst[0xeb] = f'''xor cl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selcl opxor'''

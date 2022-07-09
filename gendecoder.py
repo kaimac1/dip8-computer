@@ -1,21 +1,26 @@
 from pprint import pprint
+from collections import namedtuple
 import binascii
 
 from decoder_spec import *
 
-#flags = ['C', 'N', 'Z']
+flagbits = 3
 cyclebits = 4
 inbits = 16
 HALT = 0xFF
 
-invert = [sig.startswith("!") for sig in output_signals]
-signal_names = [sig.strip("!") for sig in output_signals] # without !
+def create_flags(flagcode):
+    out = namedtuple('flags', ('C', 'Z', 'N'))
+    out.C = bool(flagcode & 1)
+    out.Z = bool(flagcode & 2)
+    out.N = bool(flagcode & 4)
+    return out
 
-
-def create_address(opcode, cycle, flags=[]):
+def create_address(opcode, cycle, flags):
     if cycle > (2**cyclebits -1): raise Exception()
     if opcode > 255: raise Exception()
-    return (opcode << cyclebits) | cycle
+
+    return flags.N << 14 | flags.Z << 13 | flags.C << 12 | (opcode << cyclebits) | cycle
 
 def create_data(sigs):
     data = 0
@@ -31,25 +36,47 @@ def create_logisim_file(filename, rom):
         f.write("v2.0 raw\n")
         for word in rom:
             f.write("{} ".format(hex(word)[2:]))
-    
-    
+
+
+invert = [sig.startswith("!") for sig in output_signals]
+signal_names = [sig.strip("!") for sig in output_signals] # without !
+
+class Instruction:
+    def __init__(self):
+        self.sequence_good = []
+        self.sequence_bad = []
+        self.condition = lambda flags: True
+
 
 def main():
     instructions = {}
 
     for opcode in inst:
-        lines = [line.strip() for line in inst[opcode].split('\n')]
+        text = inst[opcode]
+
+        instruction = Instruction()
+        instruction.sequence_good = [t0]
+        instruction.sequence_bad = [t0]
+
+        lines = [line.strip() for line in text.split('\n')]
         name = lines[0]
         sections = lines[1:]
-
-        # Add T0 fetch signals
-        timing = [t0]
 
         for s in sections:
             sigsout = []
             sigs = [sig for sig in s.split(" ") if sig != '']
+            cond = False
             for sig in sigs:
-                if sig not in raw_signals:
+
+                if sig[0] == '(':
+                    if sig == '(CS)': instruction.condition = lambda flags: flags.C
+                    if sig == '(CC)': instruction.condition = lambda flags: not flags.C
+                    if sig == '(Z)':  instruction.condition = lambda flags: flags.Z
+                    if sig == '(NZ)': instruction.condition = lambda flags: not flags.Z
+                    instruction.sequence_bad = instruction.sequence_good + [['next']]
+                    continue
+
+                elif sig not in raw_signals:
                     print (f"ERROR 0x{opcode:02x}: Undefined signal '{sig}'")
                     return False
 
@@ -67,27 +94,32 @@ def main():
                     if opnum & 8: sigsout.append('opsel3')
                 else:
                     sigsout.append(sig)
-            timing.append(sigsout)
 
-        # Add asynchronous next signal after instruction sequence
-        timing.append(['next'])
+            instruction.sequence_good.append(sigsout)
 
-        instructions[opcode] = timing
+        instruction.sequence_good.append(['next'])
+        instructions[opcode] = instruction
 
 
     rom = [0] * 2**inbits
     
-    for opcode in instructions:
-        timing = instructions[opcode]
-        for cycle in range(2**cyclebits):
-            addr = create_address(opcode, cycle)
-            if cycle < len(timing):
-                data = create_data(timing[cycle])
-            else:
-                data = create_data([])
-            rom[addr] = data
+    for flagcode in range(2**flagbits):
+        flags = create_flags(flagcode)
 
-    #print(rom[0:16])
+        for opcode in instructions:
+
+            # Select sequence based on whether the condition is met
+            instruction = instructions[opcode]
+            good = instruction.condition(flags)
+            seq = instruction.sequence_good if good else instruction.sequence_bad
+
+            for cycle in range(2**cyclebits):
+                addr = create_address(opcode, cycle, flags)
+                if cycle < len(seq):
+                    data = create_data(seq[cycle])
+                else:
+                    data = create_data([])
+                rom[addr] = data
 
 
     print('Output signals:')
@@ -98,7 +130,6 @@ def main():
     print(f"{len(instructions)} opcodes\n")
             
     create_logisim_file("decoder.rom", rom)
-
 
 
 main()
