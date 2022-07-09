@@ -475,6 +475,9 @@ class Assembler():
 
 
 
+    def inst_brk(self):
+        self.write8(0xff)
+
 
     # Pseudoinstructions
 
@@ -623,6 +626,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="DIP8 assembler")
     parser.add_argument('srcfile')
     parser.add_argument('outfile', nargs='?', default='out.bin')
+    parser.add_argument('-l', '--logisim', action="store_true")
     args = parser.parse_args()
 
     with open(args.srcfile, 'r') as f:
@@ -633,8 +637,16 @@ if __name__ == "__main__":
 
     import binascii
     print(f"\nSymbols: {asm.syms}")
-    print(f"{len(out)} bytes.\n")
+    print(f"{len(out)} bytes.")
 
-    with open(args.outfile, 'wb') as f:
-        f.write(out)
+    if args.logisim:
+        print("Creating logisim image.")
+        with open(args.outfile, 'w') as f:
+            f.write("v2.0 raw\n")
+            for byte in out:
+                f.write("{} ".format(hex(byte)[2:]))
+
+    else:
+        with open(args.outfile, 'wb') as f:
+            f.write(out)
 

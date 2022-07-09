@@ -19,7 +19,7 @@
 
             call printdb
 
-            .byte $ff
+            brk
 string1     .string " x "
 string2     .string " = "
 

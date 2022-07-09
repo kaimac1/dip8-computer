@@ -105,10 +105,10 @@ class CPU():
             (0xf0, 0xf3): self.inc,
             (0xf4, 0xf7): self.dec,
             
-            (0xff, 0xff): self.halt,
+            (0xff, 0xff): self.brk,
         }
 
-    def halt(self):
+    def brk(self):
         #print("Halted!")
         self.halted = True
 

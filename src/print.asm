@@ -8,8 +8,7 @@
             mov x, #$a5
             call printxh
 
-            .byte $ff ; halt
-
+            brk
 hello       .byte "Hello, world!", $0a, 0
 mystring    .string "The value of register x is: $"
 
