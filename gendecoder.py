@@ -38,6 +38,7 @@ def create_logisim_file(filename, rom):
             f.write("{} ".format(hex(word)[2:]))
 
 
+
 invert = [sig.startswith("!") for sig in output_signals]
 signal_names = [sig.strip("!") for sig in output_signals] # without !
 
@@ -118,7 +119,7 @@ def main():
                 if cycle < len(seq):
                     data = create_data(seq[cycle])
                 else:
-                    data = create_data([])
+                    data = create_data(['next'])
                 rom[addr] = data
 
 
@@ -131,5 +132,8 @@ def main():
             
     create_logisim_file("decoder.rom", rom)
 
+    byte0 = bytearray([word & 0xFF for word in rom])
+    with open('decoder0.bin', 'wb') as f:
+        f.write(byte0)
 
 main()

@@ -50,15 +50,16 @@ t0 = ['pcinc', 'memrd', 'irwr']
 
 LoadLiteral     = 'pcinc memrd'
 
-StoreRegister   = 'aout memwr regoe alu opa'    # store register to RAM
-ModifyRegister  = 'regoe alu regwr'             # send register through ALU
+StoreRegister   = 'aout memwr regoe alu opa'    # store [register] to RAM
+ModifyRegister  = 'regoe alu regwr'             # send [register] through ALU [op]
 
 AddressSPL      = 'regoe selsl alu opa alwr'    # load address register
 AddressSPH      = 'regoe selsh alu opa ahwr'
 
-RegisterToT     = 'regoe alu opa twr'           # write register to t
-GenerateAL      = 'regoe alu alwr'              # write AL from register <op> t
-GenerateAH      = 'regoe alu ahwr'              # write AH from register <op> t
+RegisterToT     = 'regoe alu opa twr'           # write [register] to t
+TToRegister     = 'regwr alu opb'               # write t to [register]
+GenerateAL      = 'regoe alu alwr'              # write AL from [register] [op] t
+GenerateAH      = 'regoe alu ahwr'              # write AH from [register] [op] t
 
 # Instructions
 inst = {}
@@ -372,51 +373,64 @@ inst[0x6f] = '''ldt
 
 # move reg=reg
 
-inst[0x41] = '''mov bh, bl      \n      regoe   selbl   alu     opa     twr     \n      regwr   selbh   alu     opb'''
-inst[0x42] = '''mov bh, ch      \n      regoe   selch   alu     opa     twr     \n      regwr   selbh   alu     opb'''
-inst[0x43] = '''mov bh, cl      \n      regoe   selcl   alu     opa     twr     \n      regwr   selbh   alu     opb'''
-inst[0x44] = '''mov bh, x       \n      regoe   selx    alu     opa     twr     \n      regwr   selbh   alu     opb'''    
-inst[0x45] = '''mov bh, y       \n      regoe   sely    alu     opa     twr     \n      regwr   selbh   alu     opb'''
+inst[0x41] = f'''mov bh, bl      \n      {RegisterToT}   selbl     \n      {TToRegister}   selbh'''
+inst[0x42] = f'''mov bh, ch      \n      {RegisterToT}   selch     \n      {TToRegister}   selbh'''
+inst[0x43] = f'''mov bh, cl      \n      {RegisterToT}   selcl     \n      {TToRegister}   selbh'''
+inst[0x44] = f'''mov bh, x       \n      {RegisterToT}   selx      \n      {TToRegister}   selbh'''    
+inst[0x45] = f'''mov bh, y       \n      {RegisterToT}   sely      \n      {TToRegister}   selbh'''
 
-inst[0x46] = '''mov bl, bh      \n      regoe   selbh   alu     opa     twr     \n      regwr   selbl   alu     opb'''
-inst[0x48] = '''mov bl, ch      \n      regoe   selch   alu     opa     twr     \n      regwr   selbl   alu     opb'''
-inst[0x49] = '''mov bl, cl      \n      regoe   selcl   alu     opa     twr     \n      regwr   selbl   alu     opb'''
-inst[0x4a] = '''mov bl, x       \n      regoe   selx    alu     opa     twr     \n      regwr   selbl   alu     opb'''
-inst[0x4b] = '''mov bl, y       \n      regoe   sely    alu     opa     twr     \n      regwr   selbl   alu     opb'''
+inst[0x46] = f'''mov bl, bh      \n      {RegisterToT}   selbh     \n      {TToRegister}   selbl'''
+inst[0x48] = f'''mov bl, ch      \n      {RegisterToT}   selch     \n      {TToRegister}   selbl'''
+inst[0x49] = f'''mov bl, cl      \n      {RegisterToT}   selcl     \n      {TToRegister}   selbl'''
+inst[0x4a] = f'''mov bl, x       \n      {RegisterToT}   selx      \n      {TToRegister}   selbl'''
+inst[0x4b] = f'''mov bl, y       \n      {RegisterToT}   sely      \n      {TToRegister}   selbl'''
 
-inst[0x4c] = '''mov ch, bh      \n      regoe   selbh   alu     opa     twr     \n      regwr   selch   alu     opb'''
-inst[0x4d] = '''mov ch, bl      \n      regoe   selbl   alu     opa     twr     \n      regwr   selch   alu     opb'''
-inst[0x4f] = '''mov ch, cl      \n      regoe   selcl   alu     opa     twr     \n      regwr   selch   alu     opb'''
-inst[0x50] = '''mov ch, x       \n      regoe   selx    alu     opa     twr     \n      regwr   selch   alu     opb'''
-inst[0x51] = '''mov ch, y       \n      regoe   sely    alu     opa     twr     \n      regwr   selch   alu     opb'''
+inst[0x4c] = f'''mov ch, bh      \n      {RegisterToT}   selbh     \n      {TToRegister}   selch'''
+inst[0x4d] = f'''mov ch, bl      \n      {RegisterToT}   selbl     \n      {TToRegister}   selch'''
+inst[0x4f] = f'''mov ch, cl      \n      {RegisterToT}   selcl     \n      {TToRegister}   selch'''
+inst[0x50] = f'''mov ch, x       \n      {RegisterToT}   selx      \n      {TToRegister}   selch'''
+inst[0x51] = f'''mov ch, y       \n      {RegisterToT}   sely      \n      {TToRegister}   selch'''
 
-inst[0x52] = '''mov cl, bh      \n      regoe   selbh   alu     opa     twr     \n      regwr   selcl   alu     opb'''
-inst[0x53] = '''mov cl, bl      \n      regoe   selbl   alu     opa     twr     \n      regwr   selcl   alu     opb'''
-inst[0x54] = '''mov cl, ch      \n      regoe   selch   alu     opa     twr     \n      regwr   selcl   alu     opb'''
-inst[0x56] = '''mov cl, x       \n      regoe   selx    alu     opa     twr     \n      regwr   selcl   alu     opb'''
-inst[0x57] = '''mov cl, y       \n      regoe   sely    alu     opa     twr     \n      regwr   selcl   alu     opb'''
+inst[0x52] = f'''mov cl, bh      \n      {RegisterToT}   selbh     \n      {TToRegister}   selcl'''
+inst[0x53] = f'''mov cl, bl      \n      {RegisterToT}   selbl     \n      {TToRegister}   selcl'''
+inst[0x54] = f'''mov cl, ch      \n      {RegisterToT}   selch     \n      {TToRegister}   selcl'''
+inst[0x56] = f'''mov cl, x       \n      {RegisterToT}   selx      \n      {TToRegister}   selcl'''
+inst[0x57] = f'''mov cl, y       \n      {RegisterToT}   sely      \n      {TToRegister}   selcl'''
 
-inst[0x58] = '''mov x, bh       \n      regoe   selbh   alu     opa     twr     \n      regwr   selx    alu     opb'''
-inst[0x59] = '''mov x, bl       \n      regoe   selbl   alu     opa     twr     \n      regwr   selx    alu     opb'''
-inst[0x5a] = '''mov x, ch       \n      regoe   selch   alu     opa     twr     \n      regwr   selx    alu     opb'''
-inst[0x5b] = '''mov x, cl       \n      regoe   selcl   alu     opa     twr     \n      regwr   selx    alu     opb'''
-inst[0x5d] = '''mov x, y        \n      regoe   sely    alu     opa     twr     \n      regwr   selx    alu     opb'''
+inst[0x58] = f'''mov x, bh       \n      {RegisterToT}   selbh     \n      {TToRegister}   selx '''
+inst[0x59] = f'''mov x, bl       \n      {RegisterToT}   selbl     \n      {TToRegister}   selx '''
+inst[0x5a] = f'''mov x, ch       \n      {RegisterToT}   selch     \n      {TToRegister}   selx '''
+inst[0x5b] = f'''mov x, cl       \n      {RegisterToT}   selcl     \n      {TToRegister}   selx '''
+inst[0x5d] = f'''mov x, y        \n      {RegisterToT}   sely      \n      {TToRegister}   selx '''
 
-inst[0x5e] = '''mov y, bh       \n      regoe   selbh   alu     opa     twr     \n      regwr   sely    alu     opb'''
-inst[0x5f] = '''mov y, bl       \n      regoe   selbl   alu     opa     twr     \n      regwr   sely    alu     opb'''
-inst[0x60] = '''mov y, ch       \n      regoe   selch   alu     opa     twr     \n      regwr   sely    alu     opb'''
-inst[0x61] = '''mov y, cl       \n      regoe   selcl   alu     opa     twr     \n      regwr   sely    alu     opb'''
-inst[0x62] = '''mov y, x        \n      regoe   selx    alu     opa     twr     \n      regwr   sely    alu     opb'''
+inst[0x5e] = f'''mov y, bh       \n      {RegisterToT}   selbh     \n      {TToRegister}   sely '''
+inst[0x5f] = f'''mov y, bl       \n      {RegisterToT}   selbl     \n      {TToRegister}   sely '''
+inst[0x60] = f'''mov y, ch       \n      {RegisterToT}   selch     \n      {TToRegister}   sely '''
+inst[0x61] = f'''mov y, cl       \n      {RegisterToT}   selcl     \n      {TToRegister}   sely '''
+inst[0x62] = f'''mov y, x        \n      {RegisterToT}   selx      \n      {TToRegister}   sely '''
 
 # move t=
 
-inst[0x64] = '''mov t, bh       \n      regoe   selbh   alu     opa     twr'''
-inst[0x65] = '''mov t, bl       \n      regoe   selbl   alu     opa     twr'''
-inst[0x66] = '''mov t, ch       \n      regoe   selch   alu     opa     twr'''
-inst[0x67] = '''mov t, cl       \n      regoe   selcl   alu     opa     twr'''
-inst[0x68] = '''mov t, x        \n      regoe   selx    alu     opa     twr'''
-inst[0x69] = '''mov t, y        \n      regoe   sely    alu     opa     twr'''
+inst[0x64] = f'''mov t, bh       \n      {RegisterToT}   selbh'''
+inst[0x65] = f'''mov t, bl       \n      {RegisterToT}   selbl'''
+inst[0x66] = f'''mov t, ch       \n      {RegisterToT}   selch'''
+inst[0x67] = f'''mov t, cl       \n      {RegisterToT}   selcl'''
+inst[0x68] = f'''mov t, x        \n      {RegisterToT}   selx '''
+inst[0x69] = f'''mov t, y        \n      {RegisterToT}   sely '''
 inst[0x6a] = f'''mov t, #L       \n      {LoadLiteral}   twr'''
+
+# move 16 bit
+
+inst[0x6b] = f'''mov b, c
+    {RegisterToT} selcl
+    {TToRegister} selbl
+    {RegisterToT} selch
+    {TToRegister} selbh'''
+inst[0x6c] = f'''mov c, b
+    {RegisterToT} selbl
+    {TToRegister} selcl
+    {RegisterToT} selbh
+    {TToRegister} selch'''
 
 
 
@@ -525,3 +539,18 @@ inst[0xe5] = f'''xor bh, #L      \n      {LoadLiteral} twr      \n      {ModifyR
 inst[0xe7] = f'''xor bl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selbl opxor'''
 inst[0xe9] = f'''xor ch, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selch opxor'''
 inst[0xeb] = f'''xor cl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selcl opxor'''
+
+
+# Note:
+# For the 16-bit inc/dec of b or c, the flags come from the low byte.
+# setflags is asserted for the high byte, but the ALU operation (opci/opcd) only reads the user flags, and does not set them.
+
+inst[0xf0] = f'''inc x          \n      {ModifyRegister} selx  opinc setflags'''
+inst[0xf1] = f'''inc y          \n      {ModifyRegister} sely  opinc setflags'''
+inst[0xf2] = f'''inc b          \n      {ModifyRegister} selbl opinc setflags   \n  {ModifyRegister} selbh opci setflags'''
+inst[0xf3] = f'''inc c          \n      {ModifyRegister} selcl opinc setflags   \n  {ModifyRegister} selch opci setflags'''
+inst[0xf4] = f'''dec x          \n      {ModifyRegister} selx  opdec setflags'''
+inst[0xf5] = f'''dec y          \n      {ModifyRegister} sely  opdec setflags'''
+inst[0xf6] = f'''dec b          \n      {ModifyRegister} selbl opdec setflags   \n  {ModifyRegister} selbh opcd setflags'''
+inst[0xf7] = f'''dec c          \n      {ModifyRegister} selcl opdec setflags   \n  {ModifyRegister} selch opcd setflags'''
+

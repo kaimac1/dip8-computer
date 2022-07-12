@@ -8,96 +8,110 @@ C = 0
 K = 1 #clock flags
 
 
-# add 
-def opadd(a, b, c):
-    r = a + b + c
-    q = r % 16
-    return (q, {C:r>15, K:1})
 
-def opadc(a, b, c):
-    r = a + b + c
-    q = r % 16
-    return (q, {C:r>15, K:1})
+class ALU():
+    def __init__(self, lo):
+        self.lo = lo
 
+    # pass-through
+    def opa(self, a, b, c):
+        return (a, {C:0, K:0})
 
-# subtract
-def opsub(a, b, c):
-    r = a + ~b + c
-    cout = (r >= 0)
-    q = r % 16
-    return (q, {C:cout, K:1})
+    def opb(self, a, b, c):
+        return (b, {C:0, K:0})        
 
-def opsbc(a, b, c):
-    r = a + ~b + c
-    cout = (r >= 0)
-    q = r % 16
-    return (q, {C:cout, K:1})
+    # add 
+    def opadd(self, a, b, c):
+        # For add (without carry), first carry in is set to zero
+        if self.lo: c = 0
 
+        r = a + b + c
+        q = r % 16
+        return (q, {C:r>15, K:1})
 
-# logic
-def opand(a, b, c):
-    q = a & b
-    return (q, {C:0, K:0})
-
-def opor(a, b, c):
-    q = a | b
-    return (q, {C:0, K:0})
-
-def opxor(a, b, c):
-    q = a ^ b
-    return (q, {C:0, K:0})
+    def opadc(self, a, b, c):
+        r = a + b + c
+        q = r % 16
+        return (q, {C:r>15, K:1})
 
 
-# pass-through
-def opa(a, b, c):
-    return (a, {C:0, K:0})
+    # subtract
+    def opsub(self, a, b, c):
+        # Force carry=1 (no borrow)
+        if self.lo: c = 1
 
-def opb(a, b, c):
-    return (b, {C:0, K:0})
+        r = a + ~b + c
+        cout = (r >= 0)
+        q = r % 16
+        return (q, {C:cout, K:1})
+
+    def opsbc(self, a, b, c):
+        r = a + ~b + c
+        cout = (r >= 0)
+        q = r % 16
+        return (q, {C:cout, K:1})
 
 
-#inc/dec a
-def opinc(a, b, c):
-    r = a + c
-    q = r % 16
-    return (q, {C: r>15, K:1})
+    # logic
+    def opand(self, a, b, c):
+        q = a & b
+        return (q, {C:0, K:0})
 
-def opdec(a, b, c):
-    r = a + ~0 + c
-    cout = r >= 0
-    q = r % 16
-    return (q, {C: cout, K:1})
+    def opor(self, a, b, c):
+        q = a | b
+        return (q, {C:0, K:0})
 
-# increment if carry set
-def opci(a, b, c):
-    r = a + c
-    q = r % 16
-    return (q, {C: r>15, K:1})
+    def opxor(self, a, b, c):
+        q = a ^ b
+        return (q, {C:0, K:0})
 
-# decrement if carry clear
-def opcd(a, b, c):
-    r = a + ~0 + c
-    cout = r >= 0
-    q = r % 16
-    return (q, {C: cout, K:1})
+
+    #inc/dec a
+    def opinc(self, a, b, c):
+        if self.lo: c = 1
+
+        r = a + c
+        q = r % 16
+        return (q, {C: r>15, K:1})
+
+    def opdec(self, a, b, c):
+        if self.lo: c = 0
+
+        r = a + ~0 + c
+        cout = r >= 0
+        q = r % 16
+        return (q, {C: cout, K:1})
+
+    # increment if carry set
+    def opci(self, a, b, c):
+        r = a + c
+        q = r % 16
+        return (q, {C: r>15, K:0})
+
+    # decrement if carry clear
+    def opcd(self, a, b, c):
+        r = a + ~0 + c
+        cout = r >= 0
+        q = r % 16
+        return (q, {C: cout, K:0})
 
 
 
 
 ops = [
-opa,        #0
-opb,        #1
-opadd,      #2
-opsub,      #3
-opadc,      #4
-opsbc,      #5
-opand,      #6
-opor,       #7
-opxor,      #8
-opci,       #9
-opinc,      #10
-opdec,      #11
-opcd        #12
+'opa',        #0
+'opb',        #1
+'opadd',      #2
+'opsub',      #3
+'opadc',      #4
+'opsbc',      #5
+'opand',      #6
+'opor',       #7
+'opxor',      #8
+'opci',       #9
+'opinc',      #10
+'opdec',      #11
+'opcd'        #12
 ]
 
 print(f"{len(ops)} operators defined")
@@ -122,6 +136,9 @@ def main():
     rom = [0] * 2**inbits
 
     for highsel in range(2):
+
+        alu = ALU(lo = not highsel)
+
         for nsetflags in range(2):
             for cu in range(2):
                 for ci in range(2):
@@ -133,17 +150,11 @@ def main():
                                 # nSETFLAGS pin selects user carry (Cu) vs internal carry (Ci)
                                 carryin = ci if nsetflags else cu
 
-                                # Force carry of low IC for add/sub opcodes
-                                if highsel == 0:
-                                    if op == opadd: carryin = 0
-                                    if op == opsub: carryin = 1
-                                    if op == opinc: carryin = 1
-                                    if op == opdec: carryin = 0
-
-                                q, flags = op(a,b,carryin)
+                                q, flags = getattr(alu, op)(a,b,carryin)
 
                                 # upper IC outputs clk enable for user flags
                                 # lower IC outputs clk enable for internal carry
+                                # No flags are set if the opcode does not set them (K=0)
                                 if highsel:
                                     clken = flags[K] & ~nsetflags
                                 else:
