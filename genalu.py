@@ -58,13 +58,13 @@ def opb(a, b, c):
 
 #inc/dec a
 def opinc(a, b, c):
-    r = a + 1
+    r = a + c
     q = r % 16
     return (q, {C: r>15, K:1})
 
 def opdec(a, b, c):
-    r = a - 1
-    cout = a >= 1
+    r = a + ~0 + c
+    cout = r >= 0
     q = r % 16
     return (q, {C: cout, K:1})
 
@@ -108,6 +108,7 @@ def create_address(a, b, opsel, user, cu, ci, highsel):
 def create_data(q, cout, clken):
     z = q == 0
     n = q > 7
+    clken = not bool(clken)
     return q | (cout << 4) | (z << 5) | (n << 6) | (clken << 7)
 
 def create_logisim_file(filename, rom):
@@ -136,6 +137,8 @@ def main():
                                 if highsel == 0:
                                     if op == opadd: carryin = 0
                                     if op == opsub: carryin = 1
+                                    if op == opinc: carryin = 1
+                                    if op == opdec: carryin = 0
 
                                 q, flags = op(a,b,carryin)
 
