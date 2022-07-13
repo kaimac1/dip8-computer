@@ -209,11 +209,13 @@ class Assembler():
 
     def jump_common(self, base):
         t = self.tok.next()
-        if t.value == 'b':
-            self.write8(base + 1)
-        else:
+        if t:
+            # address provided
             self.write8(base)
             self.write16(self.get_literal16(t))
+        else:
+            #use A address
+            self.write8(base + 1)
 
     def inst_jmp(self):
         self.jump_common(0x14)
