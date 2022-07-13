@@ -320,8 +320,8 @@ class CPU():
         self.dojump(self.Z)
 
     def ret(self):
-        hi = self.stack_pop()
         lo = self.stack_pop()
+        hi = self.stack_pop()
         addr = lo | (hi << 8)
         self.pc = addr
 
