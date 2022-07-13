@@ -48,8 +48,9 @@ t0 = ['pcinc', 'memrd', 'irwr']
 
 # Shorthand
 
-LoadLiteral     = 'pcinc memrd'
+LoadLiteral     = 'pcinc memrd'                 # literal -> data bus
 
+LoadRegister    = 'aout memrd regwr'
 StoreRegister   = 'aout memwr regoe alu opa'    # store [register] to RAM
 ModifyRegister  = 'regoe alu regwr'             # send [register] through ALU [op]
 
@@ -218,18 +219,20 @@ inst[0x1f] = f'''stl #L
     {LoadLiteral}   twr
     aout    memwr   alu     opb'''
 
-inst[0x20] = '''ldx     \n      aout    memrd   regwr   selx'''
-inst[0x21] = '''ldy     \n      aout    memrd   regwr   sely'''
-inst[0x24] = '''ldbh    \n      aout    memrd   regwr   selbh'''
-inst[0x25] = '''ldbl    \n      aout    memrd   regwr   selbl'''
-inst[0x26] = '''ldch    \n      aout    memrd   regwr   selch'''
-inst[0x27] = '''ldcl    \n      aout    memrd   regwr   selcl'''
-inst[0x22] = '''ldb
-    aout    memrd   regwr   selbl   ainc
-    aout    memrd   regwr   selbh'''
-inst[0x23] = '''ldc
-    aout    memrd   regwr   selcl   ainc
-    aout    memrd   regwr   selch'''
+inst[0x20] = f'''ldx     \n      {LoadRegister} selx'''
+inst[0x21] = f'''ldy     \n      {LoadRegister} sely'''
+inst[0x24] = f'''ldbh    \n      {LoadRegister} selbh'''
+inst[0x25] = f'''ldbl    \n      {LoadRegister} selbl'''
+inst[0x26] = f'''ldch    \n      {LoadRegister} selch'''
+inst[0x27] = f'''ldcl    \n      {LoadRegister} selcl'''
+inst[0x22] = f'''ldb
+    {LoadRegister} selbl
+    ainc
+    {LoadRegister} selbh'''
+inst[0x23] = f'''ldc
+    {LoadRegister} selcl
+    ainc
+    {LoadRegister} selch'''
 
 inst[0x28] = f'''stx     \n      {StoreRegister} selx'''
 inst[0x29] = f'''sty     \n      {StoreRegister} sely'''
@@ -238,10 +241,12 @@ inst[0x2d] = f'''stbl    \n      {StoreRegister} selbl'''
 inst[0x2e] = f'''stch    \n      {StoreRegister} selch'''
 inst[0x2f] = f'''stcl    \n      {StoreRegister} selcl'''
 inst[0x2a] = f'''stb
-    {StoreRegister} selbl ainc
+    {StoreRegister} selbl
+    ainc
     {StoreRegister} selbh'''
 inst[0x2b] = f'''stc
-    {StoreRegister} selcl ainc
+    {StoreRegister} selcl
+    ainc
     {StoreRegister} selch'''
 
 
@@ -285,28 +290,28 @@ inst[0x33] = f'''push c
 inst[0x34] = f'''pop x
     {ModifyRegister} selsl opinc alwr
     {ModifyRegister} selsh opci  ahwr
-    {StoreRegister} selx'''
+    {LoadRegister} selx'''
 
 inst[0x35] = f'''pop y
     {ModifyRegister} selsl opinc alwr
     {ModifyRegister} selsh opci  ahwr
-    {StoreRegister} sely'''
+    {LoadRegister} sely'''
 
 inst[0x36] = f'''pop b
     {ModifyRegister} selsl opinc alwr
     {ModifyRegister} selsh opci  ahwr
-    {StoreRegister} selbl
+    {LoadRegister} selbl
     {ModifyRegister} selsl opinc alwr
     {ModifyRegister} selsh opci  ahwr
-    {StoreRegister} selbh'''
+    {LoadRegister} selbh'''
 
 inst[0x37] = f'''pop c
     {ModifyRegister} selsl opinc alwr
     {ModifyRegister} selsh opci  ahwr
-    {StoreRegister} selcl
+    {LoadRegister} selcl
     {ModifyRegister} selsl opinc alwr
     {ModifyRegister} selsh opci  ahwr
-    {StoreRegister} selch'''
+    {LoadRegister} selch'''
 
 inst[0x38] = f'''push LL
     {LoadLiteral} twr

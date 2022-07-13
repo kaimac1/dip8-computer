@@ -192,7 +192,10 @@ class Assembler():
         t = self.tok.next()
         if is_literal(t):
             self.write8(0x38)
-            self.write16(self.get_literal16(t))
+            # push literal is big-endian
+            value = self.get_literal16(t)
+            self.write8(value >> 8)
+            self.write8(value & 0xFF)
         else:
             self.write8(0x30 + self.get_pushpopreg(t))
 
@@ -485,9 +488,10 @@ class Assembler():
         t = self.tok.next()
         call_addr = self.get_literal16(t)
         ret_addr = self.addr + 6
-        # push ret_addr
+        # push ret_addr (big endian)
         self.write8(0x38)
-        self.write16(ret_addr)
+        self.write8(ret_addr >> 8)
+        self.write8(ret_addr & 0xFF)
         # jmp call_addr
         self.write8(0x14)
         self.write16(call_addr)

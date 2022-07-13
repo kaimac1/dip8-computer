@@ -256,10 +256,12 @@ class CPU():
         self.operands = regs[nib]
 
     def pushl(self):
-        lo = self.next()
+        # big-endian in the instruction
         hi = self.next()
-        self.stack_push(lo)
+        lo = self.next()
+        # little-endian on the stack
         self.stack_push(hi)
+        self.stack_push(lo)
         self.operands = f"${hi<<8|lo:04x}"
 
     def pop(self):
