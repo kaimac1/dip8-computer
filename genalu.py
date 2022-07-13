@@ -55,15 +55,15 @@ class ALU():
     # logic
     def opand(self, a, b, c):
         q = a & b
-        return (q, {C:0, K:0})
+        return (q, {C:0, K:1})
 
     def opor(self, a, b, c):
         q = a | b
-        return (q, {C:0, K:0})
+        return (q, {C:0, K:1})
 
     def opxor(self, a, b, c):
         q = a ^ b
-        return (q, {C:0, K:0})
+        return (q, {C:0, K:1})
 
 
     #inc/dec a
