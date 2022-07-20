@@ -524,7 +524,7 @@ class Assembler():
                 output += [ord(x) for x in t.value]
             else:
                 length += 1
-                output += self.get_literal8(t)
+                output += [self.get_literal8(t)]
             t = self.tok.next()
 
         self.write8(length)
