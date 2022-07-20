@@ -2,7 +2,7 @@ from pprint import pprint
 from collections import namedtuple
 import binascii
 
-from decoder_spec import *
+from instructions import *
 
 flagbits = 3
 cyclebits = 4
@@ -130,10 +130,18 @@ def main():
     print(f"\n{len(output_signals)} output signals")
     print(f"{len(instructions)} opcodes\n")
             
-    create_logisim_file("decoder.rom", rom)
+    create_logisim_file("decoder_logisim.rom", rom)
 
     byte0 = bytearray([word & 0xFF for word in rom])
     with open('decoder0.bin', 'wb') as f:
         f.write(byte0)
+
+    byte1 = bytearray([(word >> 8) & 0xFF for word in rom])
+    with open('decoder1.bin', 'wb') as f:
+        f.write(byte1)
+
+    byte2 = bytearray([(word >> 16) & 0xFF for word in rom])
+    with open('decoder2.bin', 'wb') as f:
+        f.write(byte2)
 
 main()

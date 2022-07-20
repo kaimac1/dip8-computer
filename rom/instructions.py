@@ -19,7 +19,7 @@ output_signals = [
 'aout',
 '!pcinc',
 '!pcwr',
-'irwr',
+'!irwr',
 '!memrd',
 '!memwr',
 'opsel0',
