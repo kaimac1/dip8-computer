@@ -3,6 +3,8 @@ import argparse
 import sys
 import binascii
 
+#DECODER_ROM_FILES = ['../rom/decoder0.bin', '../rom/decoder1.bin', '../rom/decoder2.bin']
+
 MEMSIZE = 65536
 
 # Low nibble
@@ -46,13 +48,14 @@ class CPU():
         self.mem = Memory()
         self.halted = False
         self.pc = 0
+        self.sp = 0
         self.a = 0
         self.t = 0
         self.C = 0
         self.Z = 0
         self.N = 0
 
-        self.regnames = ['bh', 'bl', 'ch', 'cl', 'x', 'y', 'sh', 'sl']
+        self.regnames = ['bh', 'bl', 'ch', 'cl', 'x', 'y']
         self.regs = dict(zip(self.regnames, [0] * len(self.regnames)))
 
         self.opcodes = {
@@ -116,8 +119,6 @@ class CPU():
         return self.regs['bh'] << 8 | self.regs['bl']
     def c16(self):
         return self.regs['ch'] << 8 | self.regs['cl']
-    def sp16(self):
-        return self.regs['sh'] << 8 | self.regs['sl']
 
     def getreg(self, reg):
         if reg == 'b':
@@ -125,7 +126,7 @@ class CPU():
         elif reg == 'c':
             return self.c16()
         elif reg == 'sp':
-            return self.sp16()
+            return self.sp
         else:
             return self.regs[reg]
 
@@ -153,9 +154,9 @@ class CPU():
         elif mode < 0x10:
             self.a = self.getreg(r[mode-0xd]) + self.regs['y']
         elif mode == 0x10:
-            self.a = self.sp16() + self.b16()
+            self.a = self.sp + self.b16()
         elif mode == 0x11:
-            self.a = self.sp16() + self.c16()
+            self.a = self.sp + self.c16()
         elif mode == 0x12:
             self.a = self.b16() + self.c16()
 
@@ -214,19 +215,17 @@ class CPU():
 
     def stack_pop(self):
         self.incsp()
-        return self.mem[self.sp16()]
+        return self.mem[self.sp]
     def stack_push(self, v):
-        self.mem[self.sp16()] = v
+        self.mem[self.sp] = v
         self.decsp()
 
     def incsp(self):
-        self.regs['sl'] = (self.regs['sl'] + 1) % 256
-        if self.regs['sl'] == 0:
-            self.regs['sh'] = (self.regs['sh'] + 1) % 256
+        self.sp += 1
+        self.sp %= 65536
     def decsp(self):
-        self.regs['sl'] = (self.regs['sl'] - 1) % 256
-        if self.regs['sl'] == 255:
-            self.regs['sh'] = (self.regs['sh'] - 1) % 256
+        self.sp -= 1
+        self.sp %= 65536
 
     def pushreg(self, reg):
         if reg in ['x', 'y', 'bh', 'bl', 'ch', 'cl']:
@@ -273,20 +272,18 @@ class CPU():
     def movstack(self):
         self.name = 'mov'
         if self.ib == 0x39:
-            self.regs['sh'] = self.regs['bh']
-            self.regs['sl'] = self.regs['bl']
+            self.sp = self.b16()
             self.operands = 'sp, b'
         elif self.ib == 0x3a:
-            self.regs['sh'] = self.regs['ch']
-            self.regs['sl'] = self.regs['cl']
+            self.sp = self.c16()
             self.operands = 'sp, c'
         elif self.ib == 0x3b:
-            self.regs['bh'] = self.regs['sh']
-            self.regs['bl'] = self.regs['sl']
+            self.regs['bh'] = self.sp >> 8
+            self.regs['bl'] = self.sp & 0xFF
             self.operands = 'b, sp'
         elif self.ib == 0x3c:
-            self.regs['ch'] = self.regs['sh']
-            self.regs['cl'] = self.regs['sl']
+            self.regs['ch'] = self.sp >> 8
+            self.regs['cl'] = self.sp & 0xFF
             self.operands = 'c, sp'
 
 
@@ -488,7 +485,7 @@ class CPU():
         print('    b  0x{0:04x}  {0}'.format(self.regs['bh']<<8 | self.regs['bl']))
         print('    c  0x{0:04x}  {0}'.format(self.regs['ch']<<8 | self.regs['cl']))
         print('   pc  0x{0:04x}  {0}'.format(self.pc))
-        print('   sp  0x{0:04x}  {0}'.format(self.sp16()))
+        print('   sp  0x{0:04x}  {0}'.format(self.sp))
         
 
     def next(self):
