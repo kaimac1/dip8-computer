@@ -1,7 +1,7 @@
 ; multiply two 8-bit values together and print the 16-bit result in decimal
 
             ; set up stack pointer
-            mov b, #$1000
+            mov b, #$8000
             mov sp, b
 
             ldx var1
@@ -16,7 +16,6 @@
             ldx var1
             ldy var2
             call mulxy      ; multiply
-
             call printdb
 
             brk
@@ -33,7 +32,8 @@ var2        .byte 69
 ; b   output
 ; c   clobbered
 
-mulbit      .byte 1
+;mulbit      .byte 1
+mulbit = $4000
 
 mulxy       mov b, #0
             mov cl, x
