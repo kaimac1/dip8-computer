@@ -15,29 +15,29 @@ raw_signals.extend(alusel)
 # ! denotes that the signal is inverted.
 
 output_signals = [
-'!next',
-'aout',
-'!pcinc',
-'!pcwr',
-'!irwr',
-'!memrd',
-'!memwr',
-'opsel0',
-'opsel1',
-'opsel2',
-'opsel3',
-'regsel0',
-'regsel1',
-'regsel2',
-'!ahwr',
-'!alwr',
-'!regoe',
-'!regwr',
-'!ainc',
-'!alu',
-'twr',
-'!setflags',
-'!brk'
+'!next',    # 0
+'aout',     # 1
+'!pcinc',   # 2
+'!pcwr',    # 3
+'!irwr',    # 4
+'!memrd',   # 5
+'!memwr',   # 6
+'!ainc',    # 7
+'!ahwr',     # 0
+'!alwr',     # 1
+'!regoe',    # 2
+'!regwr',    # 3
+'opsel0',    # 4
+'opsel1',    # 5
+'opsel2',    # 6
+'opsel3',    # 7
+'regsel0',    # 0
+'regsel1',    # 1
+'regsel2',    # 2
+'!alu',       # 3
+'twr',        # 4
+'!setflags',  # 5
+'!brk'        # 6
 ]
 
 # T0 (fetch) signals
