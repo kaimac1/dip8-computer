@@ -1,21 +1,12 @@
 #!/bin/python3
 import argparse
 import sys
-import binascii
 
-#DECODER_ROM_FILES = ['../rom/decoder0.bin', '../rom/decoder1.bin', '../rom/decoder2.bin']
-
+DECODER_ROM_FILES = ['rom/decoder0.bin', 'rom/decoder1.bin', 'rom/decoder2.bin']
 MEMSIZE = 65536
 
-# Low nibble
-def lonib(b):
-    return b & 0x0f
-def hinib(b):
-    return b >> 4
-
-def wrap16(b):
-    return b & 0xffff
-
+def inc16(w):
+    return (w + 1) & 0xFFFF
 
 class Memory():
     PERIPH = 0xF000
@@ -42,429 +33,197 @@ class Memory():
             sys.stdout.write(chr(value))
             sys.stdout.flush()
 
+class DecoderROM():
+    def __init__(self, romfile):
+        with open(romfile, 'rb') as f:
+            self.data = f.read()
+
+    def read(self, tick, opcode, C,Z,N):
+        flagbits = N << 2 | Z << 1 | C
+        address = flagbits << 12 | (opcode & 0xFF) << 4 | (tick & 0xF)
+        return self.data[address]
+
+
 class CPU():
     def __init__(self):
         self.verbose = False
         self.mem = Memory()
         self.halted = False
-        self.pc = 0
-        self.sp = 0
-        self.a = 0
-        self.t = 0
-        self.C = 0
+
+        self.dec0 = DecoderROM(DECODER_ROM_FILES[0])
+        self.dec1 = DecoderROM(DECODER_ROM_FILES[1])
+        self.dec2 = DecoderROM(DECODER_ROM_FILES[2])
+
+        self.tick = 0
+        self.Cint = 0   # internal carry
+        self.C = 0      # user flags: carry, zero, negative
         self.Z = 0
         self.N = 0
+        
+        self.pc = 0     # program counter
+        self.a = 0      # address buffer
+        self.t = 0      # t register
+        self.regnames = ['bh', 'bl', 'ch', 'cl', 'x', 'y', 'sh', 'sl']
+        self.regs = [0] * len(self.regnames)
 
-        self.regnames = ['bh', 'bl', 'ch', 'cl', 'x', 'y']
-        self.regs = dict(zip(self.regnames, [0] * len(self.regnames)))
+        self.cycles = 0     # stats
+        self.instructions = 0
 
-        self.opcodes = {
-            (0x00, 0x12): self.adr,
-            (0x13, 0x13): self.adra,
+    def run(self):
+        self.pc = 0
+        self.tick = 0
+        self.opcode = 0x00
+        self.instruction_bytes = []
 
-            (0x14, 0x15): self.jmp,
-            (0x16, 0x17): self.jcs,
-            (0x18, 0x19): self.jcc,
-            (0x1a, 0x1b): self.jz,
-            (0x1c, 0x1d): self.jnz,
-            (0x1e, 0x1e): self.ret,
+        while not self.halted:
+            self.decode()
+            self.execute()
 
-            (0x1f, 0x1f): self.stl,
-            (0x20, 0x20): self.ldx,
-            (0x21, 0x21): self.ldy,
-            (0x22, 0x22): self.ldb,
-            (0x23, 0x23): self.ldc,
-            (0x24, 0x24): self.ldbh,
-            (0x25, 0x25): self.ldbl,
-            (0x26, 0x26): self.ldch,
-            (0x27, 0x27): self.ldcl,
-            (0x28, 0x28): self.stx,
-            (0x29, 0x29): self.sty,
-            (0x2a, 0x2a): self.stb,
-            (0x2b, 0x2b): self.stc,
-            (0x2c, 0x2c): self.stbh,
-            (0x2d, 0x2d): self.stbl,
-            (0x2e, 0x2e): self.stch,
-            (0x2f, 0x2f): self.stcl,
+        self.print_instruction() # Print final instruction
 
-            (0x30, 0x33): self.push,
-            (0x34, 0x37): self.pop,
-            (0x38, 0x38): self.pushl,
-            (0x39, 0x3c): self.movstack,
-            
-            (0x40, 0x63): self.mov,
-            (0x64, 0x6a): self.movt,
-            (0x6b, 0x6e): self.movbc,
-            (0x6f, 0x6f): self.ldt,
-            
-            (0x70, 0x7f): self.add,
-            (0x80, 0x8f): self.sub,
-            (0x90, 0x9f): self.adc,
-            (0xa0, 0xaf): self.sbc,
-            (0xb0, 0xbf): self.cmp,
-            (0xc0, 0xcb): self.opand,
-            (0xd0, 0xdb): self.opor,
-            (0xe0, 0xeb): self.xor,
-            (0xf0, 0xf3): self.inc,
-            (0xf4, 0xf7): self.dec,
-            
-            (0xff, 0xff): self.brk,
-        }
 
-    def brk(self):
-        #print("Halted!")
-        self.halted = True
+    # Decode instruction byte in IR (self.opcode)
+    # Set sig_xxx control lines
+    def decode(self):
+        d0 = self.dec0.read(self.tick, self.opcode, self.C,self.Z,self.N)
+        d1 = self.dec1.read(self.tick, self.opcode, self.C,self.Z,self.N)
+        d2 = self.dec2.read(self.tick, self.opcode, self.C,self.Z,self.N)
+        #print(f"tick={self.tick}, op={hex(self.opcode)}  {d2:08b}.{d1:08b}.{d0:08b}")
 
-    def b16(self):
-        return self.regs['bh'] << 8 | self.regs['bl']
-    def c16(self):
-        return self.regs['ch'] << 8 | self.regs['cl']
+        sig_next = not (d0 & 0b1)
+        if sig_next:
+            self.tick = 0
+            self.decode()
+            return
 
-    def getreg(self, reg):
-        if reg == 'b':
-            return self.b16()
-        elif reg == 'c':
-            return self.c16()
-        elif reg == 'sp':
-            return self.sp
+        self.sig_aout  =      d0 & 0b00000010
+        self.sig_pcinc = not (d0 & 0b00000100)
+        self.sig_pcwr  = not (d0 & 0b00001000)
+        self.sig_irwr  = not (d0 & 0b00010000)
+        self.sig_memrd = not (d0 & 0b00100000)
+        self.sig_memwr = not (d0 & 0b01000000)
+        self.sig_ainc  = not (d0 & 0b10000000)
+
+        self.sig_ahwr  = not (d1 & 0b00000001)
+        self.sig_alwr  = not (d1 & 0b00000010)
+        self.sig_regoe = not (d1 & 0b00000100)
+        self.sig_regwr = not (d1 & 0b00001000)
+        self.sig_opsel = d1 >> 4
+
+        self.sig_regsel = d2 & 0b111
+        self.sig_alu = not (d2 & 0b00001000)
+        self.sig_twr =     (d2 & 0b00010000)
+        self.sig_setflags = not (d2 & 0b00100000)
+
+    def execute(self):
+        if self.opcode == 0xFF:
+            self.halted = True
+            return
+
+        abus = self.a if self.sig_aout else self.pc
+
+        # dbus writers
+        if self.sig_memrd:
+            dbus = self.mem[abus]
+            if not self.sig_irwr and not self.sig_aout:
+                self.instruction_bytes.append(dbus)
+        elif self.sig_alu:
+            dbus = self.alu()
+
+        # dbus readers
+        if self.sig_memwr:
+            self.mem[abus] = dbus
+        if self.sig_irwr:
+            # Load new instruction
+            self.opcode = dbus
+            self.instructions += 1
+            self.print_instruction()
+            self.instruction_bytes = [abus, dbus]
+        if self.sig_ahwr:
+            self.a &= 0x00FF
+            self.a |= dbus << 8
+        if self.sig_alwr:
+            self.a &= 0xFF00
+            self.a |= dbus
+        if self.sig_twr:
+            self.t = dbus
+        if self.sig_regwr:
+            self.regs[self.sig_regsel] = dbus
+
+        if self.sig_pcwr:
+            self.pc = abus
+
+        if self.sig_pcinc:
+            self.pc = inc16(self.pc)
+        if self.sig_ainc:
+            self.a = inc16(self.a)
+
+        self.tick = (self.tick + 1) % 16
+        self.cycles += 1
+
+    def alu(self):
+        a = self.regs[self.sig_regsel] if self.sig_regoe else 0
+        b = self.t
+        cin = self.C if self.sig_setflags else self.Cint
+        c = 0
+
+        if self.sig_opsel == 0: # a
+            q = a
+        elif self.sig_opsel == 1: # b
+            q = b
+        elif self.sig_opsel == 2: # add
+            q = a + b
+            c = q > 255
+        elif self.sig_opsel == 3: # sub
+            q = a + ~b + 1
+            c = q >= 0
+        elif self.sig_opsel == 4: # adc
+            q = a + b + cin
+            c = q > 255
+        elif self.sig_opsel == 5: # sbc
+            q = a + ~b + cin
+            c = q >= 0
+        elif self.sig_opsel == 6: # and
+            q = a & b
+        elif self.sig_opsel == 7: # or
+            q = a | b
+        elif self.sig_opsel == 8: # xor
+            q = a ^ b
+        elif self.sig_opsel == 9: # inc if carry set
+            q = a + cin
+        elif self.sig_opsel == 10: # inc
+            q = a + 1
+            c = q > 255
+        elif self.sig_opsel == 11: # dec 
+            q = a - 1
+            c = q >= 0
+        elif self.sig_opsel == 12: # dec if carry clear
+            q = a + ~0 + cin
         else:
-            return self.regs[reg]
+            print(f"Error: invalid ALU selection {self.sig_opsel}")
+            sys.exit(-1)
 
-    def adr(self):
-        r = ['b', 'c', 'sp']
-        mode = self.ib - 0x00
-        if mode == 0:
-            al = self.next()
-            ah = self.next()
-            self.a = ah<<8 | al
-            self.operands = f"${self.a:04x}"
+        q &= 0xFF
 
-        elif mode < 4:
-            self.a = self.getreg(r[mode-1])
-        elif mode < 7:
-            offset = self.next()
-            self.a = self.getreg(r[mode-4])
-        elif mode < 10:
-            ol = self.next()
-            oh = self.next()
-            offset = oh<<8 | ol
-            self.a = self.getreg(r[mode-7]) + offset
-        elif mode < 0xd:
-            self.a = self.getreg(r[mode-0xa]) + self.regs['x']
-        elif mode < 0x10:
-            self.a = self.getreg(r[mode-0xd]) + self.regs['y']
-        elif mode == 0x10:
-            self.a = self.sp + self.b16()
-        elif mode == 0x11:
-            self.a = self.sp + self.c16()
-        elif mode == 0x12:
-            self.a = self.b16() + self.c16()
+        # Set flags if the operator allows it
+        canset = self.sig_opsel in [2,3,4,5,6,7,8,10,11]
+        if canset:
+            if self.sig_setflags:
+                self.C = c
+                self.Z = (q == 0)
+                self.N = bool(q & 0x80)
+            else:
+                self.Cint = c
 
-    def adra(self):
-        lo = self.mem[self.a]
-        hi = self.mem[self.a+1]
-        self.a = hi<<8 | lo
-
-    def stl(self):
-        value = self.next()
-        self.mem[self.a] = value
-        self.operands = f"${value:02x}"
-
-    def ldx(self):
-        self.regs['x'] = self.mem[self.a]
-    def ldy(self):
-        self.regs['y'] = self.mem[self.a]
-    def ldb(self):
-        self.regs['bl'] = self.mem[self.a]
-        self.a += 1
-        self.regs['bh'] = self.mem[self.a]
-    def ldc(self):
-        self.regs['cl'] = self.mem[self.a]
-        self.a += 1
-        self.regs['ch'] = self.mem[self.a]
-    def ldbh(self):
-        self.regs['bh'] = self.mem[self.a]
-    def ldbl(self):
-        self.regs['bl'] = self.mem[self.a]
-    def ldch(self):
-        self.regs['ch'] = self.mem[self.a]
-    def ldcl(self):
-        self.regs['cl'] = self.mem[self.a]
-
-    def stx(self):
-        self.mem[self.a] = self.regs['x']
-    def sty(self):
-        self.mem[self.a] = self.regs['y']
-    def stb(self):
-        self.mem[self.a] = self.regs['bl']
-        self.a += 1
-        self.mem[self.a] = self.regs['bh']
-    def stc(self):
-        self.mem[self.a] = self.regs['cl']
-        self.a += 1
-        self.mem[self.a] = self.regs['ch']
-    def stbh(self):
-        self.mem[self.a] = self.regs['bh']
-    def stbl(self):
-        self.mem[self.a] = self.regs['bl']
-    def stch(self):
-        self.mem[self.a] = self.regs['ch']
-    def stcl(self):
-        self.mem[self.a] = self.regs['cl']
+        return q
 
 
-    def stack_pop(self):
-        self.incsp()
-        return self.mem[self.sp]
-    def stack_push(self, v):
-        self.mem[self.sp] = v
-        self.decsp()
-
-    def incsp(self):
-        self.sp += 1
-        self.sp %= 65536
-    def decsp(self):
-        self.sp -= 1
-        self.sp %= 65536
-
-    def pushreg(self, reg):
-        if reg in ['x', 'y', 'bh', 'bl', 'ch', 'cl']:
-            self.stack_push(self.regs[reg])
-        elif reg == 'b':
-            self.pushreg('bl')
-            self.pushreg('bh')
-        elif reg == 'c':
-            self.pushreg('cl')
-            self.pushreg('ch')
-
-    def popreg(self, reg):
-        if reg in ['x', 'y', 'bh', 'bl', 'ch', 'cl']:
-            self.regs[reg] = self.stack_pop()
-        elif reg == 'b':
-            self.popreg('bh')
-            self.popreg('bl')
-        elif reg == 'c':
-            self.popreg('ch')
-            self.popreg('cl')
-
-
-    def push(self):
-        nib = lonib(self.ib)
-        regs = ['x', 'y', 'b', 'c']
-        self.pushreg(regs[nib])
-        self.operands = regs[nib]
-
-    def pushl(self):
-        # big-endian in the instruction
-        hi = self.next()
-        lo = self.next()
-        # little-endian on the stack
-        self.stack_push(hi)
-        self.stack_push(lo)
-        self.operands = f"${hi<<8|lo:04x}"
-
-    def pop(self):
-        idx = lonib(self.ib) - 4
-        regs = ['x', 'y', 'b', 'c']
-        self.popreg(regs[idx])
-        self.operands = regs[idx]
-
-    def movstack(self):
-        self.name = 'mov'
-        if self.ib == 0x39:
-            self.sp = self.b16()
-            self.operands = 'sp, b'
-        elif self.ib == 0x3a:
-            self.sp = self.c16()
-            self.operands = 'sp, c'
-        elif self.ib == 0x3b:
-            self.regs['bh'] = self.sp >> 8
-            self.regs['bl'] = self.sp & 0xFF
-            self.operands = 'b, sp'
-        elif self.ib == 0x3c:
-            self.regs['ch'] = self.sp >> 8
-            self.regs['cl'] = self.sp & 0xFF
-            self.operands = 'c, sp'
-
-
-    def dojump(self, do):
-        nib = lonib(self.ib) % 2
-        if nib == 0:
-            lo = self.next()
-            hi = self.next()
-            addr = lo | (hi << 8)
-            if do:
-                self.pc = addr
-                self.operands = f"${addr:04x}"
-        elif nib == 1:
-            if do:
-                self.pc = self.b16()
-                self.operands = 'b'
-
-    def jmp(self):
-        self.dojump(True)
-
-    def jcs(self):
-        self.dojump(self.C)
-
-    def jcc(self):
-        self.dojump(not self.C)
-
-    def jnz(self):
-        self.dojump(not self.Z)
-
-    def jz(self):
-        self.dojump(self.Z)
-
-    def ret(self):
-        lo = self.stack_pop()
-        hi = self.stack_pop()
-        addr = lo | (hi << 8)
-        self.pc = addr
-
-
-    # mov
-
-    def mov(self):
-        regs = ['bh', 'bl', 'ch', 'cl', 'x', 'y']
-        dest = (self.ib - 0x40) // 6
-        src  = (self.ib - 0x40) %  6
-        if src == dest: # load literal
-            literal = self.next()
-            self.regs[regs[dest]] = literal
-            self.operands = f"{regs[dest]}, {literal}"
-        else:
-            self.regs[regs[dest]] = self.regs[regs[src]]
-            self.operands = f"{regs[dest]}, {regs[src]}"
-
-    def movt(self):
-        self.name = 'mov'
-        regs = ['bh', 'bl', 'ch', 'cl', 'x', 'y']
-        idx = lonib(self.ib) - 4
-        if idx == 6: # load literal
-            literal = self.next()
-            self.t = literal
-            self.operands = f"t, {literal}"
-        else:
-            src = regs[idx]
-            self.t = self.regs[src]
-            self.operands = f"t, {src}"
-
-    def movbc(self):
-        self.name = 'mov'
-        if self.ib == 0x6b:
-            self.regs['bh'] = self.regs['ch']
-            self.regs['bl'] = self.regs['cl']
-            self.operands = "b, c"
-        elif self.ib == 0x6c:
-            self.regs['ch'] = self.regs['bh']
-            self.regs['cl'] = self.regs['bl']
-            self.operands = "c, b"
-        elif self.ib == 0x6d:
-            self.regs['bl'] = self.next()
-            self.regs['bh'] = self.next()
-            self.operands = f"b, ${self.b16():04x}"
-        elif self.ib == 0x6e:
-            self.regs['cl'] = self.next()
-            self.regs['ch'] = self.next()
-            self.operands = f"c, ${self.c16():04x}"
-
-    def ldt(self):
-        self.t = self.mem[self.a]
-
-    # alu
-
-    def aluargs(self):
-        regs = ['x', 'y', 'bh', 'bl', 'ch', 'cl']
-        reg = regs[lonib(self.ib // 2) % 8]
-        if self.ib % 2 == 0:
-            v2 = self.t
-            self.operands = f"{reg}, t"
-        else:
-            v2 = self.next()
-            self.operands = f"{reg}, {v2}"
-        return reg, v2
-
-
-    def flags(self, val):
-        self.Z = (val == 0)
-        self.N = bool(val & 0x80)
-
-    def add(self):
-        reg, v2 = self.aluargs()
-        q = self.regs[reg] + v2
-        self.C = (q > 255)
-        self.regs[reg] = q % 256
-        self.flags(self.regs[reg])
-
-    def sub(self):
-        reg, v2 = self.aluargs()
-        q = self.regs[reg] + ~v2 + 1
-        self.C = (self.regs[reg] >= v2)
-        self.regs[reg] = q % 256
-        self.flags(self.regs[reg])
-
-    def adc(self):
-        reg, v2 = self.aluargs()
-        q = self.regs[reg] + v2 + int(self.C)
-        self.C = (q > 255)
-        self.regs[reg] = q % 256
-        self.flags(self.regs[reg])
-
-    def sbc(self):
-        reg, v2 = self.aluargs()
-        q = self.regs[reg] + ~v2 + int(self.C)
-        self.C = (self.regs[reg] >= v2)
-        self.regs[reg] = q % 256
-        self.flags(self.regs[reg])
-
-    def cmp(self): # subtract without storing result
-        reg, v2 = self.aluargs()
-        q = self.regs[reg] + ~v2 + 1
-        self.C = (self.regs[reg] >= v2)
-        self.flags(q)
-
-    def opand(self):
-        self.name = 'and'
-        reg, v2 = self.aluargs()
-        self.regs[reg] = self.regs[reg] & v2
-        self.flags(self.regs[reg])
-
-    def opor(self):
-        self.name = 'or'
-        reg, v2 = self.aluargs()
-        self.regs[reg] = self.regs[reg] | v2
-        self.flags(self.regs[reg])
-
-    def xor(self):
-        reg, v2 = self.aluargs()
-        self.regs[reg] = self.regs[reg] ^ v2
-        self.flags(self.regs[reg])
-
-    def inc(self):
-        r = ['x', 'y', 'bl', 'cl']
-        idx = self.ib % 4
-        reg = r[idx]
-        self.regs[reg] = (self.regs[reg] + 1) % 256
-        self.flags(self.regs[reg])
-        if idx == 2 and self.regs['bl'] == 0: self.regs['bh'] = (self.regs['bh'] + 1) % 256
-        if idx == 3 and self.regs['cl'] == 0: self.regs['ch'] = (self.regs['ch'] + 1) % 256
-        self.operands = reg
-
-    def dec(self):
-        r = ['x', 'y', 'bl', 'cl']
-        idx = self.ib % 4
-        reg = r[idx]
-        self.regs[reg] = (self.regs[reg] - 1) % 256
-        self.flags(self.regs[reg])
-        if idx == 2 and self.regs['bl'] == 255: self.regs['bh'] = (self.regs['bh'] - 1) % 256
-        if idx == 3 and self.regs['cl'] == 255: self.regs['ch'] = (self.regs['ch'] - 1) % 256
-        self.operands = reg
-
-
-
-
-
+    def print_instruction(self):
+        if not self.verbose: return
+        if len(self.instruction_bytes) < 2: return
+        addr = self.instruction_bytes[0]
+        byteshex = ' '.join([f"{x:02x}" for x in self.instruction_bytes[1:]])
+        print(f'\t{addr:04x}  {byteshex:9s}')# {self.name} {self.operands}')        
 
     def dumpmem(self, start, bytes):
         for i in range(bytes):
@@ -472,52 +231,22 @@ class CPU():
             b = self.mem[start+i]
             print(f"{b:02x} ", end="")
         print("\n")
-        #print(binascii.hexlify(self.mem[start:start+bytes]))
+
     def dumpregs(self):
-        print('----------')
-        for reg in self.regs:
-            val = self.regs[reg]
-            print('{0:3s} 0x{1:02x}  {1}'.format(reg, val))
-        print('----------')
+        print('Registers:')
+        for i in range(len(self.regs)):
+            reg = self.regnames[i]
+            val = self.regs[i]
+            print('    {0:3s} 0x{1:02x}  {1}'.format(reg, val))
+        print('-------------')
         print(f"flags  {'C' if self.C else '.'}{'Z' if self.Z else '.'}{'N' if self.N else '.'}")
         print('    a  0x{0:04x}  {0}'.format(self.a))
         print('    t  0x{0:02x}    {0}'.format(self.t))
-        print('    b  0x{0:04x}  {0}'.format(self.regs['bh']<<8 | self.regs['bl']))
-        print('    c  0x{0:04x}  {0}'.format(self.regs['ch']<<8 | self.regs['cl']))
+        print('    b  0x{0:04x}  {0}'.format(self.regs[0]<<8 | self.regs[1]))
+        print('    c  0x{0:04x}  {0}'.format(self.regs[2]<<8 | self.regs[3]))
         print('   pc  0x{0:04x}  {0}'.format(self.pc))
-        print('   sp  0x{0:04x}  {0}'.format(self.sp))
+        print('   sp  0x{0:04x}  {0}'.format(self.regs[6]<<8 | self.regs[7]))
         
-
-    def next(self):
-        byte = self.mem[self.pc]
-        self.this_instruction_bytes.append(byte)
-        self.pc += 1
-        self.pc %= MEMSIZE
-        return byte
-
-    def run(self):
-        while not self.halted:
-            self.this_instruction_bytes = []
-            self.operands = ""
-            ipc = self.pc
-            self.ib = self.next()
-
-            execd = False
-            for oprange in self.opcodes:
-                opcode = self.opcodes[oprange]
-
-                if oprange[0] <= self.ib <= oprange[1]:
-                    self.name = opcode.__name__
-                    opcode()
-                    execd = True
-                    if self.verbose:
-                        self.this_instruction_bytes = ' '.join([f"{x:02x}" for x in self.this_instruction_bytes])
-                        print(f'{ipc:04x}  {self.this_instruction_bytes:9s} {self.name} {self.operands}')
-                    break
-
-            if not execd:
-                print(f"Invalid opcode {self.ib:02x}, halted.")
-                return
 
     
 
@@ -538,13 +267,16 @@ if __name__ == "__main__":
     cpu = CPU()
     cpu.verbose = args.verbose
     cpu.mem[0:len(data)] = data
-
-    if cpu.verbose:
-        cpu.dumpmem(0,32)
     cpu.run()
+
+    print(f"\n---\nStatistics:")
+    print(f"    {cpu.instructions} instructions")
+    print(f"    {cpu.cycles} cycles")
+    cpufreq = 2000000
+    cputime = cpu.cycles / cpufreq
+    print(f"    {cputime} sec at {cpufreq/1E6} MHz")
+    mips = cpu.instructions / cputime / 1E6
+    print(f"    {mips:.2f} MIPS")
 
     if args.dump_registers:
         cpu.dumpregs()
-
-    if cpu.verbose:
-        cpu.dumpmem(0,32)

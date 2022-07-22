@@ -1,3 +1,7 @@
+            ; init sp
+            mov b, #$8000
+            mov sp, b
+    
 
             mov b, #hello
             call printn
