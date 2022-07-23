@@ -57,16 +57,23 @@ mnoadd      add cl, cl      ; c *= 2
 
 UART = $f000
 
+
+; used by printdx and print db
+; prints a single digit
+;  b    16-bit input number / remainder output
+;  c    multiple of ten (1, 10, 100, 1000, ...) to print
+;  x    1 if any previous digits have been printed (so leading zeros are not printed)
+
 dodigit     mov y, #0
-calcloop    cmp bh, ch
+calcloop    cmp bh, ch          ; compare b and c
             jnz calc2
             cmp bl, cl
 calc2       jcc calcout
-            sub bl, cl
+            sub bl, cl          ; b = b - c
             sbc bh, ch
             inc y
             jmp calcloop
-calcout     cmp y, #0
+calcout     cmp y, #0           ; now y = b div c
             jnz skipcheck
             cmp x, #0
             jz  calcret

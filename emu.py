@@ -1,6 +1,7 @@
 #!/bin/python3
 import argparse
 import sys
+import time
 
 DECODER_ROM_FILES = ['rom/decoder0.bin', 'rom/decoder1.bin', 'rom/decoder2.bin']
 MEMSIZE = 65536
@@ -33,16 +34,10 @@ class Memory():
             sys.stdout.write(chr(value))
             sys.stdout.flush()
 
-class DecoderROM():
-    def __init__(self, romfile):
-        with open(romfile, 'rb') as f:
-            self.data = f.read()
-
-    def read(self, tick, opcode, C,Z,N):
-        flagbits = N << 2 | Z << 1 | C
-        address = flagbits << 12 | (opcode & 0xFF) << 4 | (tick & 0xF)
-        return self.data[address]
-
+def decoder_rom(file):
+    with open(file, 'rb') as f:
+            data = f.read()
+    return data
 
 class CPU():
     def __init__(self):
@@ -50,9 +45,9 @@ class CPU():
         self.mem = Memory()
         self.halted = False
 
-        self.dec0 = DecoderROM(DECODER_ROM_FILES[0])
-        self.dec1 = DecoderROM(DECODER_ROM_FILES[1])
-        self.dec2 = DecoderROM(DECODER_ROM_FILES[2])
+        self.dec0 = decoder_rom(DECODER_ROM_FILES[0])
+        self.dec1 = decoder_rom(DECODER_ROM_FILES[1])
+        self.dec2 = decoder_rom(DECODER_ROM_FILES[2])
 
         self.tick = 0
         self.Cint = 0   # internal carry
@@ -76,139 +71,142 @@ class CPU():
         self.instruction_bytes = []
 
         while not self.halted:
-            self.decode()
-            self.execute()
+            self.clock()
 
         self.print_instruction() # Print final instruction
 
 
-    # Decode instruction byte in IR (self.opcode)
-    # Set sig_xxx control lines
-    def decode(self):
-        d0 = self.dec0.read(self.tick, self.opcode, self.C,self.Z,self.N)
-        d1 = self.dec1.read(self.tick, self.opcode, self.C,self.Z,self.N)
-        d2 = self.dec2.read(self.tick, self.opcode, self.C,self.Z,self.N)
-        #print(f"tick={self.tick}, op={hex(self.opcode)}  {d2:08b}.{d1:08b}.{d0:08b}")
+    def clock(self):
+
+        # decode
+
+        flagbits = self.N << 2 | self.Z << 1 | self.C
+        address = flagbits << 12 | (self.opcode & 0xFF) << 4 | (self.tick & 0xF)
+        d0 = self.dec0[address]
+        d1 = self.dec1[address]
+        d2 = self.dec2[address]
 
         sig_next = not (d0 & 0b1)
         if sig_next:
             self.tick = 0
-            self.decode()
+            self.clock()
             return
 
-        self.sig_aout  =      d0 & 0b00000010
-        self.sig_pcinc = not (d0 & 0b00000100)
-        self.sig_pcwr  = not (d0 & 0b00001000)
-        self.sig_irwr  = not (d0 & 0b00010000)
-        self.sig_memrd = not (d0 & 0b00100000)
-        self.sig_memwr = not (d0 & 0b01000000)
-        self.sig_ainc  = not (d0 & 0b10000000)
+        sig_aout  =      d0 & 0b00000010
+        sig_pcinc = not (d0 & 0b00000100)
+        sig_pcwr  = not (d0 & 0b00001000)
+        sig_irwr  = not (d0 & 0b00010000)
+        sig_memrd = not (d0 & 0b00100000)
+        sig_memwr = not (d0 & 0b01000000)
+        sig_ainc  = not (d0 & 0b10000000)
 
-        self.sig_ahwr  = not (d1 & 0b00000001)
-        self.sig_alwr  = not (d1 & 0b00000010)
-        self.sig_regoe = not (d1 & 0b00000100)
-        self.sig_regwr = not (d1 & 0b00001000)
-        self.sig_opsel = d1 >> 4
+        sig_ahwr  = not (d1 & 0b00000001)
+        sig_alwr  = not (d1 & 0b00000010)
+        sig_regoe = not (d1 & 0b00000100)
+        sig_regwr = not (d1 & 0b00001000)
+        sig_opsel = d1 >> 4
 
-        self.sig_regsel = d2 & 0b111
-        self.sig_alu = not (d2 & 0b00001000)
-        self.sig_twr =     (d2 & 0b00010000)
-        self.sig_setflags = not (d2 & 0b00100000)
+        sig_regsel = d2 & 0b111
+        sig_alu    =   not (d2 & 0b00001000)
+        sig_twr    =       (d2 & 0b00010000)
+        sig_setflags = not (d2 & 0b00100000)
 
-    def execute(self):
+
+        # execute
+
         if self.opcode == 0xFF:
             self.halted = True
             return
 
-        abus = self.a if self.sig_aout else self.pc
+        abus = self.a if sig_aout else self.pc
 
         # dbus writers
-        if self.sig_memrd:
+        if sig_memrd:
             dbus = self.mem[abus]
-            if not self.sig_irwr and not self.sig_aout:
+            if not sig_irwr and not sig_aout:
                 self.instruction_bytes.append(dbus)
-        elif self.sig_alu:
-            dbus = self.alu()
+        elif sig_alu:
+            alu_a = self.regs[sig_regsel] if sig_regoe else 0
+            dbus = self.alu(alu_a, sig_opsel, sig_setflags)
 
         # dbus readers
-        if self.sig_memwr:
+        if sig_memwr:
             self.mem[abus] = dbus
-        if self.sig_irwr:
+        if sig_irwr:
             # Load new instruction
             self.opcode = dbus
             self.instructions += 1
             self.print_instruction()
             self.instruction_bytes = [abus, dbus]
-        if self.sig_ahwr:
+        if sig_ahwr:
             self.a &= 0x00FF
             self.a |= dbus << 8
-        if self.sig_alwr:
+        if sig_alwr:
             self.a &= 0xFF00
             self.a |= dbus
-        if self.sig_twr:
+        if sig_twr:
             self.t = dbus
-        if self.sig_regwr:
-            self.regs[self.sig_regsel] = dbus
+        if sig_regwr:
+            self.regs[sig_regsel] = dbus
 
-        if self.sig_pcwr:
+        if sig_pcwr:
             self.pc = abus
 
-        if self.sig_pcinc:
+        if sig_pcinc:
             self.pc = inc16(self.pc)
-        if self.sig_ainc:
+        if sig_ainc:
             self.a = inc16(self.a)
 
         self.tick = (self.tick + 1) % 16
         self.cycles += 1
 
-    def alu(self):
-        a = self.regs[self.sig_regsel] if self.sig_regoe else 0
+    def alu(self, a, opsel, setflags):
         b = self.t
-        cin = self.C if self.sig_setflags else self.Cint
+        cin = self.C if setflags else self.Cint
         c = 0
 
-        if self.sig_opsel == 0: # a
+        if opsel == 0: # a
             q = a
-        elif self.sig_opsel == 1: # b
+        elif opsel == 1: # b
             q = b
-        elif self.sig_opsel == 2: # add
+        elif opsel == 2: # add
             q = a + b
             c = q > 255
-        elif self.sig_opsel == 3: # sub
+        elif opsel == 3: # sub
             q = a + ~b + 1
             c = q >= 0
-        elif self.sig_opsel == 4: # adc
+        elif opsel == 4: # adc
             q = a + b + cin
             c = q > 255
-        elif self.sig_opsel == 5: # sbc
+        elif opsel == 5: # sbc
             q = a + ~b + cin
             c = q >= 0
-        elif self.sig_opsel == 6: # and
+        elif opsel == 6: # and
             q = a & b
-        elif self.sig_opsel == 7: # or
+        elif opsel == 7: # or
             q = a | b
-        elif self.sig_opsel == 8: # xor
+        elif opsel == 8: # xor
             q = a ^ b
-        elif self.sig_opsel == 9: # inc if carry set
+        elif opsel == 9: # inc if carry set
             q = a + cin
-        elif self.sig_opsel == 10: # inc
+        elif opsel == 10: # inc
             q = a + 1
             c = q > 255
-        elif self.sig_opsel == 11: # dec 
+        elif opsel == 11: # dec 
             q = a - 1
             c = q >= 0
-        elif self.sig_opsel == 12: # dec if carry clear
+        elif opsel == 12: # dec if carry clear
             q = a + ~0 + cin
         else:
-            print(f"Error: invalid ALU selection {self.sig_opsel}")
+            print(f"Error: invalid ALU selection {opsel}")
             sys.exit(-1)
 
         q &= 0xFF
 
         # Set flags if the operator allows it
-        canset = self.sig_opsel in [2,3,4,5,6,7,8,10,11]
+        canset = opsel in [2,3,4,5,6,7,8,10,11]
         if canset:
-            if self.sig_setflags:
+            if setflags:
                 self.C = c
                 self.Z = (q == 0)
                 self.N = bool(q & 0x80)
