@@ -9,6 +9,8 @@ MEMSIZE = 65536
 def inc16(w):
     return (w + 1) & 0xFFFF
 
+
+# RAM and memory-mapped I/O
 class Memory():
     PERIPH = 0xF000
     def __init__(self):
@@ -34,10 +36,12 @@ class Memory():
             sys.stdout.write(chr(value))
             sys.stdout.flush()
 
+
 def decoder_rom(file):
     with open(file, 'rb') as f:
             data = f.read()
     return data
+
 
 class CPU():
     def __init__(self):
@@ -64,6 +68,8 @@ class CPU():
         self.cycles = 0     # stats
         self.instructions = 0
 
+
+    # Run until a brk (halt) instruction
     def run(self):
         self.pc = 0
         self.tick = 0
@@ -76,6 +82,7 @@ class CPU():
         self.print_instruction() # Print final instruction
 
 
+    # Perform one clock cycle - fetch/decode/execute
     def clock(self):
 
         # decode
@@ -88,6 +95,7 @@ class CPU():
 
         sig_next = not (d0 & 0b1)
         if sig_next:
+            # Reset tick and re-decode
             self.tick = 0
             self.clock()
             return
@@ -99,13 +107,11 @@ class CPU():
         sig_memrd = not (d0 & 0b00100000)
         sig_memwr = not (d0 & 0b01000000)
         sig_ainc  = not (d0 & 0b10000000)
-
         sig_ahwr  = not (d1 & 0b00000001)
         sig_alwr  = not (d1 & 0b00000010)
         sig_regoe = not (d1 & 0b00000100)
         sig_regwr = not (d1 & 0b00001000)
         sig_opsel = d1 >> 4
-
         sig_regsel = d2 & 0b111
         sig_alu    =   not (d2 & 0b00001000)
         sig_twr    =       (d2 & 0b00010000)
@@ -159,6 +165,7 @@ class CPU():
 
         self.tick = (self.tick + 1) % 16
         self.cycles += 1
+
 
     def alu(self, a, opsel, setflags):
         b = self.t
