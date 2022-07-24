@@ -160,9 +160,20 @@ class Assembler():
         try:
             return int(t.value)
         except:
-            name = t.value
+            if t.value[0] in ['<', '>']:
+                name = t.value[1:]
+            else:
+                name = t.value
+
             if name in self.syms:
-                return self.syms[name]
+                value = self.syms[name]
+
+                if t.value[0] == '<':
+                    value = value & 0xFF
+                elif t.value[0] == '>':
+                    value = value >> 8
+                return value
+
             else:
                 if self.pass1: # don't complain on pass1 if the symbol is not defined yet
                     return 0
@@ -396,20 +407,27 @@ class Assembler():
     def inst_add(self):
         self.arith_common(0x70)
     def inst_sub(self):
-        self.arith_common(0x80)
+        self.arith_common(0x7c)
     def inst_adc(self):
-        self.arith_common(0x90)
+        self.arith_common(0x88)
     def inst_sbc(self):
-        self.arith_common(0xa0)
+        self.arith_common(0x94)
     def inst_cmp(self):
-        self.arith_common(0xb0)
+        self.arith_common(0xa0)
 
     def inst_and(self):
-        self.logic_common(0xc0)
+        self.logic_common(0xac)
     def inst_or(self):
-        self.logic_common(0xd0)
+        self.logic_common(0xb8)
     def inst_xor(self):
-        self.logic_common(0xe0)
+        self.logic_common(0xc4)
+
+    def inst_shl(self):
+        t = self.tok.next()
+        regs = ['x', 'y', 'bh', 'bl', 'ch', 'cl']
+        if t.value not in regs:
+            self.error("Invalid operand.")
+        self.write8(0xd0 + regs.index(t.value))        
 
     def inst_inc(self):
         t = self.tok.next()
@@ -424,6 +442,44 @@ class Assembler():
         if t.value not in regs:
             self.error("Invalid operand.")
         self.write8(0xf4 + regs.index(t.value))
+
+
+
+    def get_aluregw(self, reg):
+        return ['b', 'c'].index(reg)
+
+    def inst_addw(self):
+        ta = self.tok.next()
+        tb = self.tok.next()
+        if ta is None or tb is None:
+            self.error("ALU instructions require two operands.")
+                    
+        lit = 0
+        if tb.type == 'text':
+            if tb.value == 'm':
+                self.inst_ldt()
+                offs = 0
+            elif tb.value == 't':
+                offs = 0
+            elif tb.value in ['b', 'c']:
+                offs = 1 if tb.value == 'b' else 2
+            else:
+                self.error("Invalid ALU instruction.")
+        elif tb.type == 'literal':
+            lit = 1
+            offs = 3
+        elif tb.type == 'symbol' and tb.value == '[':
+            self.gen_adr(self.tok.next())
+            self.inst_ldt()
+            offs = 0
+        else:
+            self.error("Invalid ALU instruction.")
+
+        self.write8(0xe0 + 4*self.get_aluregw(ta.value) + offs)
+        if lit:
+            self.write16(self.get_literal16(tb))
+
+
 
 
 
@@ -512,6 +568,12 @@ class Assembler():
             else:
                 self.write8(self.get_literal8(t))
             t = self.tok.next()
+
+    def direc_word(self):
+        t = self.tok.next()
+        while t is not None:
+            self.write16(self.get_literal16(t))
+            t = self.tok.next()        
 
     def direc_string(self):
         t = self.tok.next()

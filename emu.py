@@ -197,14 +197,17 @@ class CPU():
             c = q >= 0
         elif opsel == 12: # dec if carry clear
             q = a + ~0 + cin
+        elif opsel == 13:
+            q = a << 1
+            c = q > 255
         else:
-            print(f"Error: invalid ALU selection {opsel}")
+            print(f"Error: invalid ALU op {opsel}")
             sys.exit(-1)
 
         q &= 0xFF
 
         # Set flags if the operator allows it
-        canset = opsel in [2,3,4,5,6,7,8,10,11]
+        canset = opsel in [2,3,4,5,6,7,8,10,11,13]
         if canset:
             if setflags:
                 self.C = c
@@ -273,8 +276,11 @@ if __name__ == "__main__":
     cpufreq = 2000000
     cputime = cpu.cycles / cpufreq
     print(f"    {cputime} sec at {cpufreq/1E6} MHz")
-    mips = cpu.instructions / cputime / 1E6
-    print(f"    {mips:.2f} MIPS")
+    cperi = cpu.cycles / cpu.instructions
+    print(f"    {cperi:.2f} cycles/inst")
 
     if args.dump_registers:
         cpu.dumpregs()
+
+    # cpu.dumpmem(0x005b, 8)
+    # cpu.dumpmem(0x3ff0, 512)

@@ -96,6 +96,17 @@ class ALU():
         return (q, {C: cout, K:0})
 
 
+    # shift
+    def opshl(self, a, b, c):
+        if self.lo: c = 0
+
+        r = (a << 1) | c
+        q = r & 0xF
+        return (q, {C: r>15, K:1})
+
+
+
+
 
 
 ops = [
@@ -111,7 +122,8 @@ ops = [
 'opci',       #9
 'opinc',      #10
 'opdec',      #11
-'opcd'        #12
+'opcd',       #12
+'opshl'       #13
 ]
 
 print(f"{len(ops)} operators defined")
