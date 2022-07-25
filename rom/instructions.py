@@ -5,7 +5,7 @@
 raw_signals = 'next aout pcinc pcwr irwr memrd memwr alwr ahwr ainc regoe regwr twr alu setflags brk'
 
 regsel = ['selbh', 'selbl', 'selch', 'selcl', 'selx', 'sely', 'selsh', 'selsl']
-alusel = ['opa', 'opb', 'opadd', 'opsub', 'opadc', 'opsbc', 'opand', 'opor', 'opxor', 'opci', 'opinc', 'opdec', 'opcd', 'opshl']
+alusel = ['opa', 'opb', 'opadd', 'opsub', 'opadc', 'opsbc', 'opand', 'opor', 'opxor', 'opci', 'opinc', 'opdec', 'opcd', 'opror1', 'opror2']
 
 raw_signals = raw_signals.split(" ")
 raw_signals.extend(regsel)
@@ -545,12 +545,12 @@ inst[0xcb] = f'''xor bl, #L      \n      {LoadLiteral} twr      \n      {ModifyR
 inst[0xcd] = f'''xor ch, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selch opxor setflags'''
 inst[0xcf] = f'''xor cl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selcl opxor setflags'''
 
-inst[0xd0] = f'''shl x           \n      {ModifyRegister} selx  opshl setflags'''
-inst[0xd1] = f'''shl y           \n      {ModifyRegister} sely  opshl setflags'''
-inst[0xd2] = f'''shl bh          \n      {ModifyRegister} selbh opshl setflags'''
-inst[0xd3] = f'''shl bl          \n      {ModifyRegister} selbl opshl setflags'''
-inst[0xd4] = f'''shl ch          \n      {ModifyRegister} selch opshl setflags'''
-inst[0xd5] = f'''shl cl          \n      {ModifyRegister} selcl opshl setflags'''
+inst[0xd0] = f'''ror x           \n      {ModifyRegister} selx  opror1 setflags \n      {ModifyRegister} selx  opror2 setflags'''
+inst[0xd1] = f'''ror y           \n      {ModifyRegister} sely  opror1 setflags \n      {ModifyRegister} sely  opror2 setflags'''
+inst[0xd2] = f'''ror bh          \n      {ModifyRegister} selbh opror1 setflags \n      {ModifyRegister} selbh opror2 setflags'''
+inst[0xd3] = f'''ror bl          \n      {ModifyRegister} selbl opror1 setflags \n      {ModifyRegister} selbl opror2 setflags'''
+inst[0xd4] = f'''ror ch          \n      {ModifyRegister} selch opror1 setflags \n      {ModifyRegister} selch opror2 setflags'''
+inst[0xd5] = f'''ror cl          \n      {ModifyRegister} selcl opror1 setflags \n      {ModifyRegister} selcl opror2 setflags'''
 
 
 

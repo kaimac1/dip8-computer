@@ -4,19 +4,20 @@
             mov b, #$8000
             mov sp, b
 
-            ldx var1
-            call printdx
-            mov b, #string1
-            call prints
-            ldx var2
-            call printdx
-            mov b, #string2
-            call prints
+            ;ldx var1
+            ;call printdx
+            ;mov b, #string1
+            ;call prints
+            ;ldx var2
+            ;call printdx
+            ;mov b, #string2
+            ;call prints
 
-            ldx var1
-            ldy var2
-            call mulxy      ; multiply
-            call printdb
+            ldbh var1
+            ldbl var2
+            call mulb
+
+            ;call printdb
 
             brk
 string1     .string " x "
@@ -27,31 +28,51 @@ var2        .byte 69
 
 
 
-;mulitply (8bit x 8bit = 16bit result)
-; xy  inputs
-; b   output
-; c   clobbered
 
-;mulbit      .byte 1
-mulbit = $4000
+;multiply (8x8 bit = 16 bit result)
+; bh, bl   inputs
+; b        16-bit output
 
-mulxy       mov b, #0
-            mov cl, x
-            mov ch, #0
-            stl #1, mulbit
-mloop       mov x, y        ; add if y & bit
-            and x, [mulbit]
-            jz  mnoadd
-            add bl, cl      ; b += c
-            adc bh, ch
-mnoadd      add cl, cl      ; c *= 2
-            adc ch, ch
-            adr mulbit      ; bit *= 2
-            ldx
-            add x, x
-            stx
-            jcc mloop
+mulb        mov x, #0
+            mov y, #8
+            add x, #0       ; clear carry
+            ror bl          ; lsr bl
+            jcc mbn1
+            add x, bh
+mbn1        ror x
+            ror bl
+            jcc mbn2
+            add x, bh
+mbn2        ror x
+            ror bl
+            jcc mbn3
+            add x, bh
+mbn3        ror x
+            ror bl
+            jcc mbn4
+            add x, bh
+mbn4        ror x
+            ror bl
+            jcc mbn5
+            add x, bh
+mbn5        ror x
+            ror bl
+            jcc mbn6
+            add x, bh
+mbn6        ror x
+            ror bl
+            jcc mbn7
+            add x, bh
+mbn7        ror x
+            ror bl
+            jcc mbn8
+            add x, bh
+mbn8        ror x
+            ror bl
+            mov bh, x
             ret
+
+
 
 
 

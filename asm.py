@@ -9,6 +9,9 @@ ANSI_RESET = '\x1b[0m'
 
 addrregs = ['b', 'c']
 
+REGS4 = ['x', 'y', 'b', 'c']
+REGS6 = ['x', 'y', 'bh', 'bl', 'ch', 'cl']
+
 class Token():
     def __init__(self, toktype, value):
         self.type = toktype
@@ -197,7 +200,7 @@ class Assembler():
     # Stack
 
     def get_pushpopreg(self, t):
-        return ['x', 'y', 'b', 'c'].index(t.value)
+        return REGS4.index(t.value)
 
     def inst_push(self):
         t = self.tok.next()
@@ -367,7 +370,7 @@ class Assembler():
     # ALU
 
     def get_alureg(self, reg):
-        return ['x', 'y', 'bh', 'bl', 'ch', 'cl'].index(reg)
+        return REGS6.index(reg)
 
     def alu_common(self, base, ta, tb):
         # accept 
@@ -422,26 +425,23 @@ class Assembler():
     def inst_xor(self):
         self.logic_common(0xc4)
 
-    def inst_shl(self):
+    def inst_ror(self):
         t = self.tok.next()
-        regs = ['x', 'y', 'bh', 'bl', 'ch', 'cl']
-        if t.value not in regs:
+        if t.value not in REGS6:
             self.error("Invalid operand.")
-        self.write8(0xd0 + regs.index(t.value))        
+        self.write8(0xd0 + REGS6.index(t.value))        
 
     def inst_inc(self):
         t = self.tok.next()
-        regs = ['x', 'y', 'b', 'c']
-        if t.value not in regs:
+        if t.value not in REGS4:
             self.error("Invalid operand.")
-        self.write8(0xf0 + regs.index(t.value))
+        self.write8(0xf0 + REGS4.index(t.value))
 
     def inst_dec(self):
         t = self.tok.next()
-        regs = ['x', 'y', 'b', 'c']
-        if t.value not in regs:
+        if t.value not in REGS4:
             self.error("Invalid operand.")
-        self.write8(0xf4 + regs.index(t.value))
+        self.write8(0xf4 + REGS4.index(t.value))
 
 
 

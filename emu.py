@@ -204,9 +204,13 @@ class CPU():
             c = q >= 0
         elif opsel == 12: # dec if carry clear
             q = a + ~0 + cin
-        elif opsel == 13:
-            q = a << 1
-            c = q > 255
+        elif opsel == 13: # ror1
+            # nop
+            q = a
+            c = cin
+        elif opsel == 14: # ror2
+            c = a & 0x01
+            q = cin << 7 | a >> 1
         else:
             print(f"Error: invalid ALU op {opsel}")
             sys.exit(-1)
@@ -214,7 +218,7 @@ class CPU():
         q &= 0xFF
 
         # Set flags if the operator allows it
-        canset = opsel in [2,3,4,5,6,7,8,10,11,13]
+        canset = opsel in [2,3,4,5,6,7,8,10,11,13,14]
         if canset:
             if setflags:
                 self.C = c
