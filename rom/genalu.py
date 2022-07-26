@@ -96,13 +96,22 @@ class ALU():
         return (q, {C: cout, K:0})
 
 
-    # shift
-    def opshl(self, a, b, c):
-        if self.lo: c = 0
+    # rotate right
+    # takes two operations:
 
-        r = (a << 1) | c
-        q = r & 0xF
-        return (q, {C: r>15, K:1})
+    # input     7654 3210  C <- carry in
+    # ror1      0765 C321  4
+    # ror2      C765 4321  0 -> carry out = bit 0 of input
+
+    def opror1(self, a, b, c):
+        cout = a & 0x01
+        q = c<<3 | a>>1
+        return (q, {C: cout, K:1})
+
+    def opror2(self, a, b, c):
+        cout = a>>3
+        q = c<<3 | (a & 0x07)
+        return (q, {C: cout, K:1})
 
 
 
@@ -123,7 +132,8 @@ ops = [
 'opinc',      #10
 'opdec',      #11
 'opcd',       #12
-'opshl'       #13
+'opror1',     #13
+'opror2'      #14
 ]
 
 print(f"{len(ops)} operators defined")

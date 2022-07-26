@@ -4,20 +4,20 @@
             mov b, #$8000
             mov sp, b
 
-            ;ldx var1
-            ;call printdx
-            ;mov b, #string1
-            ;call prints
-            ;ldx var2
-            ;call printdx
-            ;mov b, #string2
-            ;call prints
+            ldx var1
+            call printdx
+            mov b, #string1
+            call prints
+            ldx var2
+            call printdx
+            mov b, #string2
+            call prints
 
             ldbh var1
             ldbl var2
             call mulb
 
-            ;call printdb
+            call printdb
 
             brk
 string1     .string " x "
@@ -95,11 +95,11 @@ calc2       jcc calcout
             inc y
             jmp calcloop
 calcout     cmp y, #0           ; now y = b div c
-            jnz skipcheck
+            jnz calcprint
             cmp x, #0
             jz  calcret
-skipcheck   mov x, #1
-calcwrite   add y, '0'          ; create ascii code
+calcprint   mov x, #1
+            add y, '0'          ; create ascii code
             sty UART
 calcret     ret
 

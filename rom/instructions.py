@@ -574,7 +574,13 @@ inst[0xe3] = f'''addw b, #LL
     {ModifyRegister} selbl opadd setflags
     {LoadLiteral} twr
     {ModifyRegister} selbh opadc setflags'''
-    
+
+inst[0xe5] = f'''addw c, b
+    {RegisterToT} selbl
+    {ModifyRegister} selcl opadd setflags
+    {RegisterToT} selbh
+    {ModifyRegister} selch opadc setflags'''
+
 inst[0xe6] = f'''addw c, c
     {RegisterToT} selcl
     {ModifyRegister} selcl opadd setflags
