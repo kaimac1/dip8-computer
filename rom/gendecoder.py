@@ -1,13 +1,14 @@
 from pprint import pprint
 from collections import namedtuple
 import binascii
+import sys
 
 from instructions import *
 
 flagbits = 3
 cyclebits = 4
 inbits = 16
-HALT = 0xFF
+default_seq = [['']] * (2**cyclebits)
 
 def create_flags(flagcode):
     out = namedtuple('flags', ('C', 'Z', 'N'))
@@ -74,7 +75,7 @@ def main():
                     if sig == '(CC)': instruction.condition = lambda flags: not flags.C
                     if sig == '(Z)':  instruction.condition = lambda flags: flags.Z
                     if sig == '(NZ)': instruction.condition = lambda flags: not flags.Z
-                    instruction.sequence_bad = instruction.sequence_good + [['next']]
+                    instruction.sequence_bad = instruction.sequence_good.copy()
                     continue
 
                 elif sig not in raw_signals:
@@ -98,7 +99,6 @@ def main():
 
             instruction.sequence_good.append(sigsout)
 
-        instruction.sequence_good.append(['next'])
         instructions[opcode] = instruction
 
 
@@ -107,12 +107,21 @@ def main():
     for flagcode in range(2**flagbits):
         flags = create_flags(flagcode)
 
-        for opcode in instructions:
+        for opcode in range(256):
 
-            # Select sequence based on whether the condition is met
-            instruction = instructions[opcode]
-            good = instruction.condition(flags)
-            seq = instruction.sequence_good if good else instruction.sequence_bad
+            if opcode in instructions:
+                # Select sequence based on whether the condition is met
+                instruction = instructions[opcode]
+                good = instruction.condition(flags)
+                seq = instruction.sequence_good if good else instruction.sequence_bad
+                seq = seq + [['next']]
+                if len(seq) >= 2**cyclebits:
+                    raise Exception("Instruction sequence too long", opcode)
+            else:
+                # Unimplemented instruction
+                seq = default_seq
+
+            #if opcode == 0xfe: print(opcode, seq)
 
             for cycle in range(2**cyclebits):
                 addr = create_address(opcode, cycle, flags)

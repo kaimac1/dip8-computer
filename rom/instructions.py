@@ -2,7 +2,7 @@
 # The register and ALU selection signals (selx, opadd, etc) get multiplexed into
 # 3-bit register and ALU selection words
 
-raw_signals = 'next aout pcinc pcwr irwr memrd memwr alwr ahwr ainc regoe regwr twr alu setflags brk'
+raw_signals = 'next aout pcinc pcwr irwr memrd memwr alwr ahwr ainc regoe regwr twr alu setflags'
 
 regsel = ['selbh', 'selbl', 'selch', 'selcl', 'selx', 'sely', 'selsh', 'selsl']
 alusel = ['opa', 'opb', 'opadd', 'opsub', 'opadc', 'opsbc', 'opand', 'opor', 'opxor', 'opci', 'opinc', 'opdec', 'opcd', 'opror1', 'opror2']
@@ -37,7 +37,6 @@ output_signals = [
 '!alu',       # 3
 'twr',        # 4
 '!setflags',  # 5
-'!brk'        # 6
 ]
 
 # T0 (fetch) signals
@@ -65,9 +64,6 @@ GenerateAH      = 'regoe alu ahwr'              # write AH from [register] [op] 
 # Instructions
 inst = {}
 
-
-inst[0xff] = '''brk
-    brk'''
 
 # address generation
 
