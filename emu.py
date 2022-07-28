@@ -62,7 +62,7 @@ class CPU():
         self.pc = 0     # program counter
         self.a = 0      # address buffer
         self.t = 0      # t register
-        self.regnames = ['bh', 'bl', 'ch', 'cl', 'x', 'y', 'sh', 'sl']
+        self.regnames = ['bh', 'bl', 'ch', 'cl', 'x', 'y', 'sh', 'sl', 'm']
         self.regs = [0] * len(self.regnames)
 
         self.cycles = 0     # stats
@@ -116,6 +116,10 @@ class CPU():
         sig_alu    =   not (d2 & 0b00001000)
         sig_twr    =       (d2 & 0b00010000)
         sig_setflags = not (d2 & 0b00100000)
+        sig_msel     = not (d2 & 0b01000000)
+
+        if sig_msel:
+            sig_regsel = 8
 
 
         # execute
@@ -165,6 +169,7 @@ class CPU():
 
         self.tick = (self.tick + 1) % 16
         self.cycles += 1
+
 
 
     def alu(self, a, opsel, setflags):

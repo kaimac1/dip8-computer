@@ -148,6 +148,7 @@
     <a name="clabel" val=""/>
     <a name="clabelup" val="east"/>
     <a name="clabelfont" val="SansSerif plain 12"/>
+    <wire from="(1320,1640)" to="(1320,1660)"/>
     <wire from="(690,610)" to="(740,610)"/>
     <wire from="(780,780)" to="(780,790)"/>
     <wire from="(770,770)" to="(770,780)"/>
@@ -165,10 +166,10 @@
     <wire from="(950,1700)" to="(970,1700)"/>
     <wire from="(700,1280)" to="(730,1280)"/>
     <wire from="(1630,350)" to="(1630,400)"/>
-    <wire from="(120,200)" to="(270,200)"/>
     <wire from="(1000,1580)" to="(1030,1580)"/>
     <wire from="(1790,310)" to="(1800,310)"/>
     <wire from="(1170,600)" to="(1330,600)"/>
+    <wire from="(290,250)" to="(300,250)"/>
     <wire from="(1030,1680)" to="(1120,1680)"/>
     <wire from="(1580,170)" to="(1580,280)"/>
     <wire from="(1140,1150)" to="(1230,1150)"/>
@@ -184,7 +185,6 @@
     <wire from="(1160,330)" to="(1160,340)"/>
     <wire from="(1290,280)" to="(1410,280)"/>
     <wire from="(1350,180)" to="(1470,180)"/>
-    <wire from="(1000,480)" to="(1110,480)"/>
     <wire from="(1330,500)" to="(1330,510)"/>
     <wire from="(780,700)" to="(800,700)"/>
     <wire from="(1350,320)" to="(1360,320)"/>
@@ -192,9 +192,8 @@
     <wire from="(1230,200)" to="(1240,200)"/>
     <wire from="(640,1360)" to="(660,1360)"/>
     <wire from="(1310,480)" to="(1310,530)"/>
-    <wire from="(310,230)" to="(330,230)"/>
     <wire from="(750,660)" to="(780,660)"/>
-    <wire from="(330,250)" to="(350,250)"/>
+    <wire from="(1580,110)" to="(1580,170)"/>
     <wire from="(1610,420)" to="(1620,420)"/>
     <wire from="(1130,560)" to="(1160,560)"/>
     <wire from="(1510,300)" to="(1540,300)"/>
@@ -202,6 +201,7 @@
     <wire from="(1720,350)" to="(1750,350)"/>
     <wire from="(1000,1730)" to="(1010,1730)"/>
     <wire from="(1510,310)" to="(1530,310)"/>
+    <wire from="(1280,1570)" to="(1280,1610)"/>
     <wire from="(1140,1220)" to="(1160,1220)"/>
     <wire from="(1470,320)" to="(1470,360)"/>
     <wire from="(1470,290)" to="(1470,310)"/>
@@ -211,11 +211,11 @@
     <wire from="(1310,570)" to="(1320,570)"/>
     <wire from="(1390,330)" to="(1400,330)"/>
     <wire from="(1400,340)" to="(1410,340)"/>
-    <wire from="(1110,210)" to="(1120,210)"/>
     <wire from="(660,540)" to="(690,540)"/>
     <wire from="(740,780)" to="(770,780)"/>
     <wire from="(1580,520)" to="(1590,520)"/>
     <wire from="(1270,190)" to="(1300,190)"/>
+    <wire from="(120,240)" to="(200,240)"/>
     <wire from="(1140,1340)" to="(1170,1340)"/>
     <wire from="(910,1290)" to="(920,1290)"/>
     <wire from="(1000,1700)" to="(1010,1700)"/>
@@ -228,10 +228,9 @@
     <wire from="(1230,180)" to="(1230,200)"/>
     <wire from="(1170,280)" to="(1170,310)"/>
     <wire from="(740,1290)" to="(740,1320)"/>
-    <wire from="(1110,250)" to="(1110,320)"/>
-    <wire from="(1110,360)" to="(1230,360)"/>
     <wire from="(870,490)" to="(870,570)"/>
     <wire from="(940,1440)" to="(960,1440)"/>
+    <wire from="(1310,1660)" to="(1320,1660)"/>
     <wire from="(1140,1300)" to="(1280,1300)"/>
     <wire from="(1150,220)" to="(1160,220)"/>
     <wire from="(1160,230)" to="(1170,230)"/>
@@ -239,8 +238,8 @@
     <wire from="(940,1590)" to="(970,1590)"/>
     <wire from="(1130,560)" to="(1130,620)"/>
     <wire from="(1620,530)" to="(1630,530)"/>
-    <wire from="(1110,480)" to="(1140,480)"/>
     <wire from="(800,580)" to="(800,700)"/>
+    <wire from="(190,220)" to="(200,220)"/>
     <wire from="(930,1600)" to="(940,1600)"/>
     <wire from="(830,540)" to="(840,540)"/>
     <wire from="(730,440)" to="(740,440)"/>
@@ -255,7 +254,9 @@
     <wire from="(1230,290)" to="(1350,290)"/>
     <wire from="(1350,250)" to="(1470,250)"/>
     <wire from="(900,1370)" to="(920,1370)"/>
+    <wire from="(930,1560)" to="(950,1560)"/>
     <wire from="(690,670)" to="(720,670)"/>
+    <wire from="(1090,360)" to="(1090,480)"/>
     <wire from="(1090,520)" to="(1160,520)"/>
     <wire from="(1730,290)" to="(1740,290)"/>
     <wire from="(940,1720)" to="(970,1720)"/>
@@ -267,6 +268,7 @@
     <wire from="(540,600)" to="(620,600)"/>
     <wire from="(780,780)" to="(790,780)"/>
     <wire from="(1140,1260)" to="(1290,1260)"/>
+    <wire from="(1260,1570)" to="(1280,1570)"/>
     <wire from="(740,430)" to="(740,440)"/>
     <wire from="(940,1590)" to="(940,1600)"/>
     <wire from="(980,1630)" to="(980,1640)"/>
@@ -275,6 +277,7 @@
     <wire from="(1070,600)" to="(1170,600)"/>
     <wire from="(1030,1750)" to="(1090,1750)"/>
     <wire from="(850,1270)" to="(890,1270)"/>
+    <wire from="(190,200)" to="(190,220)"/>
     <wire from="(1280,330)" to="(1280,340)"/>
     <wire from="(1300,510)" to="(1300,520)"/>
     <wire from="(1410,280)" to="(1530,280)"/>
@@ -285,21 +288,19 @@
     <wire from="(1330,500)" to="(1340,500)"/>
     <wire from="(1350,200)" to="(1360,200)"/>
     <wire from="(1310,1280)" to="(1320,1280)"/>
+    <wire from="(930,1690)" to="(950,1690)"/>
+    <wire from="(1330,1620)" to="(1340,1620)"/>
     <wire from="(1150,300)" to="(1180,300)"/>
-    <wire from="(930,1700)" to="(940,1700)"/>
-    <wire from="(1110,320)" to="(1110,360)"/>
     <wire from="(820,790)" to="(830,790)"/>
     <wire from="(810,460)" to="(820,460)"/>
     <wire from="(1560,400)" to="(1580,400)"/>
     <wire from="(1150,310)" to="(1170,310)"/>
-    <wire from="(180,190)" to="(180,250)"/>
     <wire from="(650,310)" to="(650,320)"/>
-    <wire from="(120,170)" to="(180,170)"/>
     <wire from="(940,1720)" to="(940,1730)"/>
     <wire from="(980,1760)" to="(980,1770)"/>
     <wire from="(740,800)" to="(790,800)"/>
-    <wire from="(330,230)" to="(380,230)"/>
     <wire from="(830,840)" to="(830,930)"/>
+    <wire from="(250,230)" to="(250,250)"/>
     <wire from="(850,1310)" to="(850,1330)"/>
     <wire from="(1170,170)" to="(1290,170)"/>
     <wire from="(1000,1610)" to="(1110,1610)"/>
@@ -308,19 +309,26 @@
     <wire from="(1030,1730)" to="(1080,1730)"/>
     <wire from="(1510,330)" to="(1520,330)"/>
     <wire from="(1520,340)" to="(1530,340)"/>
+    <wire from="(1370,1630)" to="(1380,1630)"/>
     <wire from="(1230,210)" to="(1240,210)"/>
     <wire from="(1580,280)" to="(1580,340)"/>
+    <wire from="(1090,360)" to="(1230,360)"/>
+    <wire from="(1150,130)" to="(1160,130)"/>
+    <wire from="(1160,140)" to="(1170,140)"/>
     <wire from="(1720,380)" to="(1730,380)"/>
     <wire from="(850,610)" to="(880,610)"/>
+    <wire from="(1090,210)" to="(1120,210)"/>
     <wire from="(550,480)" to="(1000,480)"/>
     <wire from="(1140,1130)" to="(1230,1130)"/>
     <wire from="(1390,190)" to="(1420,190)"/>
+    <wire from="(1330,1580)" to="(1350,1580)"/>
     <wire from="(1000,1740)" to="(1010,1740)"/>
     <wire from="(1390,200)" to="(1410,200)"/>
     <wire from="(1610,410)" to="(1640,410)"/>
     <wire from="(850,1430)" to="(860,1430)"/>
     <wire from="(1510,320)" to="(1530,320)"/>
     <wire from="(1350,210)" to="(1350,250)"/>
+    <wire from="(1150,120)" to="(1170,120)"/>
     <wire from="(1350,180)" to="(1350,200)"/>
     <wire from="(1030,1710)" to="(1070,1710)"/>
     <wire from="(1290,280)" to="(1290,310)"/>
@@ -328,11 +336,14 @@
     <wire from="(1140,480)" to="(1140,550)"/>
     <wire from="(1530,280)" to="(1580,280)"/>
     <wire from="(1230,360)" to="(1350,360)"/>
+    <wire from="(1090,480)" to="(1140,480)"/>
+    <wire from="(1400,1630)" to="(1410,1630)"/>
     <wire from="(1080,290)" to="(1080,470)"/>
     <wire from="(1280,230)" to="(1290,230)"/>
     <wire from="(1270,220)" to="(1280,220)"/>
     <wire from="(1150,580)" to="(1160,580)"/>
     <wire from="(660,390)" to="(690,390)"/>
+    <wire from="(1000,480)" to="(1090,480)"/>
     <wire from="(1070,540)" to="(1070,600)"/>
     <wire from="(1130,540)" to="(1160,540)"/>
     <wire from="(910,1300)" to="(920,1300)"/>
@@ -341,10 +352,12 @@
     <wire from="(1270,210)" to="(1290,210)"/>
     <wire from="(1300,560)" to="(1320,560)"/>
     <wire from="(580,270)" to="(580,470)"/>
+    <wire from="(1150,110)" to="(1580,110)"/>
     <wire from="(860,1580)" to="(860,1590)"/>
     <wire from="(860,1420)" to="(860,1430)"/>
     <wire from="(1140,480)" to="(1310,480)"/>
     <wire from="(1530,170)" to="(1530,200)"/>
+    <wire from="(1260,1590)" to="(1300,1590)"/>
     <wire from="(1620,420)" to="(1620,430)"/>
     <wire from="(1080,470)" to="(1330,470)"/>
     <wire from="(850,1250)" to="(850,1270)"/>
@@ -360,9 +373,9 @@
     <wire from="(1030,1690)" to="(1060,1690)"/>
     <wire from="(1140,1320)" to="(1170,1320)"/>
     <wire from="(1120,660)" to="(1150,660)"/>
-    <wire from="(370,250)" to="(380,250)"/>
     <wire from="(1140,1230)" to="(1230,1230)"/>
     <wire from="(910,1430)" to="(920,1430)"/>
+    <wire from="(1090,210)" to="(1090,250)"/>
     <wire from="(1000,1680)" to="(1010,1680)"/>
     <wire from="(830,390)" to="(840,390)"/>
     <wire from="(1330,580)" to="(1330,600)"/>
@@ -372,6 +385,7 @@
     <wire from="(620,600)" to="(660,600)"/>
     <wire from="(660,320)" to="(700,320)"/>
     <wire from="(950,450)" to="(990,450)"/>
+    <wire from="(930,1710)" to="(970,1710)"/>
     <wire from="(1110,180)" to="(1230,180)"/>
     <wire from="(1400,330)" to="(1400,340)"/>
     <wire from="(770,770)" to="(790,770)"/>
@@ -380,14 +394,18 @@
     <wire from="(1300,1310)" to="(1310,1310)"/>
     <wire from="(620,300)" to="(640,300)"/>
     <wire from="(1140,1280)" to="(1280,1280)"/>
-    <wire from="(1110,320)" to="(1120,320)"/>
     <wire from="(1090,530)" to="(1160,530)"/>
     <wire from="(1100,290)" to="(1230,290)"/>
+    <wire from="(230,230)" to="(250,230)"/>
+    <wire from="(250,250)" to="(270,250)"/>
     <wire from="(1270,300)" to="(1300,300)"/>
+    <wire from="(1090,120)" to="(1120,120)"/>
     <wire from="(850,1410)" to="(920,1410)"/>
+    <wire from="(1320,1640)" to="(1340,1640)"/>
     <wire from="(830,840)" to="(840,840)"/>
     <wire from="(1230,320)" to="(1230,360)"/>
     <wire from="(1140,1270)" to="(1290,1270)"/>
+    <wire from="(120,200)" to="(190,200)"/>
     <wire from="(1140,1140)" to="(1160,1140)"/>
     <wire from="(1120,640)" to="(1140,640)"/>
     <wire from="(1000,1550)" to="(1080,1550)"/>
@@ -402,13 +420,13 @@
     <wire from="(1150,330)" to="(1160,330)"/>
     <wire from="(1160,340)" to="(1170,340)"/>
     <wire from="(690,650)" to="(720,650)"/>
-    <wire from="(1110,360)" to="(1110,480)"/>
     <wire from="(760,1270)" to="(850,1270)"/>
     <wire from="(950,430)" to="(980,430)"/>
     <wire from="(740,930)" to="(830,930)"/>
     <wire from="(1510,190)" to="(1540,190)"/>
     <wire from="(1140,1170)" to="(1230,1170)"/>
     <wire from="(1140,1330)" to="(1230,1330)"/>
+    <wire from="(1280,1570)" to="(1300,1570)"/>
     <wire from="(1510,200)" to="(1530,200)"/>
     <wire from="(1140,1240)" to="(1290,1240)"/>
     <wire from="(1150,320)" to="(1170,320)"/>
@@ -420,7 +438,6 @@
     <wire from="(740,810)" to="(790,810)"/>
     <wire from="(860,1400)" to="(920,1400)"/>
     <wire from="(1410,280)" to="(1410,310)"/>
-    <wire from="(180,250)" to="(230,250)"/>
     <wire from="(1790,340)" to="(1790,350)"/>
     <wire from="(660,390)" to="(660,540)"/>
     <wire from="(1350,360)" to="(1470,360)"/>
@@ -430,7 +447,6 @@
     <wire from="(1390,220)" to="(1400,220)"/>
     <wire from="(1400,230)" to="(1410,230)"/>
     <wire from="(880,550)" to="(880,610)"/>
-    <wire from="(270,220)" to="(280,220)"/>
     <wire from="(1720,370)" to="(1750,370)"/>
     <wire from="(1000,1750)" to="(1010,1750)"/>
     <wire from="(1390,210)" to="(1410,210)"/>
@@ -438,13 +454,13 @@
     <wire from="(620,600)" to="(620,970)"/>
     <wire from="(880,830)" to="(890,830)"/>
     <wire from="(540,490)" to="(550,490)"/>
-    <wire from="(940,1700)" to="(940,1710)"/>
+    <wire from="(1090,120)" to="(1090,210)"/>
+    <wire from="(1260,1630)" to="(1300,1630)"/>
     <wire from="(1170,170)" to="(1170,200)"/>
     <wire from="(1790,310)" to="(1790,320)"/>
     <wire from="(830,790)" to="(830,820)"/>
-    <wire from="(120,230)" to="(230,230)"/>
     <wire from="(740,790)" to="(780,790)"/>
-    <wire from="(1110,250)" to="(1230,250)"/>
+    <wire from="(1080,110)" to="(1080,180)"/>
     <wire from="(1340,500)" to="(1340,510)"/>
     <wire from="(1350,310)" to="(1360,310)"/>
     <wire from="(1290,570)" to="(1300,570)"/>
@@ -452,23 +468,24 @@
     <wire from="(1580,540)" to="(1590,540)"/>
     <wire from="(1290,550)" to="(1320,550)"/>
     <wire from="(1080,180)" to="(1110,180)"/>
-    <wire from="(170,250)" to="(180,250)"/>
     <wire from="(1610,400)" to="(1630,400)"/>
     <wire from="(910,1310)" to="(920,1310)"/>
     <wire from="(1000,1720)" to="(1010,1720)"/>
     <wire from="(1610,390)" to="(1640,390)"/>
     <wire from="(1140,570)" to="(1160,570)"/>
+    <wire from="(1150,100)" to="(1170,100)"/>
     <wire from="(550,480)" to="(550,490)"/>
     <wire from="(990,440)" to="(990,450)"/>
     <wire from="(810,490)" to="(870,490)"/>
     <wire from="(680,1320)" to="(740,1320)"/>
-    <wire from="(270,200)" to="(270,220)"/>
     <wire from="(860,470)" to="(960,470)"/>
     <wire from="(1570,410)" to="(1570,480)"/>
     <wire from="(1560,400)" to="(1560,470)"/>
+    <wire from="(1090,250)" to="(1090,320)"/>
     <wire from="(1030,1740)" to="(1150,1740)"/>
     <wire from="(1170,280)" to="(1290,280)"/>
     <wire from="(1230,180)" to="(1350,180)"/>
+    <wire from="(1160,130)" to="(1160,140)"/>
     <wire from="(780,580)" to="(780,660)"/>
     <wire from="(1630,350)" to="(1690,350)"/>
     <wire from="(1520,330)" to="(1520,340)"/>
@@ -479,6 +496,7 @@
     <wire from="(680,1360)" to="(700,1360)"/>
     <wire from="(1110,200)" to="(1120,200)"/>
     <wire from="(620,970)" to="(650,970)"/>
+    <wire from="(1090,320)" to="(1120,320)"/>
     <wire from="(1390,300)" to="(1420,300)"/>
     <wire from="(910,1280)" to="(920,1280)"/>
     <wire from="(1000,1690)" to="(1010,1690)"/>
@@ -491,8 +509,9 @@
     <wire from="(1730,380)" to="(1730,470)"/>
     <wire from="(1000,1620)" to="(1050,1620)"/>
     <wire from="(1030,1720)" to="(1140,1720)"/>
+    <wire from="(1080,110)" to="(1120,110)"/>
     <wire from="(860,470)" to="(860,540)"/>
-    <wire from="(330,230)" to="(330,250)"/>
+    <wire from="(250,230)" to="(300,230)"/>
     <wire from="(850,590)" to="(850,610)"/>
     <wire from="(1280,220)" to="(1280,230)"/>
     <wire from="(1300,560)" to="(1300,570)"/>
@@ -511,7 +530,7 @@
     <wire from="(1310,480)" to="(1570,480)"/>
     <wire from="(1150,190)" to="(1180,190)"/>
     <wire from="(1140,1210)" to="(1230,1210)"/>
-    <wire from="(1110,210)" to="(1110,250)"/>
+    <wire from="(1280,1610)" to="(1300,1610)"/>
     <wire from="(1100,310)" to="(1120,310)"/>
     <wire from="(1080,290)" to="(1100,290)"/>
     <wire from="(1150,200)" to="(1170,200)"/>
@@ -532,12 +551,12 @@
     <wire from="(1350,540)" to="(1360,540)"/>
     <wire from="(1740,360)" to="(1740,480)"/>
     <wire from="(950,1570)" to="(970,1570)"/>
-    <wire from="(260,240)" to="(280,240)"/>
+    <wire from="(1090,250)" to="(1230,250)"/>
     <wire from="(1240,660)" to="(1310,660)"/>
     <wire from="(690,630)" to="(850,630)"/>
     <wire from="(1720,330)" to="(1800,330)"/>
-    <wire from="(940,1710)" to="(970,1710)"/>
     <wire from="(920,430)" to="(930,430)"/>
+    <wire from="(1090,320)" to="(1090,360)"/>
     <wire from="(1510,210)" to="(1530,210)"/>
     <wire from="(830,820)" to="(840,820)"/>
     <wire from="(840,1310)" to="(850,1310)"/>
@@ -546,8 +565,8 @@
     <wire from="(740,1370)" to="(750,1370)"/>
     <wire from="(1080,180)" to="(1080,290)"/>
     <wire from="(850,400)" to="(850,450)"/>
-    <comp lib="0" loc="(120,230)" name="Clock">
-      <a name="label" val="Ctrl + K"/>
+    <comp lib="1" loc="(290,250)" name="NOT Gate">
+      <a name="size" val="20"/>
     </comp>
     <comp lib="0" loc="(1120,640)" name="Tunnel">
       <a name="facing" val="east"/>
@@ -575,918 +594,915 @@
       <a name="addrWidth" val="16"/>
       <a name="dataWidth" val="32"/>
       <a name="contents">addr/data: 16 32
-680fc9 680dd9 680ed9 13*680ffc 680fc9 6109fd 600afd 13*680ffc
-680fc9 6309fd 620afd 13*680ffc 680fc9 6709fd 660afd 13*680ffc
-680fc9 780fd9 6129fd 609afd 12*680ffc 680fc9 780fd9 6329fd
-629afd 12*680ffc 680fc9 780fd9 6729fd 669afd 12*680ffc 680fc9
-780fd9 6129fd 780fd9 604afd 11*680ffc 680fc9 780fd9 6329fd
-780fd9 624afd 11*680ffc 680fc9 780fd9 6729fd 780fd9 664afd
-11*680ffc 680fc9 740bfd 6129fd 609afd 12*680ffc 680fc9 740bfd
-6329fd 629afd 12*680ffc 680fc9 740bfd 6729fd 669afd 12*680ffc
-680fc9 750bfd 6129fd 609afd 12*680ffc 680fc9 750bfd 6329fd
-629afd 12*680ffc 680fc9 750bfd 6729fd 669afd 12*680ffc 680fc9
-770bfd 6129fd 760bfd 604afd 11*680ffc 680fc9 770bfd 6329fd
-760bfd 624afd 11*680ffc 680fc9 710bfd 6329fd 700bfd 624afd
-11*680ffc 680fc9 780f5f 680edf 601dfd 12*680ffc 680fc9 680dd9
-680ed9 680ff7 12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9
-680ed9 13*680ffc 680fc9 15*680ffc 680fc9 680dd9 680ed9 680ff7
-12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9 680ed9 13*680ffc
-680fc9 15*680ffc 680fc9 680dd9 680ed9 680ff7 12*680ffc 680fc9
-680ff7 14*680ffc 680fc9 67a1fd 6692fd 780fdf 67a1fd 6692fd
-680edf 601dfd 680ff7 7*680ffc 680fc9 780fd9 601fbf 13*680ffc
-680fc9 6c07df 14*680ffc 680fc9 6d07df 14*680ffc 680fc9 6907df
-680f7d 6807df 12*680ffc 680fc9 6b07df 680f7d 6a07df 12*680ffc
-680fc9 6807df 14*680ffc 680fc9 6907df 14*680ffc 680fc9 6a07df
-14*680ffc 680fc9 6b07df 14*680ffc 680fc9 640bbf 14*680ffc 680fc9
-650bbf 14*680ffc 680fc9 610bbf 680f7d 600bbf 12*680ffc 680fc9
-630bbf 680f7d 620bbf 12*680ffc 680fc9 600bbf 14*680ffc 680fc9
-610bbf 14*680ffc 680fc9 620bbf 14*680ffc 680fc9 630bbf 14*680ffc
-680fc9 6709fd 660afd 640bbf 67b3fd 66c3fd 10*680ffc 680fc9
-6709fd 660afd 650bbf 67b3fd 66c3fd 10*680ffc 680fc9 6709fd
-660afd 600bbf 67b1fd 66c2fd 610bbf 67b3fd 66c3fd 7*680ffc
-680fc9 6709fd 660afd 620bbf 67b1fd 66c2fd 630bbf 67b3fd
-66c3fd 7*680ffc 680fc9 67a1fd 6692fd 6c07df 12*680ffc 680fc9
-67a1fd 6692fd 6d07df 12*680ffc 680fc9 67a1fd 6692fd 6907df
-67a1fd 6692fd 6807df 9*680ffc 680fc9 67a1fd 6692fd 6b07df
-67a1fd 6692fd 6a07df 9*680ffc 680fc9 780fd9 6709fd 660afd
-601fbf 780fd9 67b1fd 66c2fd 601fbf 67b1fd 66c2fd 5*680ffc
-680fc9 710bfd 6717fd 700bfd 6617fd 11*680ffc 680fc9 730bfd
-6717fd 720bfd 6617fd 11*680ffc 680fc9 770bfd 6117fd 760bfd
-6017fd 11*680ffc 680fc9 770bfd 6317fd 760bfd 6217fd 11*680ffc
-48*0 680fc9 6807d9 14*680ffc 680fc9 710bfd 6017fd 13*680ffc
-680fc9 720bfd 6017fd 13*680ffc 680fc9 730bfd 6017fd 13*680ffc
-680fc9 740bfd 6017fd 13*680ffc 680fc9 750bfd 6017fd 13*680ffc
-680fc9 700bfd 6117fd 13*680ffc 680fc9 6907d9 14*680ffc 680fc9
-720bfd 6117fd 13*680ffc 680fc9 730bfd 6117fd 13*680ffc 680fc9
-740bfd 6117fd 13*680ffc 680fc9 750bfd 6117fd 13*680ffc 680fc9
-700bfd 6217fd 13*680ffc 680fc9 710bfd 6217fd 13*680ffc 680fc9
-6a07d9 14*680ffc 680fc9 730bfd 6217fd 13*680ffc 680fc9 740bfd
-6217fd 13*680ffc 680fc9 750bfd 6217fd 13*680ffc 680fc9 700bfd
-6317fd 13*680ffc 680fc9 710bfd 6317fd 13*680ffc 680fc9 720bfd
-6317fd 13*680ffc 680fc9 6b07d9 14*680ffc 680fc9 740bfd 6317fd
-13*680ffc 680fc9 750bfd 6317fd 13*680ffc 680fc9 700bfd 6417fd
-13*680ffc 680fc9 710bfd 6417fd 13*680ffc 680fc9 720bfd 6417fd
-13*680ffc 680fc9 730bfd 6417fd 13*680ffc 680fc9 6c07d9 14*680ffc
-680fc9 750bfd 6417fd 13*680ffc 680fc9 700bfd 6517fd 13*680ffc
-680fc9 710bfd 6517fd 13*680ffc 680fc9 720bfd 6517fd 13*680ffc
-680fc9 730bfd 6517fd 13*680ffc 680fc9 740bfd 6517fd 13*680ffc
-680fc9 6d07d9 14*680ffc 680fc9 700bfd 14*680ffc 680fc9 710bfd
-14*680ffc 680fc9 720bfd 14*680ffc 680fc9 730bfd 14*680ffc 680fc9
-740bfd 14*680ffc 680fc9 750bfd 14*680ffc 680fc9 780fd9 14*680ffc
-680fc9 730bfd 6117fd 720bfd 6017fd 11*680ffc 680fc9 710bfd
-6317fd 700bfd 6217fd 11*680ffc 680fc9 6907d9 6807d9 13*680ffc
-680fc9 6b07d9 6a07d9 13*680ffc 680fc9 780fdf 14*680ffc 680fc9
-4423fd 14*680ffc 680fc9 780fd9 4423fd 13*680ffc 680fc9 4523fd
-14*680ffc 680fc9 780fd9 4523fd 13*680ffc 680fc9 4023fd 14*680ffc
-680fc9 780fd9 4023fd 13*680ffc 680fc9 4123fd 14*680ffc 680fc9
-780fd9 4123fd 13*680ffc 680fc9 4223fd 14*680ffc 680fc9 780fd9
-4223fd 13*680ffc 680fc9 4323fd 14*680ffc 680fc9 780fd9 4323fd
-13*680ffc 680fc9 4433fd 14*680ffc 680fc9 780fd9 4433fd 13*680ffc
-680fc9 4533fd 14*680ffc 680fc9 780fd9 4533fd 13*680ffc 680fc9
-4033fd 14*680ffc 680fc9 780fd9 4033fd 13*680ffc 680fc9 4133fd
-14*680ffc 680fc9 780fd9 4133fd 13*680ffc 680fc9 4233fd 14*680ffc
-680fc9 780fd9 4233fd 13*680ffc 680fc9 4333fd 14*680ffc 680fc9
-780fd9 4333fd 13*680ffc 680fc9 4443fd 14*680ffc 680fc9 780fd9
-4443fd 13*680ffc 680fc9 4543fd 14*680ffc 680fc9 780fd9 4543fd
-13*680ffc 680fc9 4043fd 14*680ffc 680fc9 780fd9 4043fd 13*680ffc
-680fc9 4143fd 14*680ffc 680fc9 780fd9 4143fd 13*680ffc 680fc9
-4243fd 14*680ffc 680fc9 780fd9 4243fd 13*680ffc 680fc9 4343fd
-14*680ffc 680fc9 780fd9 4343fd 13*680ffc 680fc9 4453fd 14*680ffc
-680fc9 780fd9 4453fd 13*680ffc 680fc9 4553fd 14*680ffc 680fc9
-780fd9 4553fd 13*680ffc 680fc9 4053fd 14*680ffc 680fc9 780fd9
-4053fd 13*680ffc 680fc9 4153fd 14*680ffc 680fc9 780fd9 4153fd
-13*680ffc 680fc9 4253fd 14*680ffc 680fc9 780fd9 4253fd 13*680ffc
-680fc9 4353fd 14*680ffc 680fc9 780fd9 4353fd 13*680ffc 680fc9
-443bfd 14*680ffc 680fc9 780fd9 443bfd 13*680ffc 680fc9 453bfd
-14*680ffc 680fc9 780fd9 453bfd 13*680ffc 680fc9 403bfd 14*680ffc
-680fc9 780fd9 403bfd 13*680ffc 680fc9 413bfd 14*680ffc 680fc9
-780fd9 413bfd 13*680ffc 680fc9 423bfd 14*680ffc 680fc9 780fd9
-423bfd 13*680ffc 680fc9 433bfd 14*680ffc 680fc9 780fd9 433bfd
-13*680ffc 680fc9 4463fd 14*680ffc 680fc9 780fd9 4463fd 13*680ffc
-680fc9 4563fd 14*680ffc 680fc9 780fd9 4563fd 13*680ffc 680fc9
-4063fd 14*680ffc 680fc9 780fd9 4063fd 13*680ffc 680fc9 4163fd
-14*680ffc 680fc9 780fd9 4163fd 13*680ffc 680fc9 4263fd 14*680ffc
-680fc9 780fd9 4263fd 13*680ffc 680fc9 4363fd 14*680ffc 680fc9
-780fd9 4363fd 13*680ffc 680fc9 4473fd 14*680ffc 680fc9 780fd9
-4473fd 13*680ffc 680fc9 4573fd 14*680ffc 680fc9 780fd9 4573fd
-13*680ffc 680fc9 4073fd 14*680ffc 680fc9 780fd9 4073fd 13*680ffc
-680fc9 4173fd 14*680ffc 680fc9 780fd9 4173fd 13*680ffc 680fc9
-4273fd 14*680ffc 680fc9 780fd9 4273fd 13*680ffc 680fc9 4373fd
-14*680ffc 680fc9 780fd9 4373fd 13*680ffc 680fc9 4483fd 14*680ffc
-680fc9 780fd9 4483fd 13*680ffc 680fc9 4583fd 14*680ffc 680fc9
-780fd9 4583fd 13*680ffc 680fc9 4083fd 14*680ffc 680fc9 780fd9
-4083fd 13*680ffc 680fc9 4183fd 14*680ffc 680fc9 780fd9 4183fd
-13*680ffc 680fc9 4283fd 14*680ffc 680fc9 780fd9 4283fd 13*680ffc
-680fc9 4383fd 14*680ffc 680fc9 780fd9 4383fd 13*680ffc 680fc9
-44d3fd 44e3fd 13*680ffc 680fc9 45d3fd 45e3fd 13*680ffc 680fc9
-40d3fd 40e3fd 13*680ffc 680fc9 41d3fd 41e3fd 13*680ffc 680fc9
-42d3fd 42e3fd 13*680ffc 680fc9 43d3fd 43e3fd 13*680ffc 176*0
-680fc9 710bfd 4123fd 700bfd 4043fd 11*680ffc 680fc9 730bfd
-4123fd 720bfd 4043fd 11*680ffc 680fc9 780fd9 4123fd 780fd9
-4043fd 11*680ffc 16*0 680fc9 710bfd 4323fd 700bfd 4243fd
-11*680ffc 680fc9 730bfd 4323fd 720bfd 4243fd 11*680ffc 144*0
-680fc9 44a3fd 14*680ffc 680fc9 45a3fd 14*680ffc 680fc9 41a3fd
-4093fd 13*680ffc 680fc9 43a3fd 4293fd 13*680ffc 680fc9 44b3fd
-14*680ffc 680fc9 45b3fd 14*680ffc 680fc9 41b3fd 40c3fd 13*680ffc
-680fc9 43b3fd 42c3fd 13*680ffc 112*0 680fc9 280ffd 14*680ffc
-680fc9 680dd9 680ed9 13*680ffc 680fc9 6109fd 600afd 13*680ffc
-680fc9 6309fd 620afd 13*680ffc 680fc9 6709fd 660afd 13*680ffc
-680fc9 780fd9 6129fd 609afd 12*680ffc 680fc9 780fd9 6329fd
-629afd 12*680ffc 680fc9 780fd9 6729fd 669afd 12*680ffc 680fc9
-780fd9 6129fd 780fd9 604afd 11*680ffc 680fc9 780fd9 6329fd
-780fd9 624afd 11*680ffc 680fc9 780fd9 6729fd 780fd9 664afd
-11*680ffc 680fc9 740bfd 6129fd 609afd 12*680ffc 680fc9 740bfd
-6329fd 629afd 12*680ffc 680fc9 740bfd 6729fd 669afd 12*680ffc
-680fc9 750bfd 6129fd 609afd 12*680ffc 680fc9 750bfd 6329fd
-629afd 12*680ffc 680fc9 750bfd 6729fd 669afd 12*680ffc 680fc9
-770bfd 6129fd 760bfd 604afd 11*680ffc 680fc9 770bfd 6329fd
-760bfd 624afd 11*680ffc 680fc9 710bfd 6329fd 700bfd 624afd
-11*680ffc 680fc9 780f5f 680edf 601dfd 12*680ffc 680fc9 680dd9
-680ed9 680ff7 12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9
-680ed9 680ff7 12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9
-680ed9 13*680ffc 680fc9 15*680ffc 680fc9 680dd9 680ed9 13*680ffc
-680fc9 15*680ffc 680fc9 680dd9 680ed9 680ff7 12*680ffc 680fc9
-680ff7 14*680ffc 680fc9 67a1fd 6692fd 780fdf 67a1fd 6692fd
-680edf 601dfd 680ff7 7*680ffc 680fc9 780fd9 601fbf 13*680ffc
-680fc9 6c07df 14*680ffc 680fc9 6d07df 14*680ffc 680fc9 6907df
-680f7d 6807df 12*680ffc 680fc9 6b07df 680f7d 6a07df 12*680ffc
-680fc9 6807df 14*680ffc 680fc9 6907df 14*680ffc 680fc9 6a07df
-14*680ffc 680fc9 6b07df 14*680ffc 680fc9 640bbf 14*680ffc 680fc9
-650bbf 14*680ffc 680fc9 610bbf 680f7d 600bbf 12*680ffc 680fc9
-630bbf 680f7d 620bbf 12*680ffc 680fc9 600bbf 14*680ffc 680fc9
-610bbf 14*680ffc 680fc9 620bbf 14*680ffc 680fc9 630bbf 14*680ffc
-680fc9 6709fd 660afd 640bbf 67b3fd 66c3fd 10*680ffc 680fc9
-6709fd 660afd 650bbf 67b3fd 66c3fd 10*680ffc 680fc9 6709fd
-660afd 600bbf 67b1fd 66c2fd 610bbf 67b3fd 66c3fd 7*680ffc
-680fc9 6709fd 660afd 620bbf 67b1fd 66c2fd 630bbf 67b3fd
-66c3fd 7*680ffc 680fc9 67a1fd 6692fd 6c07df 12*680ffc 680fc9
-67a1fd 6692fd 6d07df 12*680ffc 680fc9 67a1fd 6692fd 6907df
-67a1fd 6692fd 6807df 9*680ffc 680fc9 67a1fd 6692fd 6b07df
-67a1fd 6692fd 6a07df 9*680ffc 680fc9 780fd9 6709fd 660afd
-601fbf 780fd9 67b1fd 66c2fd 601fbf 67b1fd 66c2fd 5*680ffc
-680fc9 710bfd 6717fd 700bfd 6617fd 11*680ffc 680fc9 730bfd
-6717fd 720bfd 6617fd 11*680ffc 680fc9 770bfd 6117fd 760bfd
-6017fd 11*680ffc 680fc9 770bfd 6317fd 760bfd 6217fd 11*680ffc
-48*0 680fc9 6807d9 14*680ffc 680fc9 710bfd 6017fd 13*680ffc
-680fc9 720bfd 6017fd 13*680ffc 680fc9 730bfd 6017fd 13*680ffc
-680fc9 740bfd 6017fd 13*680ffc 680fc9 750bfd 6017fd 13*680ffc
-680fc9 700bfd 6117fd 13*680ffc 680fc9 6907d9 14*680ffc 680fc9
-720bfd 6117fd 13*680ffc 680fc9 730bfd 6117fd 13*680ffc 680fc9
-740bfd 6117fd 13*680ffc 680fc9 750bfd 6117fd 13*680ffc 680fc9
-700bfd 6217fd 13*680ffc 680fc9 710bfd 6217fd 13*680ffc 680fc9
-6a07d9 14*680ffc 680fc9 730bfd 6217fd 13*680ffc 680fc9 740bfd
-6217fd 13*680ffc 680fc9 750bfd 6217fd 13*680ffc 680fc9 700bfd
-6317fd 13*680ffc 680fc9 710bfd 6317fd 13*680ffc 680fc9 720bfd
-6317fd 13*680ffc 680fc9 6b07d9 14*680ffc 680fc9 740bfd 6317fd
-13*680ffc 680fc9 750bfd 6317fd 13*680ffc 680fc9 700bfd 6417fd
-13*680ffc 680fc9 710bfd 6417fd 13*680ffc 680fc9 720bfd 6417fd
-13*680ffc 680fc9 730bfd 6417fd 13*680ffc 680fc9 6c07d9 14*680ffc
-680fc9 750bfd 6417fd 13*680ffc 680fc9 700bfd 6517fd 13*680ffc
-680fc9 710bfd 6517fd 13*680ffc 680fc9 720bfd 6517fd 13*680ffc
-680fc9 730bfd 6517fd 13*680ffc 680fc9 740bfd 6517fd 13*680ffc
-680fc9 6d07d9 14*680ffc 680fc9 700bfd 14*680ffc 680fc9 710bfd
-14*680ffc 680fc9 720bfd 14*680ffc 680fc9 730bfd 14*680ffc 680fc9
-740bfd 14*680ffc 680fc9 750bfd 14*680ffc 680fc9 780fd9 14*680ffc
-680fc9 730bfd 6117fd 720bfd 6017fd 11*680ffc 680fc9 710bfd
-6317fd 700bfd 6217fd 11*680ffc 680fc9 6907d9 6807d9 13*680ffc
-680fc9 6b07d9 6a07d9 13*680ffc 680fc9 780fdf 14*680ffc 680fc9
-4423fd 14*680ffc 680fc9 780fd9 4423fd 13*680ffc 680fc9 4523fd
-14*680ffc 680fc9 780fd9 4523fd 13*680ffc 680fc9 4023fd 14*680ffc
-680fc9 780fd9 4023fd 13*680ffc 680fc9 4123fd 14*680ffc 680fc9
-780fd9 4123fd 13*680ffc 680fc9 4223fd 14*680ffc 680fc9 780fd9
-4223fd 13*680ffc 680fc9 4323fd 14*680ffc 680fc9 780fd9 4323fd
-13*680ffc 680fc9 4433fd 14*680ffc 680fc9 780fd9 4433fd 13*680ffc
-680fc9 4533fd 14*680ffc 680fc9 780fd9 4533fd 13*680ffc 680fc9
-4033fd 14*680ffc 680fc9 780fd9 4033fd 13*680ffc 680fc9 4133fd
-14*680ffc 680fc9 780fd9 4133fd 13*680ffc 680fc9 4233fd 14*680ffc
-680fc9 780fd9 4233fd 13*680ffc 680fc9 4333fd 14*680ffc 680fc9
-780fd9 4333fd 13*680ffc 680fc9 4443fd 14*680ffc 680fc9 780fd9
-4443fd 13*680ffc 680fc9 4543fd 14*680ffc 680fc9 780fd9 4543fd
-13*680ffc 680fc9 4043fd 14*680ffc 680fc9 780fd9 4043fd 13*680ffc
-680fc9 4143fd 14*680ffc 680fc9 780fd9 4143fd 13*680ffc 680fc9
-4243fd 14*680ffc 680fc9 780fd9 4243fd 13*680ffc 680fc9 4343fd
-14*680ffc 680fc9 780fd9 4343fd 13*680ffc 680fc9 4453fd 14*680ffc
-680fc9 780fd9 4453fd 13*680ffc 680fc9 4553fd 14*680ffc 680fc9
-780fd9 4553fd 13*680ffc 680fc9 4053fd 14*680ffc 680fc9 780fd9
-4053fd 13*680ffc 680fc9 4153fd 14*680ffc 680fc9 780fd9 4153fd
-13*680ffc 680fc9 4253fd 14*680ffc 680fc9 780fd9 4253fd 13*680ffc
-680fc9 4353fd 14*680ffc 680fc9 780fd9 4353fd 13*680ffc 680fc9
-443bfd 14*680ffc 680fc9 780fd9 443bfd 13*680ffc 680fc9 453bfd
-14*680ffc 680fc9 780fd9 453bfd 13*680ffc 680fc9 403bfd 14*680ffc
-680fc9 780fd9 403bfd 13*680ffc 680fc9 413bfd 14*680ffc 680fc9
-780fd9 413bfd 13*680ffc 680fc9 423bfd 14*680ffc 680fc9 780fd9
-423bfd 13*680ffc 680fc9 433bfd 14*680ffc 680fc9 780fd9 433bfd
-13*680ffc 680fc9 4463fd 14*680ffc 680fc9 780fd9 4463fd 13*680ffc
-680fc9 4563fd 14*680ffc 680fc9 780fd9 4563fd 13*680ffc 680fc9
-4063fd 14*680ffc 680fc9 780fd9 4063fd 13*680ffc 680fc9 4163fd
-14*680ffc 680fc9 780fd9 4163fd 13*680ffc 680fc9 4263fd 14*680ffc
-680fc9 780fd9 4263fd 13*680ffc 680fc9 4363fd 14*680ffc 680fc9
-780fd9 4363fd 13*680ffc 680fc9 4473fd 14*680ffc 680fc9 780fd9
-4473fd 13*680ffc 680fc9 4573fd 14*680ffc 680fc9 780fd9 4573fd
-13*680ffc 680fc9 4073fd 14*680ffc 680fc9 780fd9 4073fd 13*680ffc
-680fc9 4173fd 14*680ffc 680fc9 780fd9 4173fd 13*680ffc 680fc9
-4273fd 14*680ffc 680fc9 780fd9 4273fd 13*680ffc 680fc9 4373fd
-14*680ffc 680fc9 780fd9 4373fd 13*680ffc 680fc9 4483fd 14*680ffc
-680fc9 780fd9 4483fd 13*680ffc 680fc9 4583fd 14*680ffc 680fc9
-780fd9 4583fd 13*680ffc 680fc9 4083fd 14*680ffc 680fc9 780fd9
-4083fd 13*680ffc 680fc9 4183fd 14*680ffc 680fc9 780fd9 4183fd
-13*680ffc 680fc9 4283fd 14*680ffc 680fc9 780fd9 4283fd 13*680ffc
-680fc9 4383fd 14*680ffc 680fc9 780fd9 4383fd 13*680ffc 680fc9
-44d3fd 44e3fd 13*680ffc 680fc9 45d3fd 45e3fd 13*680ffc 680fc9
-40d3fd 40e3fd 13*680ffc 680fc9 41d3fd 41e3fd 13*680ffc 680fc9
-42d3fd 42e3fd 13*680ffc 680fc9 43d3fd 43e3fd 13*680ffc 176*0
-680fc9 710bfd 4123fd 700bfd 4043fd 11*680ffc 680fc9 730bfd
-4123fd 720bfd 4043fd 11*680ffc 680fc9 780fd9 4123fd 780fd9
-4043fd 11*680ffc 16*0 680fc9 710bfd 4323fd 700bfd 4243fd
-11*680ffc 680fc9 730bfd 4323fd 720bfd 4243fd 11*680ffc 144*0
-680fc9 44a3fd 14*680ffc 680fc9 45a3fd 14*680ffc 680fc9 41a3fd
-4093fd 13*680ffc 680fc9 43a3fd 4293fd 13*680ffc 680fc9 44b3fd
-14*680ffc 680fc9 45b3fd 14*680ffc 680fc9 41b3fd 40c3fd 13*680ffc
-680fc9 43b3fd 42c3fd 13*680ffc 112*0 680fc9 280ffd 14*680ffc
-680fc9 680dd9 680ed9 13*680ffc 680fc9 6109fd 600afd 13*680ffc
-680fc9 6309fd 620afd 13*680ffc 680fc9 6709fd 660afd 13*680ffc
-680fc9 780fd9 6129fd 609afd 12*680ffc 680fc9 780fd9 6329fd
-629afd 12*680ffc 680fc9 780fd9 6729fd 669afd 12*680ffc 680fc9
-780fd9 6129fd 780fd9 604afd 11*680ffc 680fc9 780fd9 6329fd
-780fd9 624afd 11*680ffc 680fc9 780fd9 6729fd 780fd9 664afd
-11*680ffc 680fc9 740bfd 6129fd 609afd 12*680ffc 680fc9 740bfd
-6329fd 629afd 12*680ffc 680fc9 740bfd 6729fd 669afd 12*680ffc
-680fc9 750bfd 6129fd 609afd 12*680ffc 680fc9 750bfd 6329fd
-629afd 12*680ffc 680fc9 750bfd 6729fd 669afd 12*680ffc 680fc9
-770bfd 6129fd 760bfd 604afd 11*680ffc 680fc9 770bfd 6329fd
-760bfd 624afd 11*680ffc 680fc9 710bfd 6329fd 700bfd 624afd
-11*680ffc 680fc9 780f5f 680edf 601dfd 12*680ffc 680fc9 680dd9
-680ed9 680ff7 12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9
-680ed9 13*680ffc 680fc9 15*680ffc 680fc9 680dd9 680ed9 680ff7
-12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9 680ed9 680ff7
-12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9 680ed9 13*680ffc
-680fc9 15*680ffc 680fc9 67a1fd 6692fd 780fdf 67a1fd 6692fd
-680edf 601dfd 680ff7 7*680ffc 680fc9 780fd9 601fbf 13*680ffc
-680fc9 6c07df 14*680ffc 680fc9 6d07df 14*680ffc 680fc9 6907df
-680f7d 6807df 12*680ffc 680fc9 6b07df 680f7d 6a07df 12*680ffc
-680fc9 6807df 14*680ffc 680fc9 6907df 14*680ffc 680fc9 6a07df
-14*680ffc 680fc9 6b07df 14*680ffc 680fc9 640bbf 14*680ffc 680fc9
-650bbf 14*680ffc 680fc9 610bbf 680f7d 600bbf 12*680ffc 680fc9
-630bbf 680f7d 620bbf 12*680ffc 680fc9 600bbf 14*680ffc 680fc9
-610bbf 14*680ffc 680fc9 620bbf 14*680ffc 680fc9 630bbf 14*680ffc
-680fc9 6709fd 660afd 640bbf 67b3fd 66c3fd 10*680ffc 680fc9
-6709fd 660afd 650bbf 67b3fd 66c3fd 10*680ffc 680fc9 6709fd
-660afd 600bbf 67b1fd 66c2fd 610bbf 67b3fd 66c3fd 7*680ffc
-680fc9 6709fd 660afd 620bbf 67b1fd 66c2fd 630bbf 67b3fd
-66c3fd 7*680ffc 680fc9 67a1fd 6692fd 6c07df 12*680ffc 680fc9
-67a1fd 6692fd 6d07df 12*680ffc 680fc9 67a1fd 6692fd 6907df
-67a1fd 6692fd 6807df 9*680ffc 680fc9 67a1fd 6692fd 6b07df
-67a1fd 6692fd 6a07df 9*680ffc 680fc9 780fd9 6709fd 660afd
-601fbf 780fd9 67b1fd 66c2fd 601fbf 67b1fd 66c2fd 5*680ffc
-680fc9 710bfd 6717fd 700bfd 6617fd 11*680ffc 680fc9 730bfd
-6717fd 720bfd 6617fd 11*680ffc 680fc9 770bfd 6117fd 760bfd
-6017fd 11*680ffc 680fc9 770bfd 6317fd 760bfd 6217fd 11*680ffc
-48*0 680fc9 6807d9 14*680ffc 680fc9 710bfd 6017fd 13*680ffc
-680fc9 720bfd 6017fd 13*680ffc 680fc9 730bfd 6017fd 13*680ffc
-680fc9 740bfd 6017fd 13*680ffc 680fc9 750bfd 6017fd 13*680ffc
-680fc9 700bfd 6117fd 13*680ffc 680fc9 6907d9 14*680ffc 680fc9
-720bfd 6117fd 13*680ffc 680fc9 730bfd 6117fd 13*680ffc 680fc9
-740bfd 6117fd 13*680ffc 680fc9 750bfd 6117fd 13*680ffc 680fc9
-700bfd 6217fd 13*680ffc 680fc9 710bfd 6217fd 13*680ffc 680fc9
-6a07d9 14*680ffc 680fc9 730bfd 6217fd 13*680ffc 680fc9 740bfd
-6217fd 13*680ffc 680fc9 750bfd 6217fd 13*680ffc 680fc9 700bfd
-6317fd 13*680ffc 680fc9 710bfd 6317fd 13*680ffc 680fc9 720bfd
-6317fd 13*680ffc 680fc9 6b07d9 14*680ffc 680fc9 740bfd 6317fd
-13*680ffc 680fc9 750bfd 6317fd 13*680ffc 680fc9 700bfd 6417fd
-13*680ffc 680fc9 710bfd 6417fd 13*680ffc 680fc9 720bfd 6417fd
-13*680ffc 680fc9 730bfd 6417fd 13*680ffc 680fc9 6c07d9 14*680ffc
-680fc9 750bfd 6417fd 13*680ffc 680fc9 700bfd 6517fd 13*680ffc
-680fc9 710bfd 6517fd 13*680ffc 680fc9 720bfd 6517fd 13*680ffc
-680fc9 730bfd 6517fd 13*680ffc 680fc9 740bfd 6517fd 13*680ffc
-680fc9 6d07d9 14*680ffc 680fc9 700bfd 14*680ffc 680fc9 710bfd
-14*680ffc 680fc9 720bfd 14*680ffc 680fc9 730bfd 14*680ffc 680fc9
-740bfd 14*680ffc 680fc9 750bfd 14*680ffc 680fc9 780fd9 14*680ffc
-680fc9 730bfd 6117fd 720bfd 6017fd 11*680ffc 680fc9 710bfd
-6317fd 700bfd 6217fd 11*680ffc 680fc9 6907d9 6807d9 13*680ffc
-680fc9 6b07d9 6a07d9 13*680ffc 680fc9 780fdf 14*680ffc 680fc9
-4423fd 14*680ffc 680fc9 780fd9 4423fd 13*680ffc 680fc9 4523fd
-14*680ffc 680fc9 780fd9 4523fd 13*680ffc 680fc9 4023fd 14*680ffc
-680fc9 780fd9 4023fd 13*680ffc 680fc9 4123fd 14*680ffc 680fc9
-780fd9 4123fd 13*680ffc 680fc9 4223fd 14*680ffc 680fc9 780fd9
-4223fd 13*680ffc 680fc9 4323fd 14*680ffc 680fc9 780fd9 4323fd
-13*680ffc 680fc9 4433fd 14*680ffc 680fc9 780fd9 4433fd 13*680ffc
-680fc9 4533fd 14*680ffc 680fc9 780fd9 4533fd 13*680ffc 680fc9
-4033fd 14*680ffc 680fc9 780fd9 4033fd 13*680ffc 680fc9 4133fd
-14*680ffc 680fc9 780fd9 4133fd 13*680ffc 680fc9 4233fd 14*680ffc
-680fc9 780fd9 4233fd 13*680ffc 680fc9 4333fd 14*680ffc 680fc9
-780fd9 4333fd 13*680ffc 680fc9 4443fd 14*680ffc 680fc9 780fd9
-4443fd 13*680ffc 680fc9 4543fd 14*680ffc 680fc9 780fd9 4543fd
-13*680ffc 680fc9 4043fd 14*680ffc 680fc9 780fd9 4043fd 13*680ffc
-680fc9 4143fd 14*680ffc 680fc9 780fd9 4143fd 13*680ffc 680fc9
-4243fd 14*680ffc 680fc9 780fd9 4243fd 13*680ffc 680fc9 4343fd
-14*680ffc 680fc9 780fd9 4343fd 13*680ffc 680fc9 4453fd 14*680ffc
-680fc9 780fd9 4453fd 13*680ffc 680fc9 4553fd 14*680ffc 680fc9
-780fd9 4553fd 13*680ffc 680fc9 4053fd 14*680ffc 680fc9 780fd9
-4053fd 13*680ffc 680fc9 4153fd 14*680ffc 680fc9 780fd9 4153fd
-13*680ffc 680fc9 4253fd 14*680ffc 680fc9 780fd9 4253fd 13*680ffc
-680fc9 4353fd 14*680ffc 680fc9 780fd9 4353fd 13*680ffc 680fc9
-443bfd 14*680ffc 680fc9 780fd9 443bfd 13*680ffc 680fc9 453bfd
-14*680ffc 680fc9 780fd9 453bfd 13*680ffc 680fc9 403bfd 14*680ffc
-680fc9 780fd9 403bfd 13*680ffc 680fc9 413bfd 14*680ffc 680fc9
-780fd9 413bfd 13*680ffc 680fc9 423bfd 14*680ffc 680fc9 780fd9
-423bfd 13*680ffc 680fc9 433bfd 14*680ffc 680fc9 780fd9 433bfd
-13*680ffc 680fc9 4463fd 14*680ffc 680fc9 780fd9 4463fd 13*680ffc
-680fc9 4563fd 14*680ffc 680fc9 780fd9 4563fd 13*680ffc 680fc9
-4063fd 14*680ffc 680fc9 780fd9 4063fd 13*680ffc 680fc9 4163fd
-14*680ffc 680fc9 780fd9 4163fd 13*680ffc 680fc9 4263fd 14*680ffc
-680fc9 780fd9 4263fd 13*680ffc 680fc9 4363fd 14*680ffc 680fc9
-780fd9 4363fd 13*680ffc 680fc9 4473fd 14*680ffc 680fc9 780fd9
-4473fd 13*680ffc 680fc9 4573fd 14*680ffc 680fc9 780fd9 4573fd
-13*680ffc 680fc9 4073fd 14*680ffc 680fc9 780fd9 4073fd 13*680ffc
-680fc9 4173fd 14*680ffc 680fc9 780fd9 4173fd 13*680ffc 680fc9
-4273fd 14*680ffc 680fc9 780fd9 4273fd 13*680ffc 680fc9 4373fd
-14*680ffc 680fc9 780fd9 4373fd 13*680ffc 680fc9 4483fd 14*680ffc
-680fc9 780fd9 4483fd 13*680ffc 680fc9 4583fd 14*680ffc 680fc9
-780fd9 4583fd 13*680ffc 680fc9 4083fd 14*680ffc 680fc9 780fd9
-4083fd 13*680ffc 680fc9 4183fd 14*680ffc 680fc9 780fd9 4183fd
-13*680ffc 680fc9 4283fd 14*680ffc 680fc9 780fd9 4283fd 13*680ffc
-680fc9 4383fd 14*680ffc 680fc9 780fd9 4383fd 13*680ffc 680fc9
-44d3fd 44e3fd 13*680ffc 680fc9 45d3fd 45e3fd 13*680ffc 680fc9
-40d3fd 40e3fd 13*680ffc 680fc9 41d3fd 41e3fd 13*680ffc 680fc9
-42d3fd 42e3fd 13*680ffc 680fc9 43d3fd 43e3fd 13*680ffc 176*0
-680fc9 710bfd 4123fd 700bfd 4043fd 11*680ffc 680fc9 730bfd
-4123fd 720bfd 4043fd 11*680ffc 680fc9 780fd9 4123fd 780fd9
-4043fd 11*680ffc 16*0 680fc9 710bfd 4323fd 700bfd 4243fd
-11*680ffc 680fc9 730bfd 4323fd 720bfd 4243fd 11*680ffc 144*0
-680fc9 44a3fd 14*680ffc 680fc9 45a3fd 14*680ffc 680fc9 41a3fd
-4093fd 13*680ffc 680fc9 43a3fd 4293fd 13*680ffc 680fc9 44b3fd
-14*680ffc 680fc9 45b3fd 14*680ffc 680fc9 41b3fd 40c3fd 13*680ffc
-680fc9 43b3fd 42c3fd 13*680ffc 112*0 680fc9 280ffd 14*680ffc
-680fc9 680dd9 680ed9 13*680ffc 680fc9 6109fd 600afd 13*680ffc
-680fc9 6309fd 620afd 13*680ffc 680fc9 6709fd 660afd 13*680ffc
-680fc9 780fd9 6129fd 609afd 12*680ffc 680fc9 780fd9 6329fd
-629afd 12*680ffc 680fc9 780fd9 6729fd 669afd 12*680ffc 680fc9
-780fd9 6129fd 780fd9 604afd 11*680ffc 680fc9 780fd9 6329fd
-780fd9 624afd 11*680ffc 680fc9 780fd9 6729fd 780fd9 664afd
-11*680ffc 680fc9 740bfd 6129fd 609afd 12*680ffc 680fc9 740bfd
-6329fd 629afd 12*680ffc 680fc9 740bfd 6729fd 669afd 12*680ffc
-680fc9 750bfd 6129fd 609afd 12*680ffc 680fc9 750bfd 6329fd
-629afd 12*680ffc 680fc9 750bfd 6729fd 669afd 12*680ffc 680fc9
-770bfd 6129fd 760bfd 604afd 11*680ffc 680fc9 770bfd 6329fd
-760bfd 624afd 11*680ffc 680fc9 710bfd 6329fd 700bfd 624afd
-11*680ffc 680fc9 780f5f 680edf 601dfd 12*680ffc 680fc9 680dd9
-680ed9 680ff7 12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9
-680ed9 680ff7 12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9
-680ed9 13*680ffc 680fc9 15*680ffc 680fc9 680dd9 680ed9 680ff7
-12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9 680ed9 13*680ffc
-680fc9 15*680ffc 680fc9 67a1fd 6692fd 780fdf 67a1fd 6692fd
-680edf 601dfd 680ff7 7*680ffc 680fc9 780fd9 601fbf 13*680ffc
-680fc9 6c07df 14*680ffc 680fc9 6d07df 14*680ffc 680fc9 6907df
-680f7d 6807df 12*680ffc 680fc9 6b07df 680f7d 6a07df 12*680ffc
-680fc9 6807df 14*680ffc 680fc9 6907df 14*680ffc 680fc9 6a07df
-14*680ffc 680fc9 6b07df 14*680ffc 680fc9 640bbf 14*680ffc 680fc9
-650bbf 14*680ffc 680fc9 610bbf 680f7d 600bbf 12*680ffc 680fc9
-630bbf 680f7d 620bbf 12*680ffc 680fc9 600bbf 14*680ffc 680fc9
-610bbf 14*680ffc 680fc9 620bbf 14*680ffc 680fc9 630bbf 14*680ffc
-680fc9 6709fd 660afd 640bbf 67b3fd 66c3fd 10*680ffc 680fc9
-6709fd 660afd 650bbf 67b3fd 66c3fd 10*680ffc 680fc9 6709fd
-660afd 600bbf 67b1fd 66c2fd 610bbf 67b3fd 66c3fd 7*680ffc
-680fc9 6709fd 660afd 620bbf 67b1fd 66c2fd 630bbf 67b3fd
-66c3fd 7*680ffc 680fc9 67a1fd 6692fd 6c07df 12*680ffc 680fc9
-67a1fd 6692fd 6d07df 12*680ffc 680fc9 67a1fd 6692fd 6907df
-67a1fd 6692fd 6807df 9*680ffc 680fc9 67a1fd 6692fd 6b07df
-67a1fd 6692fd 6a07df 9*680ffc 680fc9 780fd9 6709fd 660afd
-601fbf 780fd9 67b1fd 66c2fd 601fbf 67b1fd 66c2fd 5*680ffc
-680fc9 710bfd 6717fd 700bfd 6617fd 11*680ffc 680fc9 730bfd
-6717fd 720bfd 6617fd 11*680ffc 680fc9 770bfd 6117fd 760bfd
-6017fd 11*680ffc 680fc9 770bfd 6317fd 760bfd 6217fd 11*680ffc
-48*0 680fc9 6807d9 14*680ffc 680fc9 710bfd 6017fd 13*680ffc
-680fc9 720bfd 6017fd 13*680ffc 680fc9 730bfd 6017fd 13*680ffc
-680fc9 740bfd 6017fd 13*680ffc 680fc9 750bfd 6017fd 13*680ffc
-680fc9 700bfd 6117fd 13*680ffc 680fc9 6907d9 14*680ffc 680fc9
-720bfd 6117fd 13*680ffc 680fc9 730bfd 6117fd 13*680ffc 680fc9
-740bfd 6117fd 13*680ffc 680fc9 750bfd 6117fd 13*680ffc 680fc9
-700bfd 6217fd 13*680ffc 680fc9 710bfd 6217fd 13*680ffc 680fc9
-6a07d9 14*680ffc 680fc9 730bfd 6217fd 13*680ffc 680fc9 740bfd
-6217fd 13*680ffc 680fc9 750bfd 6217fd 13*680ffc 680fc9 700bfd
-6317fd 13*680ffc 680fc9 710bfd 6317fd 13*680ffc 680fc9 720bfd
-6317fd 13*680ffc 680fc9 6b07d9 14*680ffc 680fc9 740bfd 6317fd
-13*680ffc 680fc9 750bfd 6317fd 13*680ffc 680fc9 700bfd 6417fd
-13*680ffc 680fc9 710bfd 6417fd 13*680ffc 680fc9 720bfd 6417fd
-13*680ffc 680fc9 730bfd 6417fd 13*680ffc 680fc9 6c07d9 14*680ffc
-680fc9 750bfd 6417fd 13*680ffc 680fc9 700bfd 6517fd 13*680ffc
-680fc9 710bfd 6517fd 13*680ffc 680fc9 720bfd 6517fd 13*680ffc
-680fc9 730bfd 6517fd 13*680ffc 680fc9 740bfd 6517fd 13*680ffc
-680fc9 6d07d9 14*680ffc 680fc9 700bfd 14*680ffc 680fc9 710bfd
-14*680ffc 680fc9 720bfd 14*680ffc 680fc9 730bfd 14*680ffc 680fc9
-740bfd 14*680ffc 680fc9 750bfd 14*680ffc 680fc9 780fd9 14*680ffc
-680fc9 730bfd 6117fd 720bfd 6017fd 11*680ffc 680fc9 710bfd
-6317fd 700bfd 6217fd 11*680ffc 680fc9 6907d9 6807d9 13*680ffc
-680fc9 6b07d9 6a07d9 13*680ffc 680fc9 780fdf 14*680ffc 680fc9
-4423fd 14*680ffc 680fc9 780fd9 4423fd 13*680ffc 680fc9 4523fd
-14*680ffc 680fc9 780fd9 4523fd 13*680ffc 680fc9 4023fd 14*680ffc
-680fc9 780fd9 4023fd 13*680ffc 680fc9 4123fd 14*680ffc 680fc9
-780fd9 4123fd 13*680ffc 680fc9 4223fd 14*680ffc 680fc9 780fd9
-4223fd 13*680ffc 680fc9 4323fd 14*680ffc 680fc9 780fd9 4323fd
-13*680ffc 680fc9 4433fd 14*680ffc 680fc9 780fd9 4433fd 13*680ffc
-680fc9 4533fd 14*680ffc 680fc9 780fd9 4533fd 13*680ffc 680fc9
-4033fd 14*680ffc 680fc9 780fd9 4033fd 13*680ffc 680fc9 4133fd
-14*680ffc 680fc9 780fd9 4133fd 13*680ffc 680fc9 4233fd 14*680ffc
-680fc9 780fd9 4233fd 13*680ffc 680fc9 4333fd 14*680ffc 680fc9
-780fd9 4333fd 13*680ffc 680fc9 4443fd 14*680ffc 680fc9 780fd9
-4443fd 13*680ffc 680fc9 4543fd 14*680ffc 680fc9 780fd9 4543fd
-13*680ffc 680fc9 4043fd 14*680ffc 680fc9 780fd9 4043fd 13*680ffc
-680fc9 4143fd 14*680ffc 680fc9 780fd9 4143fd 13*680ffc 680fc9
-4243fd 14*680ffc 680fc9 780fd9 4243fd 13*680ffc 680fc9 4343fd
-14*680ffc 680fc9 780fd9 4343fd 13*680ffc 680fc9 4453fd 14*680ffc
-680fc9 780fd9 4453fd 13*680ffc 680fc9 4553fd 14*680ffc 680fc9
-780fd9 4553fd 13*680ffc 680fc9 4053fd 14*680ffc 680fc9 780fd9
-4053fd 13*680ffc 680fc9 4153fd 14*680ffc 680fc9 780fd9 4153fd
-13*680ffc 680fc9 4253fd 14*680ffc 680fc9 780fd9 4253fd 13*680ffc
-680fc9 4353fd 14*680ffc 680fc9 780fd9 4353fd 13*680ffc 680fc9
-443bfd 14*680ffc 680fc9 780fd9 443bfd 13*680ffc 680fc9 453bfd
-14*680ffc 680fc9 780fd9 453bfd 13*680ffc 680fc9 403bfd 14*680ffc
-680fc9 780fd9 403bfd 13*680ffc 680fc9 413bfd 14*680ffc 680fc9
-780fd9 413bfd 13*680ffc 680fc9 423bfd 14*680ffc 680fc9 780fd9
-423bfd 13*680ffc 680fc9 433bfd 14*680ffc 680fc9 780fd9 433bfd
-13*680ffc 680fc9 4463fd 14*680ffc 680fc9 780fd9 4463fd 13*680ffc
-680fc9 4563fd 14*680ffc 680fc9 780fd9 4563fd 13*680ffc 680fc9
-4063fd 14*680ffc 680fc9 780fd9 4063fd 13*680ffc 680fc9 4163fd
-14*680ffc 680fc9 780fd9 4163fd 13*680ffc 680fc9 4263fd 14*680ffc
-680fc9 780fd9 4263fd 13*680ffc 680fc9 4363fd 14*680ffc 680fc9
-780fd9 4363fd 13*680ffc 680fc9 4473fd 14*680ffc 680fc9 780fd9
-4473fd 13*680ffc 680fc9 4573fd 14*680ffc 680fc9 780fd9 4573fd
-13*680ffc 680fc9 4073fd 14*680ffc 680fc9 780fd9 4073fd 13*680ffc
-680fc9 4173fd 14*680ffc 680fc9 780fd9 4173fd 13*680ffc 680fc9
-4273fd 14*680ffc 680fc9 780fd9 4273fd 13*680ffc 680fc9 4373fd
-14*680ffc 680fc9 780fd9 4373fd 13*680ffc 680fc9 4483fd 14*680ffc
-680fc9 780fd9 4483fd 13*680ffc 680fc9 4583fd 14*680ffc 680fc9
-780fd9 4583fd 13*680ffc 680fc9 4083fd 14*680ffc 680fc9 780fd9
-4083fd 13*680ffc 680fc9 4183fd 14*680ffc 680fc9 780fd9 4183fd
-13*680ffc 680fc9 4283fd 14*680ffc 680fc9 780fd9 4283fd 13*680ffc
-680fc9 4383fd 14*680ffc 680fc9 780fd9 4383fd 13*680ffc 680fc9
-44d3fd 44e3fd 13*680ffc 680fc9 45d3fd 45e3fd 13*680ffc 680fc9
-40d3fd 40e3fd 13*680ffc 680fc9 41d3fd 41e3fd 13*680ffc 680fc9
-42d3fd 42e3fd 13*680ffc 680fc9 43d3fd 43e3fd 13*680ffc 176*0
-680fc9 710bfd 4123fd 700bfd 4043fd 11*680ffc 680fc9 730bfd
-4123fd 720bfd 4043fd 11*680ffc 680fc9 780fd9 4123fd 780fd9
-4043fd 11*680ffc 16*0 680fc9 710bfd 4323fd 700bfd 4243fd
-11*680ffc 680fc9 730bfd 4323fd 720bfd 4243fd 11*680ffc 144*0
-680fc9 44a3fd 14*680ffc 680fc9 45a3fd 14*680ffc 680fc9 41a3fd
-4093fd 13*680ffc 680fc9 43a3fd 4293fd 13*680ffc 680fc9 44b3fd
-14*680ffc 680fc9 45b3fd 14*680ffc 680fc9 41b3fd 40c3fd 13*680ffc
-680fc9 43b3fd 42c3fd 13*680ffc 112*0 680fc9 280ffd 14*680ffc
-680fc9 680dd9 680ed9 13*680ffc 680fc9 6109fd 600afd 13*680ffc
-680fc9 6309fd 620afd 13*680ffc 680fc9 6709fd 660afd 13*680ffc
-680fc9 780fd9 6129fd 609afd 12*680ffc 680fc9 780fd9 6329fd
-629afd 12*680ffc 680fc9 780fd9 6729fd 669afd 12*680ffc 680fc9
-780fd9 6129fd 780fd9 604afd 11*680ffc 680fc9 780fd9 6329fd
-780fd9 624afd 11*680ffc 680fc9 780fd9 6729fd 780fd9 664afd
-11*680ffc 680fc9 740bfd 6129fd 609afd 12*680ffc 680fc9 740bfd
-6329fd 629afd 12*680ffc 680fc9 740bfd 6729fd 669afd 12*680ffc
-680fc9 750bfd 6129fd 609afd 12*680ffc 680fc9 750bfd 6329fd
-629afd 12*680ffc 680fc9 750bfd 6729fd 669afd 12*680ffc 680fc9
-770bfd 6129fd 760bfd 604afd 11*680ffc 680fc9 770bfd 6329fd
-760bfd 624afd 11*680ffc 680fc9 710bfd 6329fd 700bfd 624afd
-11*680ffc 680fc9 780f5f 680edf 601dfd 12*680ffc 680fc9 680dd9
-680ed9 680ff7 12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9
-680ed9 13*680ffc 680fc9 15*680ffc 680fc9 680dd9 680ed9 680ff7
-12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9 680ed9 13*680ffc
-680fc9 15*680ffc 680fc9 680dd9 680ed9 680ff7 12*680ffc 680fc9
-680ff7 14*680ffc 680fc9 67a1fd 6692fd 780fdf 67a1fd 6692fd
-680edf 601dfd 680ff7 7*680ffc 680fc9 780fd9 601fbf 13*680ffc
-680fc9 6c07df 14*680ffc 680fc9 6d07df 14*680ffc 680fc9 6907df
-680f7d 6807df 12*680ffc 680fc9 6b07df 680f7d 6a07df 12*680ffc
-680fc9 6807df 14*680ffc 680fc9 6907df 14*680ffc 680fc9 6a07df
-14*680ffc 680fc9 6b07df 14*680ffc 680fc9 640bbf 14*680ffc 680fc9
-650bbf 14*680ffc 680fc9 610bbf 680f7d 600bbf 12*680ffc 680fc9
-630bbf 680f7d 620bbf 12*680ffc 680fc9 600bbf 14*680ffc 680fc9
-610bbf 14*680ffc 680fc9 620bbf 14*680ffc 680fc9 630bbf 14*680ffc
-680fc9 6709fd 660afd 640bbf 67b3fd 66c3fd 10*680ffc 680fc9
-6709fd 660afd 650bbf 67b3fd 66c3fd 10*680ffc 680fc9 6709fd
-660afd 600bbf 67b1fd 66c2fd 610bbf 67b3fd 66c3fd 7*680ffc
-680fc9 6709fd 660afd 620bbf 67b1fd 66c2fd 630bbf 67b3fd
-66c3fd 7*680ffc 680fc9 67a1fd 6692fd 6c07df 12*680ffc 680fc9
-67a1fd 6692fd 6d07df 12*680ffc 680fc9 67a1fd 6692fd 6907df
-67a1fd 6692fd 6807df 9*680ffc 680fc9 67a1fd 6692fd 6b07df
-67a1fd 6692fd 6a07df 9*680ffc 680fc9 780fd9 6709fd 660afd
-601fbf 780fd9 67b1fd 66c2fd 601fbf 67b1fd 66c2fd 5*680ffc
-680fc9 710bfd 6717fd 700bfd 6617fd 11*680ffc 680fc9 730bfd
-6717fd 720bfd 6617fd 11*680ffc 680fc9 770bfd 6117fd 760bfd
-6017fd 11*680ffc 680fc9 770bfd 6317fd 760bfd 6217fd 11*680ffc
-48*0 680fc9 6807d9 14*680ffc 680fc9 710bfd 6017fd 13*680ffc
-680fc9 720bfd 6017fd 13*680ffc 680fc9 730bfd 6017fd 13*680ffc
-680fc9 740bfd 6017fd 13*680ffc 680fc9 750bfd 6017fd 13*680ffc
-680fc9 700bfd 6117fd 13*680ffc 680fc9 6907d9 14*680ffc 680fc9
-720bfd 6117fd 13*680ffc 680fc9 730bfd 6117fd 13*680ffc 680fc9
-740bfd 6117fd 13*680ffc 680fc9 750bfd 6117fd 13*680ffc 680fc9
-700bfd 6217fd 13*680ffc 680fc9 710bfd 6217fd 13*680ffc 680fc9
-6a07d9 14*680ffc 680fc9 730bfd 6217fd 13*680ffc 680fc9 740bfd
-6217fd 13*680ffc 680fc9 750bfd 6217fd 13*680ffc 680fc9 700bfd
-6317fd 13*680ffc 680fc9 710bfd 6317fd 13*680ffc 680fc9 720bfd
-6317fd 13*680ffc 680fc9 6b07d9 14*680ffc 680fc9 740bfd 6317fd
-13*680ffc 680fc9 750bfd 6317fd 13*680ffc 680fc9 700bfd 6417fd
-13*680ffc 680fc9 710bfd 6417fd 13*680ffc 680fc9 720bfd 6417fd
-13*680ffc 680fc9 730bfd 6417fd 13*680ffc 680fc9 6c07d9 14*680ffc
-680fc9 750bfd 6417fd 13*680ffc 680fc9 700bfd 6517fd 13*680ffc
-680fc9 710bfd 6517fd 13*680ffc 680fc9 720bfd 6517fd 13*680ffc
-680fc9 730bfd 6517fd 13*680ffc 680fc9 740bfd 6517fd 13*680ffc
-680fc9 6d07d9 14*680ffc 680fc9 700bfd 14*680ffc 680fc9 710bfd
-14*680ffc 680fc9 720bfd 14*680ffc 680fc9 730bfd 14*680ffc 680fc9
-740bfd 14*680ffc 680fc9 750bfd 14*680ffc 680fc9 780fd9 14*680ffc
-680fc9 730bfd 6117fd 720bfd 6017fd 11*680ffc 680fc9 710bfd
-6317fd 700bfd 6217fd 11*680ffc 680fc9 6907d9 6807d9 13*680ffc
-680fc9 6b07d9 6a07d9 13*680ffc 680fc9 780fdf 14*680ffc 680fc9
-4423fd 14*680ffc 680fc9 780fd9 4423fd 13*680ffc 680fc9 4523fd
-14*680ffc 680fc9 780fd9 4523fd 13*680ffc 680fc9 4023fd 14*680ffc
-680fc9 780fd9 4023fd 13*680ffc 680fc9 4123fd 14*680ffc 680fc9
-780fd9 4123fd 13*680ffc 680fc9 4223fd 14*680ffc 680fc9 780fd9
-4223fd 13*680ffc 680fc9 4323fd 14*680ffc 680fc9 780fd9 4323fd
-13*680ffc 680fc9 4433fd 14*680ffc 680fc9 780fd9 4433fd 13*680ffc
-680fc9 4533fd 14*680ffc 680fc9 780fd9 4533fd 13*680ffc 680fc9
-4033fd 14*680ffc 680fc9 780fd9 4033fd 13*680ffc 680fc9 4133fd
-14*680ffc 680fc9 780fd9 4133fd 13*680ffc 680fc9 4233fd 14*680ffc
-680fc9 780fd9 4233fd 13*680ffc 680fc9 4333fd 14*680ffc 680fc9
-780fd9 4333fd 13*680ffc 680fc9 4443fd 14*680ffc 680fc9 780fd9
-4443fd 13*680ffc 680fc9 4543fd 14*680ffc 680fc9 780fd9 4543fd
-13*680ffc 680fc9 4043fd 14*680ffc 680fc9 780fd9 4043fd 13*680ffc
-680fc9 4143fd 14*680ffc 680fc9 780fd9 4143fd 13*680ffc 680fc9
-4243fd 14*680ffc 680fc9 780fd9 4243fd 13*680ffc 680fc9 4343fd
-14*680ffc 680fc9 780fd9 4343fd 13*680ffc 680fc9 4453fd 14*680ffc
-680fc9 780fd9 4453fd 13*680ffc 680fc9 4553fd 14*680ffc 680fc9
-780fd9 4553fd 13*680ffc 680fc9 4053fd 14*680ffc 680fc9 780fd9
-4053fd 13*680ffc 680fc9 4153fd 14*680ffc 680fc9 780fd9 4153fd
-13*680ffc 680fc9 4253fd 14*680ffc 680fc9 780fd9 4253fd 13*680ffc
-680fc9 4353fd 14*680ffc 680fc9 780fd9 4353fd 13*680ffc 680fc9
-443bfd 14*680ffc 680fc9 780fd9 443bfd 13*680ffc 680fc9 453bfd
-14*680ffc 680fc9 780fd9 453bfd 13*680ffc 680fc9 403bfd 14*680ffc
-680fc9 780fd9 403bfd 13*680ffc 680fc9 413bfd 14*680ffc 680fc9
-780fd9 413bfd 13*680ffc 680fc9 423bfd 14*680ffc 680fc9 780fd9
-423bfd 13*680ffc 680fc9 433bfd 14*680ffc 680fc9 780fd9 433bfd
-13*680ffc 680fc9 4463fd 14*680ffc 680fc9 780fd9 4463fd 13*680ffc
-680fc9 4563fd 14*680ffc 680fc9 780fd9 4563fd 13*680ffc 680fc9
-4063fd 14*680ffc 680fc9 780fd9 4063fd 13*680ffc 680fc9 4163fd
-14*680ffc 680fc9 780fd9 4163fd 13*680ffc 680fc9 4263fd 14*680ffc
-680fc9 780fd9 4263fd 13*680ffc 680fc9 4363fd 14*680ffc 680fc9
-780fd9 4363fd 13*680ffc 680fc9 4473fd 14*680ffc 680fc9 780fd9
-4473fd 13*680ffc 680fc9 4573fd 14*680ffc 680fc9 780fd9 4573fd
-13*680ffc 680fc9 4073fd 14*680ffc 680fc9 780fd9 4073fd 13*680ffc
-680fc9 4173fd 14*680ffc 680fc9 780fd9 4173fd 13*680ffc 680fc9
-4273fd 14*680ffc 680fc9 780fd9 4273fd 13*680ffc 680fc9 4373fd
-14*680ffc 680fc9 780fd9 4373fd 13*680ffc 680fc9 4483fd 14*680ffc
-680fc9 780fd9 4483fd 13*680ffc 680fc9 4583fd 14*680ffc 680fc9
-780fd9 4583fd 13*680ffc 680fc9 4083fd 14*680ffc 680fc9 780fd9
-4083fd 13*680ffc 680fc9 4183fd 14*680ffc 680fc9 780fd9 4183fd
-13*680ffc 680fc9 4283fd 14*680ffc 680fc9 780fd9 4283fd 13*680ffc
-680fc9 4383fd 14*680ffc 680fc9 780fd9 4383fd 13*680ffc 680fc9
-44d3fd 44e3fd 13*680ffc 680fc9 45d3fd 45e3fd 13*680ffc 680fc9
-40d3fd 40e3fd 13*680ffc 680fc9 41d3fd 41e3fd 13*680ffc 680fc9
-42d3fd 42e3fd 13*680ffc 680fc9 43d3fd 43e3fd 13*680ffc 176*0
-680fc9 710bfd 4123fd 700bfd 4043fd 11*680ffc 680fc9 730bfd
-4123fd 720bfd 4043fd 11*680ffc 680fc9 780fd9 4123fd 780fd9
-4043fd 11*680ffc 16*0 680fc9 710bfd 4323fd 700bfd 4243fd
-11*680ffc 680fc9 730bfd 4323fd 720bfd 4243fd 11*680ffc 144*0
-680fc9 44a3fd 14*680ffc 680fc9 45a3fd 14*680ffc 680fc9 41a3fd
-4093fd 13*680ffc 680fc9 43a3fd 4293fd 13*680ffc 680fc9 44b3fd
-14*680ffc 680fc9 45b3fd 14*680ffc 680fc9 41b3fd 40c3fd 13*680ffc
-680fc9 43b3fd 42c3fd 13*680ffc 112*0 680fc9 280ffd 14*680ffc
-680fc9 680dd9 680ed9 13*680ffc 680fc9 6109fd 600afd 13*680ffc
-680fc9 6309fd 620afd 13*680ffc 680fc9 6709fd 660afd 13*680ffc
-680fc9 780fd9 6129fd 609afd 12*680ffc 680fc9 780fd9 6329fd
-629afd 12*680ffc 680fc9 780fd9 6729fd 669afd 12*680ffc 680fc9
-780fd9 6129fd 780fd9 604afd 11*680ffc 680fc9 780fd9 6329fd
-780fd9 624afd 11*680ffc 680fc9 780fd9 6729fd 780fd9 664afd
-11*680ffc 680fc9 740bfd 6129fd 609afd 12*680ffc 680fc9 740bfd
-6329fd 629afd 12*680ffc 680fc9 740bfd 6729fd 669afd 12*680ffc
-680fc9 750bfd 6129fd 609afd 12*680ffc 680fc9 750bfd 6329fd
-629afd 12*680ffc 680fc9 750bfd 6729fd 669afd 12*680ffc 680fc9
-770bfd 6129fd 760bfd 604afd 11*680ffc 680fc9 770bfd 6329fd
-760bfd 624afd 11*680ffc 680fc9 710bfd 6329fd 700bfd 624afd
-11*680ffc 680fc9 780f5f 680edf 601dfd 12*680ffc 680fc9 680dd9
-680ed9 680ff7 12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9
-680ed9 680ff7 12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9
-680ed9 13*680ffc 680fc9 15*680ffc 680fc9 680dd9 680ed9 13*680ffc
-680fc9 15*680ffc 680fc9 680dd9 680ed9 680ff7 12*680ffc 680fc9
-680ff7 14*680ffc 680fc9 67a1fd 6692fd 780fdf 67a1fd 6692fd
-680edf 601dfd 680ff7 7*680ffc 680fc9 780fd9 601fbf 13*680ffc
-680fc9 6c07df 14*680ffc 680fc9 6d07df 14*680ffc 680fc9 6907df
-680f7d 6807df 12*680ffc 680fc9 6b07df 680f7d 6a07df 12*680ffc
-680fc9 6807df 14*680ffc 680fc9 6907df 14*680ffc 680fc9 6a07df
-14*680ffc 680fc9 6b07df 14*680ffc 680fc9 640bbf 14*680ffc 680fc9
-650bbf 14*680ffc 680fc9 610bbf 680f7d 600bbf 12*680ffc 680fc9
-630bbf 680f7d 620bbf 12*680ffc 680fc9 600bbf 14*680ffc 680fc9
-610bbf 14*680ffc 680fc9 620bbf 14*680ffc 680fc9 630bbf 14*680ffc
-680fc9 6709fd 660afd 640bbf 67b3fd 66c3fd 10*680ffc 680fc9
-6709fd 660afd 650bbf 67b3fd 66c3fd 10*680ffc 680fc9 6709fd
-660afd 600bbf 67b1fd 66c2fd 610bbf 67b3fd 66c3fd 7*680ffc
-680fc9 6709fd 660afd 620bbf 67b1fd 66c2fd 630bbf 67b3fd
-66c3fd 7*680ffc 680fc9 67a1fd 6692fd 6c07df 12*680ffc 680fc9
-67a1fd 6692fd 6d07df 12*680ffc 680fc9 67a1fd 6692fd 6907df
-67a1fd 6692fd 6807df 9*680ffc 680fc9 67a1fd 6692fd 6b07df
-67a1fd 6692fd 6a07df 9*680ffc 680fc9 780fd9 6709fd 660afd
-601fbf 780fd9 67b1fd 66c2fd 601fbf 67b1fd 66c2fd 5*680ffc
-680fc9 710bfd 6717fd 700bfd 6617fd 11*680ffc 680fc9 730bfd
-6717fd 720bfd 6617fd 11*680ffc 680fc9 770bfd 6117fd 760bfd
-6017fd 11*680ffc 680fc9 770bfd 6317fd 760bfd 6217fd 11*680ffc
-48*0 680fc9 6807d9 14*680ffc 680fc9 710bfd 6017fd 13*680ffc
-680fc9 720bfd 6017fd 13*680ffc 680fc9 730bfd 6017fd 13*680ffc
-680fc9 740bfd 6017fd 13*680ffc 680fc9 750bfd 6017fd 13*680ffc
-680fc9 700bfd 6117fd 13*680ffc 680fc9 6907d9 14*680ffc 680fc9
-720bfd 6117fd 13*680ffc 680fc9 730bfd 6117fd 13*680ffc 680fc9
-740bfd 6117fd 13*680ffc 680fc9 750bfd 6117fd 13*680ffc 680fc9
-700bfd 6217fd 13*680ffc 680fc9 710bfd 6217fd 13*680ffc 680fc9
-6a07d9 14*680ffc 680fc9 730bfd 6217fd 13*680ffc 680fc9 740bfd
-6217fd 13*680ffc 680fc9 750bfd 6217fd 13*680ffc 680fc9 700bfd
-6317fd 13*680ffc 680fc9 710bfd 6317fd 13*680ffc 680fc9 720bfd
-6317fd 13*680ffc 680fc9 6b07d9 14*680ffc 680fc9 740bfd 6317fd
-13*680ffc 680fc9 750bfd 6317fd 13*680ffc 680fc9 700bfd 6417fd
-13*680ffc 680fc9 710bfd 6417fd 13*680ffc 680fc9 720bfd 6417fd
-13*680ffc 680fc9 730bfd 6417fd 13*680ffc 680fc9 6c07d9 14*680ffc
-680fc9 750bfd 6417fd 13*680ffc 680fc9 700bfd 6517fd 13*680ffc
-680fc9 710bfd 6517fd 13*680ffc 680fc9 720bfd 6517fd 13*680ffc
-680fc9 730bfd 6517fd 13*680ffc 680fc9 740bfd 6517fd 13*680ffc
-680fc9 6d07d9 14*680ffc 680fc9 700bfd 14*680ffc 680fc9 710bfd
-14*680ffc 680fc9 720bfd 14*680ffc 680fc9 730bfd 14*680ffc 680fc9
-740bfd 14*680ffc 680fc9 750bfd 14*680ffc 680fc9 780fd9 14*680ffc
-680fc9 730bfd 6117fd 720bfd 6017fd 11*680ffc 680fc9 710bfd
-6317fd 700bfd 6217fd 11*680ffc 680fc9 6907d9 6807d9 13*680ffc
-680fc9 6b07d9 6a07d9 13*680ffc 680fc9 780fdf 14*680ffc 680fc9
-4423fd 14*680ffc 680fc9 780fd9 4423fd 13*680ffc 680fc9 4523fd
-14*680ffc 680fc9 780fd9 4523fd 13*680ffc 680fc9 4023fd 14*680ffc
-680fc9 780fd9 4023fd 13*680ffc 680fc9 4123fd 14*680ffc 680fc9
-780fd9 4123fd 13*680ffc 680fc9 4223fd 14*680ffc 680fc9 780fd9
-4223fd 13*680ffc 680fc9 4323fd 14*680ffc 680fc9 780fd9 4323fd
-13*680ffc 680fc9 4433fd 14*680ffc 680fc9 780fd9 4433fd 13*680ffc
-680fc9 4533fd 14*680ffc 680fc9 780fd9 4533fd 13*680ffc 680fc9
-4033fd 14*680ffc 680fc9 780fd9 4033fd 13*680ffc 680fc9 4133fd
-14*680ffc 680fc9 780fd9 4133fd 13*680ffc 680fc9 4233fd 14*680ffc
-680fc9 780fd9 4233fd 13*680ffc 680fc9 4333fd 14*680ffc 680fc9
-780fd9 4333fd 13*680ffc 680fc9 4443fd 14*680ffc 680fc9 780fd9
-4443fd 13*680ffc 680fc9 4543fd 14*680ffc 680fc9 780fd9 4543fd
-13*680ffc 680fc9 4043fd 14*680ffc 680fc9 780fd9 4043fd 13*680ffc
-680fc9 4143fd 14*680ffc 680fc9 780fd9 4143fd 13*680ffc 680fc9
-4243fd 14*680ffc 680fc9 780fd9 4243fd 13*680ffc 680fc9 4343fd
-14*680ffc 680fc9 780fd9 4343fd 13*680ffc 680fc9 4453fd 14*680ffc
-680fc9 780fd9 4453fd 13*680ffc 680fc9 4553fd 14*680ffc 680fc9
-780fd9 4553fd 13*680ffc 680fc9 4053fd 14*680ffc 680fc9 780fd9
-4053fd 13*680ffc 680fc9 4153fd 14*680ffc 680fc9 780fd9 4153fd
-13*680ffc 680fc9 4253fd 14*680ffc 680fc9 780fd9 4253fd 13*680ffc
-680fc9 4353fd 14*680ffc 680fc9 780fd9 4353fd 13*680ffc 680fc9
-443bfd 14*680ffc 680fc9 780fd9 443bfd 13*680ffc 680fc9 453bfd
-14*680ffc 680fc9 780fd9 453bfd 13*680ffc 680fc9 403bfd 14*680ffc
-680fc9 780fd9 403bfd 13*680ffc 680fc9 413bfd 14*680ffc 680fc9
-780fd9 413bfd 13*680ffc 680fc9 423bfd 14*680ffc 680fc9 780fd9
-423bfd 13*680ffc 680fc9 433bfd 14*680ffc 680fc9 780fd9 433bfd
-13*680ffc 680fc9 4463fd 14*680ffc 680fc9 780fd9 4463fd 13*680ffc
-680fc9 4563fd 14*680ffc 680fc9 780fd9 4563fd 13*680ffc 680fc9
-4063fd 14*680ffc 680fc9 780fd9 4063fd 13*680ffc 680fc9 4163fd
-14*680ffc 680fc9 780fd9 4163fd 13*680ffc 680fc9 4263fd 14*680ffc
-680fc9 780fd9 4263fd 13*680ffc 680fc9 4363fd 14*680ffc 680fc9
-780fd9 4363fd 13*680ffc 680fc9 4473fd 14*680ffc 680fc9 780fd9
-4473fd 13*680ffc 680fc9 4573fd 14*680ffc 680fc9 780fd9 4573fd
-13*680ffc 680fc9 4073fd 14*680ffc 680fc9 780fd9 4073fd 13*680ffc
-680fc9 4173fd 14*680ffc 680fc9 780fd9 4173fd 13*680ffc 680fc9
-4273fd 14*680ffc 680fc9 780fd9 4273fd 13*680ffc 680fc9 4373fd
-14*680ffc 680fc9 780fd9 4373fd 13*680ffc 680fc9 4483fd 14*680ffc
-680fc9 780fd9 4483fd 13*680ffc 680fc9 4583fd 14*680ffc 680fc9
-780fd9 4583fd 13*680ffc 680fc9 4083fd 14*680ffc 680fc9 780fd9
-4083fd 13*680ffc 680fc9 4183fd 14*680ffc 680fc9 780fd9 4183fd
-13*680ffc 680fc9 4283fd 14*680ffc 680fc9 780fd9 4283fd 13*680ffc
-680fc9 4383fd 14*680ffc 680fc9 780fd9 4383fd 13*680ffc 680fc9
-44d3fd 44e3fd 13*680ffc 680fc9 45d3fd 45e3fd 13*680ffc 680fc9
-40d3fd 40e3fd 13*680ffc 680fc9 41d3fd 41e3fd 13*680ffc 680fc9
-42d3fd 42e3fd 13*680ffc 680fc9 43d3fd 43e3fd 13*680ffc 176*0
-680fc9 710bfd 4123fd 700bfd 4043fd 11*680ffc 680fc9 730bfd
-4123fd 720bfd 4043fd 11*680ffc 680fc9 780fd9 4123fd 780fd9
-4043fd 11*680ffc 16*0 680fc9 710bfd 4323fd 700bfd 4243fd
-11*680ffc 680fc9 730bfd 4323fd 720bfd 4243fd 11*680ffc 144*0
-680fc9 44a3fd 14*680ffc 680fc9 45a3fd 14*680ffc 680fc9 41a3fd
-4093fd 13*680ffc 680fc9 43a3fd 4293fd 13*680ffc 680fc9 44b3fd
-14*680ffc 680fc9 45b3fd 14*680ffc 680fc9 41b3fd 40c3fd 13*680ffc
-680fc9 43b3fd 42c3fd 13*680ffc 112*0 680fc9 280ffd 14*680ffc
-680fc9 680dd9 680ed9 13*680ffc 680fc9 6109fd 600afd 13*680ffc
-680fc9 6309fd 620afd 13*680ffc 680fc9 6709fd 660afd 13*680ffc
-680fc9 780fd9 6129fd 609afd 12*680ffc 680fc9 780fd9 6329fd
-629afd 12*680ffc 680fc9 780fd9 6729fd 669afd 12*680ffc 680fc9
-780fd9 6129fd 780fd9 604afd 11*680ffc 680fc9 780fd9 6329fd
-780fd9 624afd 11*680ffc 680fc9 780fd9 6729fd 780fd9 664afd
-11*680ffc 680fc9 740bfd 6129fd 609afd 12*680ffc 680fc9 740bfd
-6329fd 629afd 12*680ffc 680fc9 740bfd 6729fd 669afd 12*680ffc
-680fc9 750bfd 6129fd 609afd 12*680ffc 680fc9 750bfd 6329fd
-629afd 12*680ffc 680fc9 750bfd 6729fd 669afd 12*680ffc 680fc9
-770bfd 6129fd 760bfd 604afd 11*680ffc 680fc9 770bfd 6329fd
-760bfd 624afd 11*680ffc 680fc9 710bfd 6329fd 700bfd 624afd
-11*680ffc 680fc9 780f5f 680edf 601dfd 12*680ffc 680fc9 680dd9
-680ed9 680ff7 12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9
-680ed9 13*680ffc 680fc9 15*680ffc 680fc9 680dd9 680ed9 680ff7
-12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9 680ed9 680ff7
-12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9 680ed9 13*680ffc
-680fc9 15*680ffc 680fc9 67a1fd 6692fd 780fdf 67a1fd 6692fd
-680edf 601dfd 680ff7 7*680ffc 680fc9 780fd9 601fbf 13*680ffc
-680fc9 6c07df 14*680ffc 680fc9 6d07df 14*680ffc 680fc9 6907df
-680f7d 6807df 12*680ffc 680fc9 6b07df 680f7d 6a07df 12*680ffc
-680fc9 6807df 14*680ffc 680fc9 6907df 14*680ffc 680fc9 6a07df
-14*680ffc 680fc9 6b07df 14*680ffc 680fc9 640bbf 14*680ffc 680fc9
-650bbf 14*680ffc 680fc9 610bbf 680f7d 600bbf 12*680ffc 680fc9
-630bbf 680f7d 620bbf 12*680ffc 680fc9 600bbf 14*680ffc 680fc9
-610bbf 14*680ffc 680fc9 620bbf 14*680ffc 680fc9 630bbf 14*680ffc
-680fc9 6709fd 660afd 640bbf 67b3fd 66c3fd 10*680ffc 680fc9
-6709fd 660afd 650bbf 67b3fd 66c3fd 10*680ffc 680fc9 6709fd
-660afd 600bbf 67b1fd 66c2fd 610bbf 67b3fd 66c3fd 7*680ffc
-680fc9 6709fd 660afd 620bbf 67b1fd 66c2fd 630bbf 67b3fd
-66c3fd 7*680ffc 680fc9 67a1fd 6692fd 6c07df 12*680ffc 680fc9
-67a1fd 6692fd 6d07df 12*680ffc 680fc9 67a1fd 6692fd 6907df
-67a1fd 6692fd 6807df 9*680ffc 680fc9 67a1fd 6692fd 6b07df
-67a1fd 6692fd 6a07df 9*680ffc 680fc9 780fd9 6709fd 660afd
-601fbf 780fd9 67b1fd 66c2fd 601fbf 67b1fd 66c2fd 5*680ffc
-680fc9 710bfd 6717fd 700bfd 6617fd 11*680ffc 680fc9 730bfd
-6717fd 720bfd 6617fd 11*680ffc 680fc9 770bfd 6117fd 760bfd
-6017fd 11*680ffc 680fc9 770bfd 6317fd 760bfd 6217fd 11*680ffc
-48*0 680fc9 6807d9 14*680ffc 680fc9 710bfd 6017fd 13*680ffc
-680fc9 720bfd 6017fd 13*680ffc 680fc9 730bfd 6017fd 13*680ffc
-680fc9 740bfd 6017fd 13*680ffc 680fc9 750bfd 6017fd 13*680ffc
-680fc9 700bfd 6117fd 13*680ffc 680fc9 6907d9 14*680ffc 680fc9
-720bfd 6117fd 13*680ffc 680fc9 730bfd 6117fd 13*680ffc 680fc9
-740bfd 6117fd 13*680ffc 680fc9 750bfd 6117fd 13*680ffc 680fc9
-700bfd 6217fd 13*680ffc 680fc9 710bfd 6217fd 13*680ffc 680fc9
-6a07d9 14*680ffc 680fc9 730bfd 6217fd 13*680ffc 680fc9 740bfd
-6217fd 13*680ffc 680fc9 750bfd 6217fd 13*680ffc 680fc9 700bfd
-6317fd 13*680ffc 680fc9 710bfd 6317fd 13*680ffc 680fc9 720bfd
-6317fd 13*680ffc 680fc9 6b07d9 14*680ffc 680fc9 740bfd 6317fd
-13*680ffc 680fc9 750bfd 6317fd 13*680ffc 680fc9 700bfd 6417fd
-13*680ffc 680fc9 710bfd 6417fd 13*680ffc 680fc9 720bfd 6417fd
-13*680ffc 680fc9 730bfd 6417fd 13*680ffc 680fc9 6c07d9 14*680ffc
-680fc9 750bfd 6417fd 13*680ffc 680fc9 700bfd 6517fd 13*680ffc
-680fc9 710bfd 6517fd 13*680ffc 680fc9 720bfd 6517fd 13*680ffc
-680fc9 730bfd 6517fd 13*680ffc 680fc9 740bfd 6517fd 13*680ffc
-680fc9 6d07d9 14*680ffc 680fc9 700bfd 14*680ffc 680fc9 710bfd
-14*680ffc 680fc9 720bfd 14*680ffc 680fc9 730bfd 14*680ffc 680fc9
-740bfd 14*680ffc 680fc9 750bfd 14*680ffc 680fc9 780fd9 14*680ffc
-680fc9 730bfd 6117fd 720bfd 6017fd 11*680ffc 680fc9 710bfd
-6317fd 700bfd 6217fd 11*680ffc 680fc9 6907d9 6807d9 13*680ffc
-680fc9 6b07d9 6a07d9 13*680ffc 680fc9 780fdf 14*680ffc 680fc9
-4423fd 14*680ffc 680fc9 780fd9 4423fd 13*680ffc 680fc9 4523fd
-14*680ffc 680fc9 780fd9 4523fd 13*680ffc 680fc9 4023fd 14*680ffc
-680fc9 780fd9 4023fd 13*680ffc 680fc9 4123fd 14*680ffc 680fc9
-780fd9 4123fd 13*680ffc 680fc9 4223fd 14*680ffc 680fc9 780fd9
-4223fd 13*680ffc 680fc9 4323fd 14*680ffc 680fc9 780fd9 4323fd
-13*680ffc 680fc9 4433fd 14*680ffc 680fc9 780fd9 4433fd 13*680ffc
-680fc9 4533fd 14*680ffc 680fc9 780fd9 4533fd 13*680ffc 680fc9
-4033fd 14*680ffc 680fc9 780fd9 4033fd 13*680ffc 680fc9 4133fd
-14*680ffc 680fc9 780fd9 4133fd 13*680ffc 680fc9 4233fd 14*680ffc
-680fc9 780fd9 4233fd 13*680ffc 680fc9 4333fd 14*680ffc 680fc9
-780fd9 4333fd 13*680ffc 680fc9 4443fd 14*680ffc 680fc9 780fd9
-4443fd 13*680ffc 680fc9 4543fd 14*680ffc 680fc9 780fd9 4543fd
-13*680ffc 680fc9 4043fd 14*680ffc 680fc9 780fd9 4043fd 13*680ffc
-680fc9 4143fd 14*680ffc 680fc9 780fd9 4143fd 13*680ffc 680fc9
-4243fd 14*680ffc 680fc9 780fd9 4243fd 13*680ffc 680fc9 4343fd
-14*680ffc 680fc9 780fd9 4343fd 13*680ffc 680fc9 4453fd 14*680ffc
-680fc9 780fd9 4453fd 13*680ffc 680fc9 4553fd 14*680ffc 680fc9
-780fd9 4553fd 13*680ffc 680fc9 4053fd 14*680ffc 680fc9 780fd9
-4053fd 13*680ffc 680fc9 4153fd 14*680ffc 680fc9 780fd9 4153fd
-13*680ffc 680fc9 4253fd 14*680ffc 680fc9 780fd9 4253fd 13*680ffc
-680fc9 4353fd 14*680ffc 680fc9 780fd9 4353fd 13*680ffc 680fc9
-443bfd 14*680ffc 680fc9 780fd9 443bfd 13*680ffc 680fc9 453bfd
-14*680ffc 680fc9 780fd9 453bfd 13*680ffc 680fc9 403bfd 14*680ffc
-680fc9 780fd9 403bfd 13*680ffc 680fc9 413bfd 14*680ffc 680fc9
-780fd9 413bfd 13*680ffc 680fc9 423bfd 14*680ffc 680fc9 780fd9
-423bfd 13*680ffc 680fc9 433bfd 14*680ffc 680fc9 780fd9 433bfd
-13*680ffc 680fc9 4463fd 14*680ffc 680fc9 780fd9 4463fd 13*680ffc
-680fc9 4563fd 14*680ffc 680fc9 780fd9 4563fd 13*680ffc 680fc9
-4063fd 14*680ffc 680fc9 780fd9 4063fd 13*680ffc 680fc9 4163fd
-14*680ffc 680fc9 780fd9 4163fd 13*680ffc 680fc9 4263fd 14*680ffc
-680fc9 780fd9 4263fd 13*680ffc 680fc9 4363fd 14*680ffc 680fc9
-780fd9 4363fd 13*680ffc 680fc9 4473fd 14*680ffc 680fc9 780fd9
-4473fd 13*680ffc 680fc9 4573fd 14*680ffc 680fc9 780fd9 4573fd
-13*680ffc 680fc9 4073fd 14*680ffc 680fc9 780fd9 4073fd 13*680ffc
-680fc9 4173fd 14*680ffc 680fc9 780fd9 4173fd 13*680ffc 680fc9
-4273fd 14*680ffc 680fc9 780fd9 4273fd 13*680ffc 680fc9 4373fd
-14*680ffc 680fc9 780fd9 4373fd 13*680ffc 680fc9 4483fd 14*680ffc
-680fc9 780fd9 4483fd 13*680ffc 680fc9 4583fd 14*680ffc 680fc9
-780fd9 4583fd 13*680ffc 680fc9 4083fd 14*680ffc 680fc9 780fd9
-4083fd 13*680ffc 680fc9 4183fd 14*680ffc 680fc9 780fd9 4183fd
-13*680ffc 680fc9 4283fd 14*680ffc 680fc9 780fd9 4283fd 13*680ffc
-680fc9 4383fd 14*680ffc 680fc9 780fd9 4383fd 13*680ffc 680fc9
-44d3fd 44e3fd 13*680ffc 680fc9 45d3fd 45e3fd 13*680ffc 680fc9
-40d3fd 40e3fd 13*680ffc 680fc9 41d3fd 41e3fd 13*680ffc 680fc9
-42d3fd 42e3fd 13*680ffc 680fc9 43d3fd 43e3fd 13*680ffc 176*0
-680fc9 710bfd 4123fd 700bfd 4043fd 11*680ffc 680fc9 730bfd
-4123fd 720bfd 4043fd 11*680ffc 680fc9 780fd9 4123fd 780fd9
-4043fd 11*680ffc 16*0 680fc9 710bfd 4323fd 700bfd 4243fd
-11*680ffc 680fc9 730bfd 4323fd 720bfd 4243fd 11*680ffc 144*0
-680fc9 44a3fd 14*680ffc 680fc9 45a3fd 14*680ffc 680fc9 41a3fd
-4093fd 13*680ffc 680fc9 43a3fd 4293fd 13*680ffc 680fc9 44b3fd
-14*680ffc 680fc9 45b3fd 14*680ffc 680fc9 41b3fd 40c3fd 13*680ffc
-680fc9 43b3fd 42c3fd 13*680ffc 112*0 680fc9 280ffd 14*680ffc
-680fc9 680dd9 680ed9 13*680ffc 680fc9 6109fd 600afd 13*680ffc
-680fc9 6309fd 620afd 13*680ffc 680fc9 6709fd 660afd 13*680ffc
-680fc9 780fd9 6129fd 609afd 12*680ffc 680fc9 780fd9 6329fd
-629afd 12*680ffc 680fc9 780fd9 6729fd 669afd 12*680ffc 680fc9
-780fd9 6129fd 780fd9 604afd 11*680ffc 680fc9 780fd9 6329fd
-780fd9 624afd 11*680ffc 680fc9 780fd9 6729fd 780fd9 664afd
-11*680ffc 680fc9 740bfd 6129fd 609afd 12*680ffc 680fc9 740bfd
-6329fd 629afd 12*680ffc 680fc9 740bfd 6729fd 669afd 12*680ffc
-680fc9 750bfd 6129fd 609afd 12*680ffc 680fc9 750bfd 6329fd
-629afd 12*680ffc 680fc9 750bfd 6729fd 669afd 12*680ffc 680fc9
-770bfd 6129fd 760bfd 604afd 11*680ffc 680fc9 770bfd 6329fd
-760bfd 624afd 11*680ffc 680fc9 710bfd 6329fd 700bfd 624afd
-11*680ffc 680fc9 780f5f 680edf 601dfd 12*680ffc 680fc9 680dd9
-680ed9 680ff7 12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9
-680ed9 680ff7 12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9
-680ed9 13*680ffc 680fc9 15*680ffc 680fc9 680dd9 680ed9 680ff7
-12*680ffc 680fc9 680ff7 14*680ffc 680fc9 680dd9 680ed9 13*680ffc
-680fc9 15*680ffc 680fc9 67a1fd 6692fd 780fdf 67a1fd 6692fd
-680edf 601dfd 680ff7 7*680ffc 680fc9 780fd9 601fbf 13*680ffc
-680fc9 6c07df 14*680ffc 680fc9 6d07df 14*680ffc 680fc9 6907df
-680f7d 6807df 12*680ffc 680fc9 6b07df 680f7d 6a07df 12*680ffc
-680fc9 6807df 14*680ffc 680fc9 6907df 14*680ffc 680fc9 6a07df
-14*680ffc 680fc9 6b07df 14*680ffc 680fc9 640bbf 14*680ffc 680fc9
-650bbf 14*680ffc 680fc9 610bbf 680f7d 600bbf 12*680ffc 680fc9
-630bbf 680f7d 620bbf 12*680ffc 680fc9 600bbf 14*680ffc 680fc9
-610bbf 14*680ffc 680fc9 620bbf 14*680ffc 680fc9 630bbf 14*680ffc
-680fc9 6709fd 660afd 640bbf 67b3fd 66c3fd 10*680ffc 680fc9
-6709fd 660afd 650bbf 67b3fd 66c3fd 10*680ffc 680fc9 6709fd
-660afd 600bbf 67b1fd 66c2fd 610bbf 67b3fd 66c3fd 7*680ffc
-680fc9 6709fd 660afd 620bbf 67b1fd 66c2fd 630bbf 67b3fd
-66c3fd 7*680ffc 680fc9 67a1fd 6692fd 6c07df 12*680ffc 680fc9
-67a1fd 6692fd 6d07df 12*680ffc 680fc9 67a1fd 6692fd 6907df
-67a1fd 6692fd 6807df 9*680ffc 680fc9 67a1fd 6692fd 6b07df
-67a1fd 6692fd 6a07df 9*680ffc 680fc9 780fd9 6709fd 660afd
-601fbf 780fd9 67b1fd 66c2fd 601fbf 67b1fd 66c2fd 5*680ffc
-680fc9 710bfd 6717fd 700bfd 6617fd 11*680ffc 680fc9 730bfd
-6717fd 720bfd 6617fd 11*680ffc 680fc9 770bfd 6117fd 760bfd
-6017fd 11*680ffc 680fc9 770bfd 6317fd 760bfd 6217fd 11*680ffc
-48*0 680fc9 6807d9 14*680ffc 680fc9 710bfd 6017fd 13*680ffc
-680fc9 720bfd 6017fd 13*680ffc 680fc9 730bfd 6017fd 13*680ffc
-680fc9 740bfd 6017fd 13*680ffc 680fc9 750bfd 6017fd 13*680ffc
-680fc9 700bfd 6117fd 13*680ffc 680fc9 6907d9 14*680ffc 680fc9
-720bfd 6117fd 13*680ffc 680fc9 730bfd 6117fd 13*680ffc 680fc9
-740bfd 6117fd 13*680ffc 680fc9 750bfd 6117fd 13*680ffc 680fc9
-700bfd 6217fd 13*680ffc 680fc9 710bfd 6217fd 13*680ffc 680fc9
-6a07d9 14*680ffc 680fc9 730bfd 6217fd 13*680ffc 680fc9 740bfd
-6217fd 13*680ffc 680fc9 750bfd 6217fd 13*680ffc 680fc9 700bfd
-6317fd 13*680ffc 680fc9 710bfd 6317fd 13*680ffc 680fc9 720bfd
-6317fd 13*680ffc 680fc9 6b07d9 14*680ffc 680fc9 740bfd 6317fd
-13*680ffc 680fc9 750bfd 6317fd 13*680ffc 680fc9 700bfd 6417fd
-13*680ffc 680fc9 710bfd 6417fd 13*680ffc 680fc9 720bfd 6417fd
-13*680ffc 680fc9 730bfd 6417fd 13*680ffc 680fc9 6c07d9 14*680ffc
-680fc9 750bfd 6417fd 13*680ffc 680fc9 700bfd 6517fd 13*680ffc
-680fc9 710bfd 6517fd 13*680ffc 680fc9 720bfd 6517fd 13*680ffc
-680fc9 730bfd 6517fd 13*680ffc 680fc9 740bfd 6517fd 13*680ffc
-680fc9 6d07d9 14*680ffc 680fc9 700bfd 14*680ffc 680fc9 710bfd
-14*680ffc 680fc9 720bfd 14*680ffc 680fc9 730bfd 14*680ffc 680fc9
-740bfd 14*680ffc 680fc9 750bfd 14*680ffc 680fc9 780fd9 14*680ffc
-680fc9 730bfd 6117fd 720bfd 6017fd 11*680ffc 680fc9 710bfd
-6317fd 700bfd 6217fd 11*680ffc 680fc9 6907d9 6807d9 13*680ffc
-680fc9 6b07d9 6a07d9 13*680ffc 680fc9 780fdf 14*680ffc 680fc9
-4423fd 14*680ffc 680fc9 780fd9 4423fd 13*680ffc 680fc9 4523fd
-14*680ffc 680fc9 780fd9 4523fd 13*680ffc 680fc9 4023fd 14*680ffc
-680fc9 780fd9 4023fd 13*680ffc 680fc9 4123fd 14*680ffc 680fc9
-780fd9 4123fd 13*680ffc 680fc9 4223fd 14*680ffc 680fc9 780fd9
-4223fd 13*680ffc 680fc9 4323fd 14*680ffc 680fc9 780fd9 4323fd
-13*680ffc 680fc9 4433fd 14*680ffc 680fc9 780fd9 4433fd 13*680ffc
-680fc9 4533fd 14*680ffc 680fc9 780fd9 4533fd 13*680ffc 680fc9
-4033fd 14*680ffc 680fc9 780fd9 4033fd 13*680ffc 680fc9 4133fd
-14*680ffc 680fc9 780fd9 4133fd 13*680ffc 680fc9 4233fd 14*680ffc
-680fc9 780fd9 4233fd 13*680ffc 680fc9 4333fd 14*680ffc 680fc9
-780fd9 4333fd 13*680ffc 680fc9 4443fd 14*680ffc 680fc9 780fd9
-4443fd 13*680ffc 680fc9 4543fd 14*680ffc 680fc9 780fd9 4543fd
-13*680ffc 680fc9 4043fd 14*680ffc 680fc9 780fd9 4043fd 13*680ffc
-680fc9 4143fd 14*680ffc 680fc9 780fd9 4143fd 13*680ffc 680fc9
-4243fd 14*680ffc 680fc9 780fd9 4243fd 13*680ffc 680fc9 4343fd
-14*680ffc 680fc9 780fd9 4343fd 13*680ffc 680fc9 4453fd 14*680ffc
-680fc9 780fd9 4453fd 13*680ffc 680fc9 4553fd 14*680ffc 680fc9
-780fd9 4553fd 13*680ffc 680fc9 4053fd 14*680ffc 680fc9 780fd9
-4053fd 13*680ffc 680fc9 4153fd 14*680ffc 680fc9 780fd9 4153fd
-13*680ffc 680fc9 4253fd 14*680ffc 680fc9 780fd9 4253fd 13*680ffc
-680fc9 4353fd 14*680ffc 680fc9 780fd9 4353fd 13*680ffc 680fc9
-443bfd 14*680ffc 680fc9 780fd9 443bfd 13*680ffc 680fc9 453bfd
-14*680ffc 680fc9 780fd9 453bfd 13*680ffc 680fc9 403bfd 14*680ffc
-680fc9 780fd9 403bfd 13*680ffc 680fc9 413bfd 14*680ffc 680fc9
-780fd9 413bfd 13*680ffc 680fc9 423bfd 14*680ffc 680fc9 780fd9
-423bfd 13*680ffc 680fc9 433bfd 14*680ffc 680fc9 780fd9 433bfd
-13*680ffc 680fc9 4463fd 14*680ffc 680fc9 780fd9 4463fd 13*680ffc
-680fc9 4563fd 14*680ffc 680fc9 780fd9 4563fd 13*680ffc 680fc9
-4063fd 14*680ffc 680fc9 780fd9 4063fd 13*680ffc 680fc9 4163fd
-14*680ffc 680fc9 780fd9 4163fd 13*680ffc 680fc9 4263fd 14*680ffc
-680fc9 780fd9 4263fd 13*680ffc 680fc9 4363fd 14*680ffc 680fc9
-780fd9 4363fd 13*680ffc 680fc9 4473fd 14*680ffc 680fc9 780fd9
-4473fd 13*680ffc 680fc9 4573fd 14*680ffc 680fc9 780fd9 4573fd
-13*680ffc 680fc9 4073fd 14*680ffc 680fc9 780fd9 4073fd 13*680ffc
-680fc9 4173fd 14*680ffc 680fc9 780fd9 4173fd 13*680ffc 680fc9
-4273fd 14*680ffc 680fc9 780fd9 4273fd 13*680ffc 680fc9 4373fd
-14*680ffc 680fc9 780fd9 4373fd 13*680ffc 680fc9 4483fd 14*680ffc
-680fc9 780fd9 4483fd 13*680ffc 680fc9 4583fd 14*680ffc 680fc9
-780fd9 4583fd 13*680ffc 680fc9 4083fd 14*680ffc 680fc9 780fd9
-4083fd 13*680ffc 680fc9 4183fd 14*680ffc 680fc9 780fd9 4183fd
-13*680ffc 680fc9 4283fd 14*680ffc 680fc9 780fd9 4283fd 13*680ffc
-680fc9 4383fd 14*680ffc 680fc9 780fd9 4383fd 13*680ffc 680fc9
-44d3fd 44e3fd 13*680ffc 680fc9 45d3fd 45e3fd 13*680ffc 680fc9
-40d3fd 40e3fd 13*680ffc 680fc9 41d3fd 41e3fd 13*680ffc 680fc9
-42d3fd 42e3fd 13*680ffc 680fc9 43d3fd 43e3fd 13*680ffc 176*0
-680fc9 710bfd 4123fd 700bfd 4043fd 11*680ffc 680fc9 730bfd
-4123fd 720bfd 4043fd 11*680ffc 680fc9 780fd9 4123fd 780fd9
-4043fd 11*680ffc 16*0 680fc9 710bfd 4323fd 700bfd 4243fd
-11*680ffc 680fc9 730bfd 4323fd 720bfd 4243fd 11*680ffc 144*0
-680fc9 44a3fd 14*680ffc 680fc9 45a3fd 14*680ffc 680fc9 41a3fd
-4093fd 13*680ffc 680fc9 43a3fd 4293fd 13*680ffc 680fc9 44b3fd
-14*680ffc 680fc9 45b3fd 14*680ffc 680fc9 41b3fd 40c3fd 13*680ffc
-680fc9 43b3fd 42c3fd 13*680ffc 112*0 680fc9 280ffd 14*680ffc
+280fc9 280dd9 280ed9 13*280ffc 280fc9 2109fd 200afd 13*280ffc
+280fc9 2309fd 220afd 13*280ffc 280fc9 2709fd 260afd 13*280ffc
+280fc9 380fd9 2129fd 209afd 12*280ffc 280fc9 380fd9 2329fd
+229afd 12*280ffc 280fc9 380fd9 2729fd 269afd 12*280ffc 280fc9
+380fd9 2129fd 380fd9 204afd 11*280ffc 280fc9 380fd9 2329fd
+380fd9 224afd 11*280ffc 280fc9 380fd9 2729fd 380fd9 264afd
+11*280ffc 280fc9 340bfd 2129fd 209afd 12*280ffc 280fc9 340bfd
+2329fd 229afd 12*280ffc 280fc9 340bfd 2729fd 269afd 12*280ffc
+280fc9 350bfd 2129fd 209afd 12*280ffc 280fc9 350bfd 2329fd
+229afd 12*280ffc 280fc9 350bfd 2729fd 269afd 12*280ffc 280fc9
+370bfd 2129fd 360bfd 204afd 11*280ffc 280fc9 370bfd 2329fd
+360bfd 224afd 11*280ffc 280fc9 310bfd 2329fd 300bfd 224afd
+11*280ffc 280fc9 380f5f 280edf 201dfd 12*280ffc 280fc9 280dd9
+280ed9 280ff7 12*280ffc 280fc9 280ff7 14*280ffc 280fc9 280dd9
+280ed9 13*280ffc 280fc9 15*280ffc 280fc9 280dd9 280ed9 280ff7
+12*280ffc 280fc9 280ff7 14*280ffc 280fc9 280dd9 280ed9 13*280ffc
+280fc9 15*280ffc 280fc9 280dd9 280ed9 280ff7 12*280ffc 280fc9
+280ff7 14*280ffc 280fc9 27a1fd 2692fd 380fdf 27a1fd 2692fd
+280edf 201dfd 280ff7 7*280ffc 280fc9 380fd9 201fbf 13*280ffc
+280fc9 2c07df 14*280ffc 280fc9 2d07df 14*280ffc 280fc9 2907df
+280f7d 2807df 12*280ffc 280fc9 2b07df 280f7d 2a07df 12*280ffc
+280fc9 2807df 14*280ffc 280fc9 2907df 14*280ffc 280fc9 2a07df
+14*280ffc 280fc9 2b07df 14*280ffc 280fc9 240bbf 14*280ffc 280fc9
+250bbf 14*280ffc 280fc9 210bbf 280f7d 200bbf 12*280ffc 280fc9
+230bbf 280f7d 220bbf 12*280ffc 280fc9 200bbf 14*280ffc 280fc9
+210bbf 14*280ffc 280fc9 220bbf 14*280ffc 280fc9 230bbf 14*280ffc
+280fc9 2709fd 260afd 240bbf 27b3fd 26c3fd 10*280ffc 280fc9
+2709fd 260afd 250bbf 27b3fd 26c3fd 10*280ffc 280fc9 2709fd
+260afd 200bbf 27b1fd 26c2fd 210bbf 27b3fd 26c3fd 7*280ffc
+280fc9 2709fd 260afd 220bbf 27b1fd 26c2fd 230bbf 27b3fd
+26c3fd 7*280ffc 280fc9 27a1fd 2692fd 2c07df 12*280ffc 280fc9
+27a1fd 2692fd 2d07df 12*280ffc 280fc9 27a1fd 2692fd 2907df
+27a1fd 2692fd 2807df 9*280ffc 280fc9 27a1fd 2692fd 2b07df
+27a1fd 2692fd 2a07df 9*280ffc 280fc9 380fd9 2709fd 260afd
+201fbf 380fd9 27b1fd 26c2fd 201fbf 27b1fd 26c2fd 5*280ffc
+280fc9 310bfd 2717fd 300bfd 2617fd 11*280ffc 280fc9 330bfd
+2717fd 320bfd 2617fd 11*280ffc 280fc9 370bfd 2117fd 360bfd
+2017fd 11*280ffc 280fc9 370bfd 2317fd 360bfd 2217fd 11*280ffc
+48*280ffd 280fc9 2807d9 14*280ffc 280fc9 310bfd 2017fd 13*280ffc
+280fc9 320bfd 2017fd 13*280ffc 280fc9 330bfd 2017fd 13*280ffc
+280fc9 340bfd 2017fd 13*280ffc 280fc9 350bfd 2017fd 13*280ffc
+280fc9 300bfd 2117fd 13*280ffc 280fc9 2907d9 14*280ffc 280fc9
+320bfd 2117fd 13*280ffc 280fc9 330bfd 2117fd 13*280ffc 280fc9
+340bfd 2117fd 13*280ffc 280fc9 350bfd 2117fd 13*280ffc 280fc9
+300bfd 2217fd 13*280ffc 280fc9 310bfd 2217fd 13*280ffc 280fc9
+2a07d9 14*280ffc 280fc9 330bfd 2217fd 13*280ffc 280fc9 340bfd
+2217fd 13*280ffc 280fc9 350bfd 2217fd 13*280ffc 280fc9 300bfd
+2317fd 13*280ffc 280fc9 310bfd 2317fd 13*280ffc 280fc9 320bfd
+2317fd 13*280ffc 280fc9 2b07d9 14*280ffc 280fc9 340bfd 2317fd
+13*280ffc 280fc9 350bfd 2317fd 13*280ffc 280fc9 300bfd 2417fd
+13*280ffc 280fc9 310bfd 2417fd 13*280ffc 280fc9 320bfd 2417fd
+13*280ffc 280fc9 330bfd 2417fd 13*280ffc 280fc9 2c07d9 14*280ffc
+280fc9 350bfd 2417fd 13*280ffc 280fc9 300bfd 2517fd 13*280ffc
+280fc9 310bfd 2517fd 13*280ffc 280fc9 320bfd 2517fd 13*280ffc
+280fc9 330bfd 2517fd 13*280ffc 280fc9 340bfd 2517fd 13*280ffc
+280fc9 2d07d9 14*280ffc 280fc9 300bfd 14*280ffc 280fc9 310bfd
+14*280ffc 280fc9 320bfd 14*280ffc 280fc9 330bfd 14*280ffc 280fc9
+340bfd 14*280ffc 280fc9 350bfd 14*280ffc 280fc9 380fd9 14*280ffc
+280fc9 330bfd 2117fd 320bfd 2017fd 11*280ffc 280fc9 310bfd
+2317fd 300bfd 2217fd 11*280ffc 280fc9 2907d9 2807d9 13*280ffc
+280fc9 2b07d9 2a07d9 13*280ffc 280fc9 380fdf 14*280ffc 280fc9
+423fd 14*280ffc 280fc9 380fd9 423fd 13*280ffc 280fc9 523fd
+14*280ffc 280fc9 380fd9 523fd 13*280ffc 280fc9 23fd 14*280ffc
+280fc9 380fd9 23fd 13*280ffc 280fc9 123fd 14*280ffc 280fc9
+380fd9 123fd 13*280ffc 280fc9 223fd 14*280ffc 280fc9 380fd9
+223fd 13*280ffc 280fc9 323fd 14*280ffc 280fc9 380fd9 323fd
+13*280ffc 280fc9 433fd 14*280ffc 280fc9 380fd9 433fd 13*280ffc
+280fc9 533fd 14*280ffc 280fc9 380fd9 533fd 13*280ffc 280fc9
+33fd 14*280ffc 280fc9 380fd9 33fd 13*280ffc 280fc9 133fd
+14*280ffc 280fc9 380fd9 133fd 13*280ffc 280fc9 233fd 14*280ffc
+280fc9 380fd9 233fd 13*280ffc 280fc9 333fd 14*280ffc 280fc9
+380fd9 333fd 13*280ffc 280fc9 443fd 14*280ffc 280fc9 380fd9
+443fd 13*280ffc 280fc9 543fd 14*280ffc 280fc9 380fd9 543fd
+13*280ffc 280fc9 43fd 14*280ffc 280fc9 380fd9 43fd 13*280ffc
+280fc9 143fd 14*280ffc 280fc9 380fd9 143fd 13*280ffc 280fc9
+243fd 14*280ffc 280fc9 380fd9 243fd 13*280ffc 280fc9 343fd
+14*280ffc 280fc9 380fd9 343fd 13*280ffc 280fc9 453fd 14*280ffc
+280fc9 380fd9 453fd 13*280ffc 280fc9 553fd 14*280ffc 280fc9
+380fd9 553fd 13*280ffc 280fc9 53fd 14*280ffc 280fc9 380fd9
+53fd 13*280ffc 280fc9 153fd 14*280ffc 280fc9 380fd9 153fd
+13*280ffc 280fc9 253fd 14*280ffc 280fc9 380fd9 253fd 13*280ffc
+280fc9 353fd 14*280ffc 280fc9 380fd9 353fd 13*280ffc 280fc9
+43bfd 14*280ffc 280fc9 380fd9 43bfd 13*280ffc 280fc9 53bfd
+14*280ffc 280fc9 380fd9 53bfd 13*280ffc 280fc9 3bfd 14*280ffc
+280fc9 380fd9 3bfd 13*280ffc 280fc9 13bfd 14*280ffc 280fc9
+380fd9 13bfd 13*280ffc 280fc9 23bfd 14*280ffc 280fc9 380fd9
+23bfd 13*280ffc 280fc9 33bfd 14*280ffc 280fc9 380fd9 33bfd
+13*280ffc 280fc9 463fd 14*280ffc 280fc9 380fd9 463fd 13*280ffc
+280fc9 563fd 14*280ffc 280fc9 380fd9 563fd 13*280ffc 280fc9
+63fd 14*280ffc 280fc9 380fd9 63fd 13*280ffc 280fc9 163fd
+14*280ffc 280fc9 380fd9 163fd 13*280ffc 280fc9 263fd 14*280ffc
+280fc9 380fd9 263fd 13*280ffc 280fc9 363fd 14*280ffc 280fc9
+380fd9 363fd 13*280ffc 280fc9 473fd 14*280ffc 280fc9 380fd9
+473fd 13*280ffc 280fc9 573fd 14*280ffc 280fc9 380fd9 573fd
+13*280ffc 280fc9 73fd 14*280ffc 280fc9 380fd9 73fd 13*280ffc
+280fc9 173fd 14*280ffc 280fc9 380fd9 173fd 13*280ffc 280fc9
+273fd 14*280ffc 280fc9 380fd9 273fd 13*280ffc 280fc9 373fd
+14*280ffc 280fc9 380fd9 373fd 13*280ffc 280fc9 483fd 14*280ffc
+280fc9 380fd9 483fd 13*280ffc 280fc9 583fd 14*280ffc 280fc9
+380fd9 583fd 13*280ffc 280fc9 83fd 14*280ffc 280fc9 380fd9
+83fd 13*280ffc 280fc9 183fd 14*280ffc 280fc9 380fd9 183fd
+13*280ffc 280fc9 283fd 14*280ffc 280fc9 380fd9 283fd 13*280ffc
+280fc9 383fd 14*280ffc 280fc9 380fd9 383fd 13*280ffc 280fc9
+4d3fd 4e3fd 13*280ffc 280fc9 5d3fd 5e3fd 13*280ffc 280fc9
+d3fd e3fd 13*280ffc 280fc9 1d3fd 1e3fd 13*280ffc 280fc9
+2d3fd 2e3fd 13*280ffc 280fc9 3d3fd 3e3fd 13*280ffc 176*280ffd
+280fc9 310bfd 123fd 300bfd 43fd 11*280ffc 280fc9 330bfd
+123fd 320bfd 43fd 11*280ffc 280fc9 380fd9 123fd 380fd9
+43fd 11*280ffc 16*280ffd 280fc9 310bfd 323fd 300bfd 243fd
+11*280ffc 280fc9 330bfd 323fd 320bfd 243fd 11*280ffc 144*280ffd
+280fc9 4a3fd 14*280ffc 280fc9 5a3fd 14*280ffc 280fc9 1a3fd
+93fd 13*280ffc 280fc9 3a3fd 293fd 13*280ffc 280fc9 4b3fd
+14*280ffc 280fc9 5b3fd 14*280ffc 280fc9 1b3fd c3fd 13*280ffc
+280fc9 3b3fd 2c3fd 13*280ffc 128*280ffd 280fc9 280dd9 280ed9
+13*280ffc 280fc9 2109fd 200afd 13*280ffc 280fc9 2309fd 220afd
+13*280ffc 280fc9 2709fd 260afd 13*280ffc 280fc9 380fd9 2129fd
+209afd 12*280ffc 280fc9 380fd9 2329fd 229afd 12*280ffc 280fc9
+380fd9 2729fd 269afd 12*280ffc 280fc9 380fd9 2129fd 380fd9
+204afd 11*280ffc 280fc9 380fd9 2329fd 380fd9 224afd 11*280ffc
+280fc9 380fd9 2729fd 380fd9 264afd 11*280ffc 280fc9 340bfd
+2129fd 209afd 12*280ffc 280fc9 340bfd 2329fd 229afd 12*280ffc
+280fc9 340bfd 2729fd 269afd 12*280ffc 280fc9 350bfd 2129fd
+209afd 12*280ffc 280fc9 350bfd 2329fd 229afd 12*280ffc 280fc9
+350bfd 2729fd 269afd 12*280ffc 280fc9 370bfd 2129fd 360bfd
+204afd 11*280ffc 280fc9 370bfd 2329fd 360bfd 224afd 11*280ffc
+280fc9 310bfd 2329fd 300bfd 224afd 11*280ffc 280fc9 380f5f
+280edf 201dfd 12*280ffc 280fc9 280dd9 280ed9 280ff7 12*280ffc
+280fc9 280ff7 14*280ffc 280fc9 280dd9 280ed9 280ff7 12*280ffc
+280fc9 280ff7 14*280ffc 280fc9 280dd9 280ed9 13*280ffc 280fc9
+15*280ffc 280fc9 280dd9 280ed9 13*280ffc 280fc9 15*280ffc 280fc9
+280dd9 280ed9 280ff7 12*280ffc 280fc9 280ff7 14*280ffc 280fc9
+27a1fd 2692fd 380fdf 27a1fd 2692fd 280edf 201dfd 280ff7
+7*280ffc 280fc9 380fd9 201fbf 13*280ffc 280fc9 2c07df 14*280ffc
+280fc9 2d07df 14*280ffc 280fc9 2907df 280f7d 2807df 12*280ffc
+280fc9 2b07df 280f7d 2a07df 12*280ffc 280fc9 2807df 14*280ffc
+280fc9 2907df 14*280ffc 280fc9 2a07df 14*280ffc 280fc9 2b07df
+14*280ffc 280fc9 240bbf 14*280ffc 280fc9 250bbf 14*280ffc 280fc9
+210bbf 280f7d 200bbf 12*280ffc 280fc9 230bbf 280f7d 220bbf
+12*280ffc 280fc9 200bbf 14*280ffc 280fc9 210bbf 14*280ffc 280fc9
+220bbf 14*280ffc 280fc9 230bbf 14*280ffc 280fc9 2709fd 260afd
+240bbf 27b3fd 26c3fd 10*280ffc 280fc9 2709fd 260afd 250bbf
+27b3fd 26c3fd 10*280ffc 280fc9 2709fd 260afd 200bbf 27b1fd
+26c2fd 210bbf 27b3fd 26c3fd 7*280ffc 280fc9 2709fd 260afd
+220bbf 27b1fd 26c2fd 230bbf 27b3fd 26c3fd 7*280ffc 280fc9
+27a1fd 2692fd 2c07df 12*280ffc 280fc9 27a1fd 2692fd 2d07df
+12*280ffc 280fc9 27a1fd 2692fd 2907df 27a1fd 2692fd 2807df
+9*280ffc 280fc9 27a1fd 2692fd 2b07df 27a1fd 2692fd 2a07df
+9*280ffc 280fc9 380fd9 2709fd 260afd 201fbf 380fd9 27b1fd
+26c2fd 201fbf 27b1fd 26c2fd 5*280ffc 280fc9 310bfd 2717fd
+300bfd 2617fd 11*280ffc 280fc9 330bfd 2717fd 320bfd 2617fd
+11*280ffc 280fc9 370bfd 2117fd 360bfd 2017fd 11*280ffc 280fc9
+370bfd 2317fd 360bfd 2217fd 11*280ffc 48*280ffd 280fc9 2807d9
+14*280ffc 280fc9 310bfd 2017fd 13*280ffc 280fc9 320bfd 2017fd
+13*280ffc 280fc9 330bfd 2017fd 13*280ffc 280fc9 340bfd 2017fd
+13*280ffc 280fc9 350bfd 2017fd 13*280ffc 280fc9 300bfd 2117fd
+13*280ffc 280fc9 2907d9 14*280ffc 280fc9 320bfd 2117fd 13*280ffc
+280fc9 330bfd 2117fd 13*280ffc 280fc9 340bfd 2117fd 13*280ffc
+280fc9 350bfd 2117fd 13*280ffc 280fc9 300bfd 2217fd 13*280ffc
+280fc9 310bfd 2217fd 13*280ffc 280fc9 2a07d9 14*280ffc 280fc9
+330bfd 2217fd 13*280ffc 280fc9 340bfd 2217fd 13*280ffc 280fc9
+350bfd 2217fd 13*280ffc 280fc9 300bfd 2317fd 13*280ffc 280fc9
+310bfd 2317fd 13*280ffc 280fc9 320bfd 2317fd 13*280ffc 280fc9
+2b07d9 14*280ffc 280fc9 340bfd 2317fd 13*280ffc 280fc9 350bfd
+2317fd 13*280ffc 280fc9 300bfd 2417fd 13*280ffc 280fc9 310bfd
+2417fd 13*280ffc 280fc9 320bfd 2417fd 13*280ffc 280fc9 330bfd
+2417fd 13*280ffc 280fc9 2c07d9 14*280ffc 280fc9 350bfd 2417fd
+13*280ffc 280fc9 300bfd 2517fd 13*280ffc 280fc9 310bfd 2517fd
+13*280ffc 280fc9 320bfd 2517fd 13*280ffc 280fc9 330bfd 2517fd
+13*280ffc 280fc9 340bfd 2517fd 13*280ffc 280fc9 2d07d9 14*280ffc
+280fc9 300bfd 14*280ffc 280fc9 310bfd 14*280ffc 280fc9 320bfd
+14*280ffc 280fc9 330bfd 14*280ffc 280fc9 340bfd 14*280ffc 280fc9
+350bfd 14*280ffc 280fc9 380fd9 14*280ffc 280fc9 330bfd 2117fd
+320bfd 2017fd 11*280ffc 280fc9 310bfd 2317fd 300bfd 2217fd
+11*280ffc 280fc9 2907d9 2807d9 13*280ffc 280fc9 2b07d9 2a07d9
+13*280ffc 280fc9 380fdf 14*280ffc 280fc9 423fd 14*280ffc 280fc9
+380fd9 423fd 13*280ffc 280fc9 523fd 14*280ffc 280fc9 380fd9
+523fd 13*280ffc 280fc9 23fd 14*280ffc 280fc9 380fd9 23fd
+13*280ffc 280fc9 123fd 14*280ffc 280fc9 380fd9 123fd 13*280ffc
+280fc9 223fd 14*280ffc 280fc9 380fd9 223fd 13*280ffc 280fc9
+323fd 14*280ffc 280fc9 380fd9 323fd 13*280ffc 280fc9 433fd
+14*280ffc 280fc9 380fd9 433fd 13*280ffc 280fc9 533fd 14*280ffc
+280fc9 380fd9 533fd 13*280ffc 280fc9 33fd 14*280ffc 280fc9
+380fd9 33fd 13*280ffc 280fc9 133fd 14*280ffc 280fc9 380fd9
+133fd 13*280ffc 280fc9 233fd 14*280ffc 280fc9 380fd9 233fd
+13*280ffc 280fc9 333fd 14*280ffc 280fc9 380fd9 333fd 13*280ffc
+280fc9 443fd 14*280ffc 280fc9 380fd9 443fd 13*280ffc 280fc9
+543fd 14*280ffc 280fc9 380fd9 543fd 13*280ffc 280fc9 43fd
+14*280ffc 280fc9 380fd9 43fd 13*280ffc 280fc9 143fd 14*280ffc
+280fc9 380fd9 143fd 13*280ffc 280fc9 243fd 14*280ffc 280fc9
+380fd9 243fd 13*280ffc 280fc9 343fd 14*280ffc 280fc9 380fd9
+343fd 13*280ffc 280fc9 453fd 14*280ffc 280fc9 380fd9 453fd
+13*280ffc 280fc9 553fd 14*280ffc 280fc9 380fd9 553fd 13*280ffc
+280fc9 53fd 14*280ffc 280fc9 380fd9 53fd 13*280ffc 280fc9
+153fd 14*280ffc 280fc9 380fd9 153fd 13*280ffc 280fc9 253fd
+14*280ffc 280fc9 380fd9 253fd 13*280ffc 280fc9 353fd 14*280ffc
+280fc9 380fd9 353fd 13*280ffc 280fc9 43bfd 14*280ffc 280fc9
+380fd9 43bfd 13*280ffc 280fc9 53bfd 14*280ffc 280fc9 380fd9
+53bfd 13*280ffc 280fc9 3bfd 14*280ffc 280fc9 380fd9 3bfd
+13*280ffc 280fc9 13bfd 14*280ffc 280fc9 380fd9 13bfd 13*280ffc
+280fc9 23bfd 14*280ffc 280fc9 380fd9 23bfd 13*280ffc 280fc9
+33bfd 14*280ffc 280fc9 380fd9 33bfd 13*280ffc 280fc9 463fd
+14*280ffc 280fc9 380fd9 463fd 13*280ffc 280fc9 563fd 14*280ffc
+280fc9 380fd9 563fd 13*280ffc 280fc9 63fd 14*280ffc 280fc9
+380fd9 63fd 13*280ffc 280fc9 163fd 14*280ffc 280fc9 380fd9
+163fd 13*280ffc 280fc9 263fd 14*280ffc 280fc9 380fd9 263fd
+13*280ffc 280fc9 363fd 14*280ffc 280fc9 380fd9 363fd 13*280ffc
+280fc9 473fd 14*280ffc 280fc9 380fd9 473fd 13*280ffc 280fc9
+573fd 14*280ffc 280fc9 380fd9 573fd 13*280ffc 280fc9 73fd
+14*280ffc 280fc9 380fd9 73fd 13*280ffc 280fc9 173fd 14*280ffc
+280fc9 380fd9 173fd 13*280ffc 280fc9 273fd 14*280ffc 280fc9
+380fd9 273fd 13*280ffc 280fc9 373fd 14*280ffc 280fc9 380fd9
+373fd 13*280ffc 280fc9 483fd 14*280ffc 280fc9 380fd9 483fd
+13*280ffc 280fc9 583fd 14*280ffc 280fc9 380fd9 583fd 13*280ffc
+280fc9 83fd 14*280ffc 280fc9 380fd9 83fd 13*280ffc 280fc9
+183fd 14*280ffc 280fc9 380fd9 183fd 13*280ffc 280fc9 283fd
+14*280ffc 280fc9 380fd9 283fd 13*280ffc 280fc9 383fd 14*280ffc
+280fc9 380fd9 383fd 13*280ffc 280fc9 4d3fd 4e3fd 13*280ffc
+280fc9 5d3fd 5e3fd 13*280ffc 280fc9 d3fd e3fd 13*280ffc
+280fc9 1d3fd 1e3fd 13*280ffc 280fc9 2d3fd 2e3fd 13*280ffc
+280fc9 3d3fd 3e3fd 13*280ffc 176*280ffd 280fc9 310bfd 123fd
+300bfd 43fd 11*280ffc 280fc9 330bfd 123fd 320bfd 43fd
+11*280ffc 280fc9 380fd9 123fd 380fd9 43fd 11*280ffc 16*280ffd
+280fc9 310bfd 323fd 300bfd 243fd 11*280ffc 280fc9 330bfd
+323fd 320bfd 243fd 11*280ffc 144*280ffd 280fc9 4a3fd 14*280ffc
+280fc9 5a3fd 14*280ffc 280fc9 1a3fd 93fd 13*280ffc 280fc9
+3a3fd 293fd 13*280ffc 280fc9 4b3fd 14*280ffc 280fc9 5b3fd
+14*280ffc 280fc9 1b3fd c3fd 13*280ffc 280fc9 3b3fd 2c3fd
+13*280ffc 128*280ffd 280fc9 280dd9 280ed9 13*280ffc 280fc9 2109fd
+200afd 13*280ffc 280fc9 2309fd 220afd 13*280ffc 280fc9 2709fd
+260afd 13*280ffc 280fc9 380fd9 2129fd 209afd 12*280ffc 280fc9
+380fd9 2329fd 229afd 12*280ffc 280fc9 380fd9 2729fd 269afd
+12*280ffc 280fc9 380fd9 2129fd 380fd9 204afd 11*280ffc 280fc9
+380fd9 2329fd 380fd9 224afd 11*280ffc 280fc9 380fd9 2729fd
+380fd9 264afd 11*280ffc 280fc9 340bfd 2129fd 209afd 12*280ffc
+280fc9 340bfd 2329fd 229afd 12*280ffc 280fc9 340bfd 2729fd
+269afd 12*280ffc 280fc9 350bfd 2129fd 209afd 12*280ffc 280fc9
+350bfd 2329fd 229afd 12*280ffc 280fc9 350bfd 2729fd 269afd
+12*280ffc 280fc9 370bfd 2129fd 360bfd 204afd 11*280ffc 280fc9
+370bfd 2329fd 360bfd 224afd 11*280ffc 280fc9 310bfd 2329fd
+300bfd 224afd 11*280ffc 280fc9 380f5f 280edf 201dfd 12*280ffc
+280fc9 280dd9 280ed9 280ff7 12*280ffc 280fc9 280ff7 14*280ffc
+280fc9 280dd9 280ed9 13*280ffc 280fc9 15*280ffc 280fc9 280dd9
+280ed9 280ff7 12*280ffc 280fc9 280ff7 14*280ffc 280fc9 280dd9
+280ed9 280ff7 12*280ffc 280fc9 280ff7 14*280ffc 280fc9 280dd9
+280ed9 13*280ffc 280fc9 15*280ffc 280fc9 27a1fd 2692fd 380fdf
+27a1fd 2692fd 280edf 201dfd 280ff7 7*280ffc 280fc9 380fd9
+201fbf 13*280ffc 280fc9 2c07df 14*280ffc 280fc9 2d07df 14*280ffc
+280fc9 2907df 280f7d 2807df 12*280ffc 280fc9 2b07df 280f7d
+2a07df 12*280ffc 280fc9 2807df 14*280ffc 280fc9 2907df 14*280ffc
+280fc9 2a07df 14*280ffc 280fc9 2b07df 14*280ffc 280fc9 240bbf
+14*280ffc 280fc9 250bbf 14*280ffc 280fc9 210bbf 280f7d 200bbf
+12*280ffc 280fc9 230bbf 280f7d 220bbf 12*280ffc 280fc9 200bbf
+14*280ffc 280fc9 210bbf 14*280ffc 280fc9 220bbf 14*280ffc 280fc9
+230bbf 14*280ffc 280fc9 2709fd 260afd 240bbf 27b3fd 26c3fd
+10*280ffc 280fc9 2709fd 260afd 250bbf 27b3fd 26c3fd 10*280ffc
+280fc9 2709fd 260afd 200bbf 27b1fd 26c2fd 210bbf 27b3fd
+26c3fd 7*280ffc 280fc9 2709fd 260afd 220bbf 27b1fd 26c2fd
+230bbf 27b3fd 26c3fd 7*280ffc 280fc9 27a1fd 2692fd 2c07df
+12*280ffc 280fc9 27a1fd 2692fd 2d07df 12*280ffc 280fc9 27a1fd
+2692fd 2907df 27a1fd 2692fd 2807df 9*280ffc 280fc9 27a1fd
+2692fd 2b07df 27a1fd 2692fd 2a07df 9*280ffc 280fc9 380fd9
+2709fd 260afd 201fbf 380fd9 27b1fd 26c2fd 201fbf 27b1fd
+26c2fd 5*280ffc 280fc9 310bfd 2717fd 300bfd 2617fd 11*280ffc
+280fc9 330bfd 2717fd 320bfd 2617fd 11*280ffc 280fc9 370bfd
+2117fd 360bfd 2017fd 11*280ffc 280fc9 370bfd 2317fd 360bfd
+2217fd 11*280ffc 48*280ffd 280fc9 2807d9 14*280ffc 280fc9 310bfd
+2017fd 13*280ffc 280fc9 320bfd 2017fd 13*280ffc 280fc9 330bfd
+2017fd 13*280ffc 280fc9 340bfd 2017fd 13*280ffc 280fc9 350bfd
+2017fd 13*280ffc 280fc9 300bfd 2117fd 13*280ffc 280fc9 2907d9
+14*280ffc 280fc9 320bfd 2117fd 13*280ffc 280fc9 330bfd 2117fd
+13*280ffc 280fc9 340bfd 2117fd 13*280ffc 280fc9 350bfd 2117fd
+13*280ffc 280fc9 300bfd 2217fd 13*280ffc 280fc9 310bfd 2217fd
+13*280ffc 280fc9 2a07d9 14*280ffc 280fc9 330bfd 2217fd 13*280ffc
+280fc9 340bfd 2217fd 13*280ffc 280fc9 350bfd 2217fd 13*280ffc
+280fc9 300bfd 2317fd 13*280ffc 280fc9 310bfd 2317fd 13*280ffc
+280fc9 320bfd 2317fd 13*280ffc 280fc9 2b07d9 14*280ffc 280fc9
+340bfd 2317fd 13*280ffc 280fc9 350bfd 2317fd 13*280ffc 280fc9
+300bfd 2417fd 13*280ffc 280fc9 310bfd 2417fd 13*280ffc 280fc9
+320bfd 2417fd 13*280ffc 280fc9 330bfd 2417fd 13*280ffc 280fc9
+2c07d9 14*280ffc 280fc9 350bfd 2417fd 13*280ffc 280fc9 300bfd
+2517fd 13*280ffc 280fc9 310bfd 2517fd 13*280ffc 280fc9 320bfd
+2517fd 13*280ffc 280fc9 330bfd 2517fd 13*280ffc 280fc9 340bfd
+2517fd 13*280ffc 280fc9 2d07d9 14*280ffc 280fc9 300bfd 14*280ffc
+280fc9 310bfd 14*280ffc 280fc9 320bfd 14*280ffc 280fc9 330bfd
+14*280ffc 280fc9 340bfd 14*280ffc 280fc9 350bfd 14*280ffc 280fc9
+380fd9 14*280ffc 280fc9 330bfd 2117fd 320bfd 2017fd 11*280ffc
+280fc9 310bfd 2317fd 300bfd 2217fd 11*280ffc 280fc9 2907d9
+2807d9 13*280ffc 280fc9 2b07d9 2a07d9 13*280ffc 280fc9 380fdf
+14*280ffc 280fc9 423fd 14*280ffc 280fc9 380fd9 423fd 13*280ffc
+280fc9 523fd 14*280ffc 280fc9 380fd9 523fd 13*280ffc 280fc9
+23fd 14*280ffc 280fc9 380fd9 23fd 13*280ffc 280fc9 123fd
+14*280ffc 280fc9 380fd9 123fd 13*280ffc 280fc9 223fd 14*280ffc
+280fc9 380fd9 223fd 13*280ffc 280fc9 323fd 14*280ffc 280fc9
+380fd9 323fd 13*280ffc 280fc9 433fd 14*280ffc 280fc9 380fd9
+433fd 13*280ffc 280fc9 533fd 14*280ffc 280fc9 380fd9 533fd
+13*280ffc 280fc9 33fd 14*280ffc 280fc9 380fd9 33fd 13*280ffc
+280fc9 133fd 14*280ffc 280fc9 380fd9 133fd 13*280ffc 280fc9
+233fd 14*280ffc 280fc9 380fd9 233fd 13*280ffc 280fc9 333fd
+14*280ffc 280fc9 380fd9 333fd 13*280ffc 280fc9 443fd 14*280ffc
+280fc9 380fd9 443fd 13*280ffc 280fc9 543fd 14*280ffc 280fc9
+380fd9 543fd 13*280ffc 280fc9 43fd 14*280ffc 280fc9 380fd9
+43fd 13*280ffc 280fc9 143fd 14*280ffc 280fc9 380fd9 143fd
+13*280ffc 280fc9 243fd 14*280ffc 280fc9 380fd9 243fd 13*280ffc
+280fc9 343fd 14*280ffc 280fc9 380fd9 343fd 13*280ffc 280fc9
+453fd 14*280ffc 280fc9 380fd9 453fd 13*280ffc 280fc9 553fd
+14*280ffc 280fc9 380fd9 553fd 13*280ffc 280fc9 53fd 14*280ffc
+280fc9 380fd9 53fd 13*280ffc 280fc9 153fd 14*280ffc 280fc9
+380fd9 153fd 13*280ffc 280fc9 253fd 14*280ffc 280fc9 380fd9
+253fd 13*280ffc 280fc9 353fd 14*280ffc 280fc9 380fd9 353fd
+13*280ffc 280fc9 43bfd 14*280ffc 280fc9 380fd9 43bfd 13*280ffc
+280fc9 53bfd 14*280ffc 280fc9 380fd9 53bfd 13*280ffc 280fc9
+3bfd 14*280ffc 280fc9 380fd9 3bfd 13*280ffc 280fc9 13bfd
+14*280ffc 280fc9 380fd9 13bfd 13*280ffc 280fc9 23bfd 14*280ffc
+280fc9 380fd9 23bfd 13*280ffc 280fc9 33bfd 14*280ffc 280fc9
+380fd9 33bfd 13*280ffc 280fc9 463fd 14*280ffc 280fc9 380fd9
+463fd 13*280ffc 280fc9 563fd 14*280ffc 280fc9 380fd9 563fd
+13*280ffc 280fc9 63fd 14*280ffc 280fc9 380fd9 63fd 13*280ffc
+280fc9 163fd 14*280ffc 280fc9 380fd9 163fd 13*280ffc 280fc9
+263fd 14*280ffc 280fc9 380fd9 263fd 13*280ffc 280fc9 363fd
+14*280ffc 280fc9 380fd9 363fd 13*280ffc 280fc9 473fd 14*280ffc
+280fc9 380fd9 473fd 13*280ffc 280fc9 573fd 14*280ffc 280fc9
+380fd9 573fd 13*280ffc 280fc9 73fd 14*280ffc 280fc9 380fd9
+73fd 13*280ffc 280fc9 173fd 14*280ffc 280fc9 380fd9 173fd
+13*280ffc 280fc9 273fd 14*280ffc 280fc9 380fd9 273fd 13*280ffc
+280fc9 373fd 14*280ffc 280fc9 380fd9 373fd 13*280ffc 280fc9
+483fd 14*280ffc 280fc9 380fd9 483fd 13*280ffc 280fc9 583fd
+14*280ffc 280fc9 380fd9 583fd 13*280ffc 280fc9 83fd 14*280ffc
+280fc9 380fd9 83fd 13*280ffc 280fc9 183fd 14*280ffc 280fc9
+380fd9 183fd 13*280ffc 280fc9 283fd 14*280ffc 280fc9 380fd9
+283fd 13*280ffc 280fc9 383fd 14*280ffc 280fc9 380fd9 383fd
+13*280ffc 280fc9 4d3fd 4e3fd 13*280ffc 280fc9 5d3fd 5e3fd
+13*280ffc 280fc9 d3fd e3fd 13*280ffc 280fc9 1d3fd 1e3fd
+13*280ffc 280fc9 2d3fd 2e3fd 13*280ffc 280fc9 3d3fd 3e3fd
+13*280ffc 176*280ffd 280fc9 310bfd 123fd 300bfd 43fd 11*280ffc
+280fc9 330bfd 123fd 320bfd 43fd 11*280ffc 280fc9 380fd9
+123fd 380fd9 43fd 11*280ffc 16*280ffd 280fc9 310bfd 323fd
+300bfd 243fd 11*280ffc 280fc9 330bfd 323fd 320bfd 243fd
+11*280ffc 144*280ffd 280fc9 4a3fd 14*280ffc 280fc9 5a3fd 14*280ffc
+280fc9 1a3fd 93fd 13*280ffc 280fc9 3a3fd 293fd 13*280ffc
+280fc9 4b3fd 14*280ffc 280fc9 5b3fd 14*280ffc 280fc9 1b3fd
+c3fd 13*280ffc 280fc9 3b3fd 2c3fd 13*280ffc 128*280ffd 280fc9
+280dd9 280ed9 13*280ffc 280fc9 2109fd 200afd 13*280ffc 280fc9
+2309fd 220afd 13*280ffc 280fc9 2709fd 260afd 13*280ffc 280fc9
+380fd9 2129fd 209afd 12*280ffc 280fc9 380fd9 2329fd 229afd
+12*280ffc 280fc9 380fd9 2729fd 269afd 12*280ffc 280fc9 380fd9
+2129fd 380fd9 204afd 11*280ffc 280fc9 380fd9 2329fd 380fd9
+224afd 11*280ffc 280fc9 380fd9 2729fd 380fd9 264afd 11*280ffc
+280fc9 340bfd 2129fd 209afd 12*280ffc 280fc9 340bfd 2329fd
+229afd 12*280ffc 280fc9 340bfd 2729fd 269afd 12*280ffc 280fc9
+350bfd 2129fd 209afd 12*280ffc 280fc9 350bfd 2329fd 229afd
+12*280ffc 280fc9 350bfd 2729fd 269afd 12*280ffc 280fc9 370bfd
+2129fd 360bfd 204afd 11*280ffc 280fc9 370bfd 2329fd 360bfd
+224afd 11*280ffc 280fc9 310bfd 2329fd 300bfd 224afd 11*280ffc
+280fc9 380f5f 280edf 201dfd 12*280ffc 280fc9 280dd9 280ed9
+280ff7 12*280ffc 280fc9 280ff7 14*280ffc 280fc9 280dd9 280ed9
+280ff7 12*280ffc 280fc9 280ff7 14*280ffc 280fc9 280dd9 280ed9
+13*280ffc 280fc9 15*280ffc 280fc9 280dd9 280ed9 280ff7 12*280ffc
+280fc9 280ff7 14*280ffc 280fc9 280dd9 280ed9 13*280ffc 280fc9
+15*280ffc 280fc9 27a1fd 2692fd 380fdf 27a1fd 2692fd 280edf
+201dfd 280ff7 7*280ffc 280fc9 380fd9 201fbf 13*280ffc 280fc9
+2c07df 14*280ffc 280fc9 2d07df 14*280ffc 280fc9 2907df 280f7d
+2807df 12*280ffc 280fc9 2b07df 280f7d 2a07df 12*280ffc 280fc9
+2807df 14*280ffc 280fc9 2907df 14*280ffc 280fc9 2a07df 14*280ffc
+280fc9 2b07df 14*280ffc 280fc9 240bbf 14*280ffc 280fc9 250bbf
+14*280ffc 280fc9 210bbf 280f7d 200bbf 12*280ffc 280fc9 230bbf
+280f7d 220bbf 12*280ffc 280fc9 200bbf 14*280ffc 280fc9 210bbf
+14*280ffc 280fc9 220bbf 14*280ffc 280fc9 230bbf 14*280ffc 280fc9
+2709fd 260afd 240bbf 27b3fd 26c3fd 10*280ffc 280fc9 2709fd
+260afd 250bbf 27b3fd 26c3fd 10*280ffc 280fc9 2709fd 260afd
+200bbf 27b1fd 26c2fd 210bbf 27b3fd 26c3fd 7*280ffc 280fc9
+2709fd 260afd 220bbf 27b1fd 26c2fd 230bbf 27b3fd 26c3fd
+7*280ffc 280fc9 27a1fd 2692fd 2c07df 12*280ffc 280fc9 27a1fd
+2692fd 2d07df 12*280ffc 280fc9 27a1fd 2692fd 2907df 27a1fd
+2692fd 2807df 9*280ffc 280fc9 27a1fd 2692fd 2b07df 27a1fd
+2692fd 2a07df 9*280ffc 280fc9 380fd9 2709fd 260afd 201fbf
+380fd9 27b1fd 26c2fd 201fbf 27b1fd 26c2fd 5*280ffc 280fc9
+310bfd 2717fd 300bfd 2617fd 11*280ffc 280fc9 330bfd 2717fd
+320bfd 2617fd 11*280ffc 280fc9 370bfd 2117fd 360bfd 2017fd
+11*280ffc 280fc9 370bfd 2317fd 360bfd 2217fd 11*280ffc 48*280ffd
+280fc9 2807d9 14*280ffc 280fc9 310bfd 2017fd 13*280ffc 280fc9
+320bfd 2017fd 13*280ffc 280fc9 330bfd 2017fd 13*280ffc 280fc9
+340bfd 2017fd 13*280ffc 280fc9 350bfd 2017fd 13*280ffc 280fc9
+300bfd 2117fd 13*280ffc 280fc9 2907d9 14*280ffc 280fc9 320bfd
+2117fd 13*280ffc 280fc9 330bfd 2117fd 13*280ffc 280fc9 340bfd
+2117fd 13*280ffc 280fc9 350bfd 2117fd 13*280ffc 280fc9 300bfd
+2217fd 13*280ffc 280fc9 310bfd 2217fd 13*280ffc 280fc9 2a07d9
+14*280ffc 280fc9 330bfd 2217fd 13*280ffc 280fc9 340bfd 2217fd
+13*280ffc 280fc9 350bfd 2217fd 13*280ffc 280fc9 300bfd 2317fd
+13*280ffc 280fc9 310bfd 2317fd 13*280ffc 280fc9 320bfd 2317fd
+13*280ffc 280fc9 2b07d9 14*280ffc 280fc9 340bfd 2317fd 13*280ffc
+280fc9 350bfd 2317fd 13*280ffc 280fc9 300bfd 2417fd 13*280ffc
+280fc9 310bfd 2417fd 13*280ffc 280fc9 320bfd 2417fd 13*280ffc
+280fc9 330bfd 2417fd 13*280ffc 280fc9 2c07d9 14*280ffc 280fc9
+350bfd 2417fd 13*280ffc 280fc9 300bfd 2517fd 13*280ffc 280fc9
+310bfd 2517fd 13*280ffc 280fc9 320bfd 2517fd 13*280ffc 280fc9
+330bfd 2517fd 13*280ffc 280fc9 340bfd 2517fd 13*280ffc 280fc9
+2d07d9 14*280ffc 280fc9 300bfd 14*280ffc 280fc9 310bfd 14*280ffc
+280fc9 320bfd 14*280ffc 280fc9 330bfd 14*280ffc 280fc9 340bfd
+14*280ffc 280fc9 350bfd 14*280ffc 280fc9 380fd9 14*280ffc 280fc9
+330bfd 2117fd 320bfd 2017fd 11*280ffc 280fc9 310bfd 2317fd
+300bfd 2217fd 11*280ffc 280fc9 2907d9 2807d9 13*280ffc 280fc9
+2b07d9 2a07d9 13*280ffc 280fc9 380fdf 14*280ffc 280fc9 423fd
+14*280ffc 280fc9 380fd9 423fd 13*280ffc 280fc9 523fd 14*280ffc
+280fc9 380fd9 523fd 13*280ffc 280fc9 23fd 14*280ffc 280fc9
+380fd9 23fd 13*280ffc 280fc9 123fd 14*280ffc 280fc9 380fd9
+123fd 13*280ffc 280fc9 223fd 14*280ffc 280fc9 380fd9 223fd
+13*280ffc 280fc9 323fd 14*280ffc 280fc9 380fd9 323fd 13*280ffc
+280fc9 433fd 14*280ffc 280fc9 380fd9 433fd 13*280ffc 280fc9
+533fd 14*280ffc 280fc9 380fd9 533fd 13*280ffc 280fc9 33fd
+14*280ffc 280fc9 380fd9 33fd 13*280ffc 280fc9 133fd 14*280ffc
+280fc9 380fd9 133fd 13*280ffc 280fc9 233fd 14*280ffc 280fc9
+380fd9 233fd 13*280ffc 280fc9 333fd 14*280ffc 280fc9 380fd9
+333fd 13*280ffc 280fc9 443fd 14*280ffc 280fc9 380fd9 443fd
+13*280ffc 280fc9 543fd 14*280ffc 280fc9 380fd9 543fd 13*280ffc
+280fc9 43fd 14*280ffc 280fc9 380fd9 43fd 13*280ffc 280fc9
+143fd 14*280ffc 280fc9 380fd9 143fd 13*280ffc 280fc9 243fd
+14*280ffc 280fc9 380fd9 243fd 13*280ffc 280fc9 343fd 14*280ffc
+280fc9 380fd9 343fd 13*280ffc 280fc9 453fd 14*280ffc 280fc9
+380fd9 453fd 13*280ffc 280fc9 553fd 14*280ffc 280fc9 380fd9
+553fd 13*280ffc 280fc9 53fd 14*280ffc 280fc9 380fd9 53fd
+13*280ffc 280fc9 153fd 14*280ffc 280fc9 380fd9 153fd 13*280ffc
+280fc9 253fd 14*280ffc 280fc9 380fd9 253fd 13*280ffc 280fc9
+353fd 14*280ffc 280fc9 380fd9 353fd 13*280ffc 280fc9 43bfd
+14*280ffc 280fc9 380fd9 43bfd 13*280ffc 280fc9 53bfd 14*280ffc
+280fc9 380fd9 53bfd 13*280ffc 280fc9 3bfd 14*280ffc 280fc9
+380fd9 3bfd 13*280ffc 280fc9 13bfd 14*280ffc 280fc9 380fd9
+13bfd 13*280ffc 280fc9 23bfd 14*280ffc 280fc9 380fd9 23bfd
+13*280ffc 280fc9 33bfd 14*280ffc 280fc9 380fd9 33bfd 13*280ffc
+280fc9 463fd 14*280ffc 280fc9 380fd9 463fd 13*280ffc 280fc9
+563fd 14*280ffc 280fc9 380fd9 563fd 13*280ffc 280fc9 63fd
+14*280ffc 280fc9 380fd9 63fd 13*280ffc 280fc9 163fd 14*280ffc
+280fc9 380fd9 163fd 13*280ffc 280fc9 263fd 14*280ffc 280fc9
+380fd9 263fd 13*280ffc 280fc9 363fd 14*280ffc 280fc9 380fd9
+363fd 13*280ffc 280fc9 473fd 14*280ffc 280fc9 380fd9 473fd
+13*280ffc 280fc9 573fd 14*280ffc 280fc9 380fd9 573fd 13*280ffc
+280fc9 73fd 14*280ffc 280fc9 380fd9 73fd 13*280ffc 280fc9
+173fd 14*280ffc 280fc9 380fd9 173fd 13*280ffc 280fc9 273fd
+14*280ffc 280fc9 380fd9 273fd 13*280ffc 280fc9 373fd 14*280ffc
+280fc9 380fd9 373fd 13*280ffc 280fc9 483fd 14*280ffc 280fc9
+380fd9 483fd 13*280ffc 280fc9 583fd 14*280ffc 280fc9 380fd9
+583fd 13*280ffc 280fc9 83fd 14*280ffc 280fc9 380fd9 83fd
+13*280ffc 280fc9 183fd 14*280ffc 280fc9 380fd9 183fd 13*280ffc
+280fc9 283fd 14*280ffc 280fc9 380fd9 283fd 13*280ffc 280fc9
+383fd 14*280ffc 280fc9 380fd9 383fd 13*280ffc 280fc9 4d3fd
+4e3fd 13*280ffc 280fc9 5d3fd 5e3fd 13*280ffc 280fc9 d3fd
+e3fd 13*280ffc 280fc9 1d3fd 1e3fd 13*280ffc 280fc9 2d3fd
+2e3fd 13*280ffc 280fc9 3d3fd 3e3fd 13*280ffc 176*280ffd 280fc9
+310bfd 123fd 300bfd 43fd 11*280ffc 280fc9 330bfd 123fd
+320bfd 43fd 11*280ffc 280fc9 380fd9 123fd 380fd9 43fd
+11*280ffc 16*280ffd 280fc9 310bfd 323fd 300bfd 243fd 11*280ffc
+280fc9 330bfd 323fd 320bfd 243fd 11*280ffc 144*280ffd 280fc9
+4a3fd 14*280ffc 280fc9 5a3fd 14*280ffc 280fc9 1a3fd 93fd
+13*280ffc 280fc9 3a3fd 293fd 13*280ffc 280fc9 4b3fd 14*280ffc
+280fc9 5b3fd 14*280ffc 280fc9 1b3fd c3fd 13*280ffc 280fc9
+3b3fd 2c3fd 13*280ffc 128*280ffd 280fc9 280dd9 280ed9 13*280ffc
+280fc9 2109fd 200afd 13*280ffc 280fc9 2309fd 220afd 13*280ffc
+280fc9 2709fd 260afd 13*280ffc 280fc9 380fd9 2129fd 209afd
+12*280ffc 280fc9 380fd9 2329fd 229afd 12*280ffc 280fc9 380fd9
+2729fd 269afd 12*280ffc 280fc9 380fd9 2129fd 380fd9 204afd
+11*280ffc 280fc9 380fd9 2329fd 380fd9 224afd 11*280ffc 280fc9
+380fd9 2729fd 380fd9 264afd 11*280ffc 280fc9 340bfd 2129fd
+209afd 12*280ffc 280fc9 340bfd 2329fd 229afd 12*280ffc 280fc9
+340bfd 2729fd 269afd 12*280ffc 280fc9 350bfd 2129fd 209afd
+12*280ffc 280fc9 350bfd 2329fd 229afd 12*280ffc 280fc9 350bfd
+2729fd 269afd 12*280ffc 280fc9 370bfd 2129fd 360bfd 204afd
+11*280ffc 280fc9 370bfd 2329fd 360bfd 224afd 11*280ffc 280fc9
+310bfd 2329fd 300bfd 224afd 11*280ffc 280fc9 380f5f 280edf
+201dfd 12*280ffc 280fc9 280dd9 280ed9 280ff7 12*280ffc 280fc9
+280ff7 14*280ffc 280fc9 280dd9 280ed9 13*280ffc 280fc9 15*280ffc
+280fc9 280dd9 280ed9 280ff7 12*280ffc 280fc9 280ff7 14*280ffc
+280fc9 280dd9 280ed9 13*280ffc 280fc9 15*280ffc 280fc9 280dd9
+280ed9 280ff7 12*280ffc 280fc9 280ff7 14*280ffc 280fc9 27a1fd
+2692fd 380fdf 27a1fd 2692fd 280edf 201dfd 280ff7 7*280ffc
+280fc9 380fd9 201fbf 13*280ffc 280fc9 2c07df 14*280ffc 280fc9
+2d07df 14*280ffc 280fc9 2907df 280f7d 2807df 12*280ffc 280fc9
+2b07df 280f7d 2a07df 12*280ffc 280fc9 2807df 14*280ffc 280fc9
+2907df 14*280ffc 280fc9 2a07df 14*280ffc 280fc9 2b07df 14*280ffc
+280fc9 240bbf 14*280ffc 280fc9 250bbf 14*280ffc 280fc9 210bbf
+280f7d 200bbf 12*280ffc 280fc9 230bbf 280f7d 220bbf 12*280ffc
+280fc9 200bbf 14*280ffc 280fc9 210bbf 14*280ffc 280fc9 220bbf
+14*280ffc 280fc9 230bbf 14*280ffc 280fc9 2709fd 260afd 240bbf
+27b3fd 26c3fd 10*280ffc 280fc9 2709fd 260afd 250bbf 27b3fd
+26c3fd 10*280ffc 280fc9 2709fd 260afd 200bbf 27b1fd 26c2fd
+210bbf 27b3fd 26c3fd 7*280ffc 280fc9 2709fd 260afd 220bbf
+27b1fd 26c2fd 230bbf 27b3fd 26c3fd 7*280ffc 280fc9 27a1fd
+2692fd 2c07df 12*280ffc 280fc9 27a1fd 2692fd 2d07df 12*280ffc
+280fc9 27a1fd 2692fd 2907df 27a1fd 2692fd 2807df 9*280ffc
+280fc9 27a1fd 2692fd 2b07df 27a1fd 2692fd 2a07df 9*280ffc
+280fc9 380fd9 2709fd 260afd 201fbf 380fd9 27b1fd 26c2fd
+201fbf 27b1fd 26c2fd 5*280ffc 280fc9 310bfd 2717fd 300bfd
+2617fd 11*280ffc 280fc9 330bfd 2717fd 320bfd 2617fd 11*280ffc
+280fc9 370bfd 2117fd 360bfd 2017fd 11*280ffc 280fc9 370bfd
+2317fd 360bfd 2217fd 11*280ffc 48*280ffd 280fc9 2807d9 14*280ffc
+280fc9 310bfd 2017fd 13*280ffc 280fc9 320bfd 2017fd 13*280ffc
+280fc9 330bfd 2017fd 13*280ffc 280fc9 340bfd 2017fd 13*280ffc
+280fc9 350bfd 2017fd 13*280ffc 280fc9 300bfd 2117fd 13*280ffc
+280fc9 2907d9 14*280ffc 280fc9 320bfd 2117fd 13*280ffc 280fc9
+330bfd 2117fd 13*280ffc 280fc9 340bfd 2117fd 13*280ffc 280fc9
+350bfd 2117fd 13*280ffc 280fc9 300bfd 2217fd 13*280ffc 280fc9
+310bfd 2217fd 13*280ffc 280fc9 2a07d9 14*280ffc 280fc9 330bfd
+2217fd 13*280ffc 280fc9 340bfd 2217fd 13*280ffc 280fc9 350bfd
+2217fd 13*280ffc 280fc9 300bfd 2317fd 13*280ffc 280fc9 310bfd
+2317fd 13*280ffc 280fc9 320bfd 2317fd 13*280ffc 280fc9 2b07d9
+14*280ffc 280fc9 340bfd 2317fd 13*280ffc 280fc9 350bfd 2317fd
+13*280ffc 280fc9 300bfd 2417fd 13*280ffc 280fc9 310bfd 2417fd
+13*280ffc 280fc9 320bfd 2417fd 13*280ffc 280fc9 330bfd 2417fd
+13*280ffc 280fc9 2c07d9 14*280ffc 280fc9 350bfd 2417fd 13*280ffc
+280fc9 300bfd 2517fd 13*280ffc 280fc9 310bfd 2517fd 13*280ffc
+280fc9 320bfd 2517fd 13*280ffc 280fc9 330bfd 2517fd 13*280ffc
+280fc9 340bfd 2517fd 13*280ffc 280fc9 2d07d9 14*280ffc 280fc9
+300bfd 14*280ffc 280fc9 310bfd 14*280ffc 280fc9 320bfd 14*280ffc
+280fc9 330bfd 14*280ffc 280fc9 340bfd 14*280ffc 280fc9 350bfd
+14*280ffc 280fc9 380fd9 14*280ffc 280fc9 330bfd 2117fd 320bfd
+2017fd 11*280ffc 280fc9 310bfd 2317fd 300bfd 2217fd 11*280ffc
+280fc9 2907d9 2807d9 13*280ffc 280fc9 2b07d9 2a07d9 13*280ffc
+280fc9 380fdf 14*280ffc 280fc9 423fd 14*280ffc 280fc9 380fd9
+423fd 13*280ffc 280fc9 523fd 14*280ffc 280fc9 380fd9 523fd
+13*280ffc 280fc9 23fd 14*280ffc 280fc9 380fd9 23fd 13*280ffc
+280fc9 123fd 14*280ffc 280fc9 380fd9 123fd 13*280ffc 280fc9
+223fd 14*280ffc 280fc9 380fd9 223fd 13*280ffc 280fc9 323fd
+14*280ffc 280fc9 380fd9 323fd 13*280ffc 280fc9 433fd 14*280ffc
+280fc9 380fd9 433fd 13*280ffc 280fc9 533fd 14*280ffc 280fc9
+380fd9 533fd 13*280ffc 280fc9 33fd 14*280ffc 280fc9 380fd9
+33fd 13*280ffc 280fc9 133fd 14*280ffc 280fc9 380fd9 133fd
+13*280ffc 280fc9 233fd 14*280ffc 280fc9 380fd9 233fd 13*280ffc
+280fc9 333fd 14*280ffc 280fc9 380fd9 333fd 13*280ffc 280fc9
+443fd 14*280ffc 280fc9 380fd9 443fd 13*280ffc 280fc9 543fd
+14*280ffc 280fc9 380fd9 543fd 13*280ffc 280fc9 43fd 14*280ffc
+280fc9 380fd9 43fd 13*280ffc 280fc9 143fd 14*280ffc 280fc9
+380fd9 143fd 13*280ffc 280fc9 243fd 14*280ffc 280fc9 380fd9
+243fd 13*280ffc 280fc9 343fd 14*280ffc 280fc9 380fd9 343fd
+13*280ffc 280fc9 453fd 14*280ffc 280fc9 380fd9 453fd 13*280ffc
+280fc9 553fd 14*280ffc 280fc9 380fd9 553fd 13*280ffc 280fc9
+53fd 14*280ffc 280fc9 380fd9 53fd 13*280ffc 280fc9 153fd
+14*280ffc 280fc9 380fd9 153fd 13*280ffc 280fc9 253fd 14*280ffc
+280fc9 380fd9 253fd 13*280ffc 280fc9 353fd 14*280ffc 280fc9
+380fd9 353fd 13*280ffc 280fc9 43bfd 14*280ffc 280fc9 380fd9
+43bfd 13*280ffc 280fc9 53bfd 14*280ffc 280fc9 380fd9 53bfd
+13*280ffc 280fc9 3bfd 14*280ffc 280fc9 380fd9 3bfd 13*280ffc
+280fc9 13bfd 14*280ffc 280fc9 380fd9 13bfd 13*280ffc 280fc9
+23bfd 14*280ffc 280fc9 380fd9 23bfd 13*280ffc 280fc9 33bfd
+14*280ffc 280fc9 380fd9 33bfd 13*280ffc 280fc9 463fd 14*280ffc
+280fc9 380fd9 463fd 13*280ffc 280fc9 563fd 14*280ffc 280fc9
+380fd9 563fd 13*280ffc 280fc9 63fd 14*280ffc 280fc9 380fd9
+63fd 13*280ffc 280fc9 163fd 14*280ffc 280fc9 380fd9 163fd
+13*280ffc 280fc9 263fd 14*280ffc 280fc9 380fd9 263fd 13*280ffc
+280fc9 363fd 14*280ffc 280fc9 380fd9 363fd 13*280ffc 280fc9
+473fd 14*280ffc 280fc9 380fd9 473fd 13*280ffc 280fc9 573fd
+14*280ffc 280fc9 380fd9 573fd 13*280ffc 280fc9 73fd 14*280ffc
+280fc9 380fd9 73fd 13*280ffc 280fc9 173fd 14*280ffc 280fc9
+380fd9 173fd 13*280ffc 280fc9 273fd 14*280ffc 280fc9 380fd9
+273fd 13*280ffc 280fc9 373fd 14*280ffc 280fc9 380fd9 373fd
+13*280ffc 280fc9 483fd 14*280ffc 280fc9 380fd9 483fd 13*280ffc
+280fc9 583fd 14*280ffc 280fc9 380fd9 583fd 13*280ffc 280fc9
+83fd 14*280ffc 280fc9 380fd9 83fd 13*280ffc 280fc9 183fd
+14*280ffc 280fc9 380fd9 183fd 13*280ffc 280fc9 283fd 14*280ffc
+280fc9 380fd9 283fd 13*280ffc 280fc9 383fd 14*280ffc 280fc9
+380fd9 383fd 13*280ffc 280fc9 4d3fd 4e3fd 13*280ffc 280fc9
+5d3fd 5e3fd 13*280ffc 280fc9 d3fd e3fd 13*280ffc 280fc9
+1d3fd 1e3fd 13*280ffc 280fc9 2d3fd 2e3fd 13*280ffc 280fc9
+3d3fd 3e3fd 13*280ffc 176*280ffd 280fc9 310bfd 123fd 300bfd
+43fd 11*280ffc 280fc9 330bfd 123fd 320bfd 43fd 11*280ffc
+280fc9 380fd9 123fd 380fd9 43fd 11*280ffc 16*280ffd 280fc9
+310bfd 323fd 300bfd 243fd 11*280ffc 280fc9 330bfd 323fd
+320bfd 243fd 11*280ffc 144*280ffd 280fc9 4a3fd 14*280ffc 280fc9
+5a3fd 14*280ffc 280fc9 1a3fd 93fd 13*280ffc 280fc9 3a3fd
+293fd 13*280ffc 280fc9 4b3fd 14*280ffc 280fc9 5b3fd 14*280ffc
+280fc9 1b3fd c3fd 13*280ffc 280fc9 3b3fd 2c3fd 13*280ffc
+128*280ffd 280fc9 280dd9 280ed9 13*280ffc 280fc9 2109fd 200afd
+13*280ffc 280fc9 2309fd 220afd 13*280ffc 280fc9 2709fd 260afd
+13*280ffc 280fc9 380fd9 2129fd 209afd 12*280ffc 280fc9 380fd9
+2329fd 229afd 12*280ffc 280fc9 380fd9 2729fd 269afd 12*280ffc
+280fc9 380fd9 2129fd 380fd9 204afd 11*280ffc 280fc9 380fd9
+2329fd 380fd9 224afd 11*280ffc 280fc9 380fd9 2729fd 380fd9
+264afd 11*280ffc 280fc9 340bfd 2129fd 209afd 12*280ffc 280fc9
+340bfd 2329fd 229afd 12*280ffc 280fc9 340bfd 2729fd 269afd
+12*280ffc 280fc9 350bfd 2129fd 209afd 12*280ffc 280fc9 350bfd
+2329fd 229afd 12*280ffc 280fc9 350bfd 2729fd 269afd 12*280ffc
+280fc9 370bfd 2129fd 360bfd 204afd 11*280ffc 280fc9 370bfd
+2329fd 360bfd 224afd 11*280ffc 280fc9 310bfd 2329fd 300bfd
+224afd 11*280ffc 280fc9 380f5f 280edf 201dfd 12*280ffc 280fc9
+280dd9 280ed9 280ff7 12*280ffc 280fc9 280ff7 14*280ffc 280fc9
+280dd9 280ed9 280ff7 12*280ffc 280fc9 280ff7 14*280ffc 280fc9
+280dd9 280ed9 13*280ffc 280fc9 15*280ffc 280fc9 280dd9 280ed9
+13*280ffc 280fc9 15*280ffc 280fc9 280dd9 280ed9 280ff7 12*280ffc
+280fc9 280ff7 14*280ffc 280fc9 27a1fd 2692fd 380fdf 27a1fd
+2692fd 280edf 201dfd 280ff7 7*280ffc 280fc9 380fd9 201fbf
+13*280ffc 280fc9 2c07df 14*280ffc 280fc9 2d07df 14*280ffc 280fc9
+2907df 280f7d 2807df 12*280ffc 280fc9 2b07df 280f7d 2a07df
+12*280ffc 280fc9 2807df 14*280ffc 280fc9 2907df 14*280ffc 280fc9
+2a07df 14*280ffc 280fc9 2b07df 14*280ffc 280fc9 240bbf 14*280ffc
+280fc9 250bbf 14*280ffc 280fc9 210bbf 280f7d 200bbf 12*280ffc
+280fc9 230bbf 280f7d 220bbf 12*280ffc 280fc9 200bbf 14*280ffc
+280fc9 210bbf 14*280ffc 280fc9 220bbf 14*280ffc 280fc9 230bbf
+14*280ffc 280fc9 2709fd 260afd 240bbf 27b3fd 26c3fd 10*280ffc
+280fc9 2709fd 260afd 250bbf 27b3fd 26c3fd 10*280ffc 280fc9
+2709fd 260afd 200bbf 27b1fd 26c2fd 210bbf 27b3fd 26c3fd
+7*280ffc 280fc9 2709fd 260afd 220bbf 27b1fd 26c2fd 230bbf
+27b3fd 26c3fd 7*280ffc 280fc9 27a1fd 2692fd 2c07df 12*280ffc
+280fc9 27a1fd 2692fd 2d07df 12*280ffc 280fc9 27a1fd 2692fd
+2907df 27a1fd 2692fd 2807df 9*280ffc 280fc9 27a1fd 2692fd
+2b07df 27a1fd 2692fd 2a07df 9*280ffc 280fc9 380fd9 2709fd
+260afd 201fbf 380fd9 27b1fd 26c2fd 201fbf 27b1fd 26c2fd
+5*280ffc 280fc9 310bfd 2717fd 300bfd 2617fd 11*280ffc 280fc9
+330bfd 2717fd 320bfd 2617fd 11*280ffc 280fc9 370bfd 2117fd
+360bfd 2017fd 11*280ffc 280fc9 370bfd 2317fd 360bfd 2217fd
+11*280ffc 48*280ffd 280fc9 2807d9 14*280ffc 280fc9 310bfd 2017fd
+13*280ffc 280fc9 320bfd 2017fd 13*280ffc 280fc9 330bfd 2017fd
+13*280ffc 280fc9 340bfd 2017fd 13*280ffc 280fc9 350bfd 2017fd
+13*280ffc 280fc9 300bfd 2117fd 13*280ffc 280fc9 2907d9 14*280ffc
+280fc9 320bfd 2117fd 13*280ffc 280fc9 330bfd 2117fd 13*280ffc
+280fc9 340bfd 2117fd 13*280ffc 280fc9 350bfd 2117fd 13*280ffc
+280fc9 300bfd 2217fd 13*280ffc 280fc9 310bfd 2217fd 13*280ffc
+280fc9 2a07d9 14*280ffc 280fc9 330bfd 2217fd 13*280ffc 280fc9
+340bfd 2217fd 13*280ffc 280fc9 350bfd 2217fd 13*280ffc 280fc9
+300bfd 2317fd 13*280ffc 280fc9 310bfd 2317fd 13*280ffc 280fc9
+320bfd 2317fd 13*280ffc 280fc9 2b07d9 14*280ffc 280fc9 340bfd
+2317fd 13*280ffc 280fc9 350bfd 2317fd 13*280ffc 280fc9 300bfd
+2417fd 13*280ffc 280fc9 310bfd 2417fd 13*280ffc 280fc9 320bfd
+2417fd 13*280ffc 280fc9 330bfd 2417fd 13*280ffc 280fc9 2c07d9
+14*280ffc 280fc9 350bfd 2417fd 13*280ffc 280fc9 300bfd 2517fd
+13*280ffc 280fc9 310bfd 2517fd 13*280ffc 280fc9 320bfd 2517fd
+13*280ffc 280fc9 330bfd 2517fd 13*280ffc 280fc9 340bfd 2517fd
+13*280ffc 280fc9 2d07d9 14*280ffc 280fc9 300bfd 14*280ffc 280fc9
+310bfd 14*280ffc 280fc9 320bfd 14*280ffc 280fc9 330bfd 14*280ffc
+280fc9 340bfd 14*280ffc 280fc9 350bfd 14*280ffc 280fc9 380fd9
+14*280ffc 280fc9 330bfd 2117fd 320bfd 2017fd 11*280ffc 280fc9
+310bfd 2317fd 300bfd 2217fd 11*280ffc 280fc9 2907d9 2807d9
+13*280ffc 280fc9 2b07d9 2a07d9 13*280ffc 280fc9 380fdf 14*280ffc
+280fc9 423fd 14*280ffc 280fc9 380fd9 423fd 13*280ffc 280fc9
+523fd 14*280ffc 280fc9 380fd9 523fd 13*280ffc 280fc9 23fd
+14*280ffc 280fc9 380fd9 23fd 13*280ffc 280fc9 123fd 14*280ffc
+280fc9 380fd9 123fd 13*280ffc 280fc9 223fd 14*280ffc 280fc9
+380fd9 223fd 13*280ffc 280fc9 323fd 14*280ffc 280fc9 380fd9
+323fd 13*280ffc 280fc9 433fd 14*280ffc 280fc9 380fd9 433fd
+13*280ffc 280fc9 533fd 14*280ffc 280fc9 380fd9 533fd 13*280ffc
+280fc9 33fd 14*280ffc 280fc9 380fd9 33fd 13*280ffc 280fc9
+133fd 14*280ffc 280fc9 380fd9 133fd 13*280ffc 280fc9 233fd
+14*280ffc 280fc9 380fd9 233fd 13*280ffc 280fc9 333fd 14*280ffc
+280fc9 380fd9 333fd 13*280ffc 280fc9 443fd 14*280ffc 280fc9
+380fd9 443fd 13*280ffc 280fc9 543fd 14*280ffc 280fc9 380fd9
+543fd 13*280ffc 280fc9 43fd 14*280ffc 280fc9 380fd9 43fd
+13*280ffc 280fc9 143fd 14*280ffc 280fc9 380fd9 143fd 13*280ffc
+280fc9 243fd 14*280ffc 280fc9 380fd9 243fd 13*280ffc 280fc9
+343fd 14*280ffc 280fc9 380fd9 343fd 13*280ffc 280fc9 453fd
+14*280ffc 280fc9 380fd9 453fd 13*280ffc 280fc9 553fd 14*280ffc
+280fc9 380fd9 553fd 13*280ffc 280fc9 53fd 14*280ffc 280fc9
+380fd9 53fd 13*280ffc 280fc9 153fd 14*280ffc 280fc9 380fd9
+153fd 13*280ffc 280fc9 253fd 14*280ffc 280fc9 380fd9 253fd
+13*280ffc 280fc9 353fd 14*280ffc 280fc9 380fd9 353fd 13*280ffc
+280fc9 43bfd 14*280ffc 280fc9 380fd9 43bfd 13*280ffc 280fc9
+53bfd 14*280ffc 280fc9 380fd9 53bfd 13*280ffc 280fc9 3bfd
+14*280ffc 280fc9 380fd9 3bfd 13*280ffc 280fc9 13bfd 14*280ffc
+280fc9 380fd9 13bfd 13*280ffc 280fc9 23bfd 14*280ffc 280fc9
+380fd9 23bfd 13*280ffc 280fc9 33bfd 14*280ffc 280fc9 380fd9
+33bfd 13*280ffc 280fc9 463fd 14*280ffc 280fc9 380fd9 463fd
+13*280ffc 280fc9 563fd 14*280ffc 280fc9 380fd9 563fd 13*280ffc
+280fc9 63fd 14*280ffc 280fc9 380fd9 63fd 13*280ffc 280fc9
+163fd 14*280ffc 280fc9 380fd9 163fd 13*280ffc 280fc9 263fd
+14*280ffc 280fc9 380fd9 263fd 13*280ffc 280fc9 363fd 14*280ffc
+280fc9 380fd9 363fd 13*280ffc 280fc9 473fd 14*280ffc 280fc9
+380fd9 473fd 13*280ffc 280fc9 573fd 14*280ffc 280fc9 380fd9
+573fd 13*280ffc 280fc9 73fd 14*280ffc 280fc9 380fd9 73fd
+13*280ffc 280fc9 173fd 14*280ffc 280fc9 380fd9 173fd 13*280ffc
+280fc9 273fd 14*280ffc 280fc9 380fd9 273fd 13*280ffc 280fc9
+373fd 14*280ffc 280fc9 380fd9 373fd 13*280ffc 280fc9 483fd
+14*280ffc 280fc9 380fd9 483fd 13*280ffc 280fc9 583fd 14*280ffc
+280fc9 380fd9 583fd 13*280ffc 280fc9 83fd 14*280ffc 280fc9
+380fd9 83fd 13*280ffc 280fc9 183fd 14*280ffc 280fc9 380fd9
+183fd 13*280ffc 280fc9 283fd 14*280ffc 280fc9 380fd9 283fd
+13*280ffc 280fc9 383fd 14*280ffc 280fc9 380fd9 383fd 13*280ffc
+280fc9 4d3fd 4e3fd 13*280ffc 280fc9 5d3fd 5e3fd 13*280ffc
+280fc9 d3fd e3fd 13*280ffc 280fc9 1d3fd 1e3fd 13*280ffc
+280fc9 2d3fd 2e3fd 13*280ffc 280fc9 3d3fd 3e3fd 13*280ffc
+176*280ffd 280fc9 310bfd 123fd 300bfd 43fd 11*280ffc 280fc9
+330bfd 123fd 320bfd 43fd 11*280ffc 280fc9 380fd9 123fd
+380fd9 43fd 11*280ffc 16*280ffd 280fc9 310bfd 323fd 300bfd
+243fd 11*280ffc 280fc9 330bfd 323fd 320bfd 243fd 11*280ffc
+144*280ffd 280fc9 4a3fd 14*280ffc 280fc9 5a3fd 14*280ffc 280fc9
+1a3fd 93fd 13*280ffc 280fc9 3a3fd 293fd 13*280ffc 280fc9
+4b3fd 14*280ffc 280fc9 5b3fd 14*280ffc 280fc9 1b3fd c3fd
+13*280ffc 280fc9 3b3fd 2c3fd 13*280ffc 128*280ffd 280fc9 280dd9
+280ed9 13*280ffc 280fc9 2109fd 200afd 13*280ffc 280fc9 2309fd
+220afd 13*280ffc 280fc9 2709fd 260afd 13*280ffc 280fc9 380fd9
+2129fd 209afd 12*280ffc 280fc9 380fd9 2329fd 229afd 12*280ffc
+280fc9 380fd9 2729fd 269afd 12*280ffc 280fc9 380fd9 2129fd
+380fd9 204afd 11*280ffc 280fc9 380fd9 2329fd 380fd9 224afd
+11*280ffc 280fc9 380fd9 2729fd 380fd9 264afd 11*280ffc 280fc9
+340bfd 2129fd 209afd 12*280ffc 280fc9 340bfd 2329fd 229afd
+12*280ffc 280fc9 340bfd 2729fd 269afd 12*280ffc 280fc9 350bfd
+2129fd 209afd 12*280ffc 280fc9 350bfd 2329fd 229afd 12*280ffc
+280fc9 350bfd 2729fd 269afd 12*280ffc 280fc9 370bfd 2129fd
+360bfd 204afd 11*280ffc 280fc9 370bfd 2329fd 360bfd 224afd
+11*280ffc 280fc9 310bfd 2329fd 300bfd 224afd 11*280ffc 280fc9
+380f5f 280edf 201dfd 12*280ffc 280fc9 280dd9 280ed9 280ff7
+12*280ffc 280fc9 280ff7 14*280ffc 280fc9 280dd9 280ed9 13*280ffc
+280fc9 15*280ffc 280fc9 280dd9 280ed9 280ff7 12*280ffc 280fc9
+280ff7 14*280ffc 280fc9 280dd9 280ed9 280ff7 12*280ffc 280fc9
+280ff7 14*280ffc 280fc9 280dd9 280ed9 13*280ffc 280fc9 15*280ffc
+280fc9 27a1fd 2692fd 380fdf 27a1fd 2692fd 280edf 201dfd
+280ff7 7*280ffc 280fc9 380fd9 201fbf 13*280ffc 280fc9 2c07df
+14*280ffc 280fc9 2d07df 14*280ffc 280fc9 2907df 280f7d 2807df
+12*280ffc 280fc9 2b07df 280f7d 2a07df 12*280ffc 280fc9 2807df
+14*280ffc 280fc9 2907df 14*280ffc 280fc9 2a07df 14*280ffc 280fc9
+2b07df 14*280ffc 280fc9 240bbf 14*280ffc 280fc9 250bbf 14*280ffc
+280fc9 210bbf 280f7d 200bbf 12*280ffc 280fc9 230bbf 280f7d
+220bbf 12*280ffc 280fc9 200bbf 14*280ffc 280fc9 210bbf 14*280ffc
+280fc9 220bbf 14*280ffc 280fc9 230bbf 14*280ffc 280fc9 2709fd
+260afd 240bbf 27b3fd 26c3fd 10*280ffc 280fc9 2709fd 260afd
+250bbf 27b3fd 26c3fd 10*280ffc 280fc9 2709fd 260afd 200bbf
+27b1fd 26c2fd 210bbf 27b3fd 26c3fd 7*280ffc 280fc9 2709fd
+260afd 220bbf 27b1fd 26c2fd 230bbf 27b3fd 26c3fd 7*280ffc
+280fc9 27a1fd 2692fd 2c07df 12*280ffc 280fc9 27a1fd 2692fd
+2d07df 12*280ffc 280fc9 27a1fd 2692fd 2907df 27a1fd 2692fd
+2807df 9*280ffc 280fc9 27a1fd 2692fd 2b07df 27a1fd 2692fd
+2a07df 9*280ffc 280fc9 380fd9 2709fd 260afd 201fbf 380fd9
+27b1fd 26c2fd 201fbf 27b1fd 26c2fd 5*280ffc 280fc9 310bfd
+2717fd 300bfd 2617fd 11*280ffc 280fc9 330bfd 2717fd 320bfd
+2617fd 11*280ffc 280fc9 370bfd 2117fd 360bfd 2017fd 11*280ffc
+280fc9 370bfd 2317fd 360bfd 2217fd 11*280ffc 48*280ffd 280fc9
+2807d9 14*280ffc 280fc9 310bfd 2017fd 13*280ffc 280fc9 320bfd
+2017fd 13*280ffc 280fc9 330bfd 2017fd 13*280ffc 280fc9 340bfd
+2017fd 13*280ffc 280fc9 350bfd 2017fd 13*280ffc 280fc9 300bfd
+2117fd 13*280ffc 280fc9 2907d9 14*280ffc 280fc9 320bfd 2117fd
+13*280ffc 280fc9 330bfd 2117fd 13*280ffc 280fc9 340bfd 2117fd
+13*280ffc 280fc9 350bfd 2117fd 13*280ffc 280fc9 300bfd 2217fd
+13*280ffc 280fc9 310bfd 2217fd 13*280ffc 280fc9 2a07d9 14*280ffc
+280fc9 330bfd 2217fd 13*280ffc 280fc9 340bfd 2217fd 13*280ffc
+280fc9 350bfd 2217fd 13*280ffc 280fc9 300bfd 2317fd 13*280ffc
+280fc9 310bfd 2317fd 13*280ffc 280fc9 320bfd 2317fd 13*280ffc
+280fc9 2b07d9 14*280ffc 280fc9 340bfd 2317fd 13*280ffc 280fc9
+350bfd 2317fd 13*280ffc 280fc9 300bfd 2417fd 13*280ffc 280fc9
+310bfd 2417fd 13*280ffc 280fc9 320bfd 2417fd 13*280ffc 280fc9
+330bfd 2417fd 13*280ffc 280fc9 2c07d9 14*280ffc 280fc9 350bfd
+2417fd 13*280ffc 280fc9 300bfd 2517fd 13*280ffc 280fc9 310bfd
+2517fd 13*280ffc 280fc9 320bfd 2517fd 13*280ffc 280fc9 330bfd
+2517fd 13*280ffc 280fc9 340bfd 2517fd 13*280ffc 280fc9 2d07d9
+14*280ffc 280fc9 300bfd 14*280ffc 280fc9 310bfd 14*280ffc 280fc9
+320bfd 14*280ffc 280fc9 330bfd 14*280ffc 280fc9 340bfd 14*280ffc
+280fc9 350bfd 14*280ffc 280fc9 380fd9 14*280ffc 280fc9 330bfd
+2117fd 320bfd 2017fd 11*280ffc 280fc9 310bfd 2317fd 300bfd
+2217fd 11*280ffc 280fc9 2907d9 2807d9 13*280ffc 280fc9 2b07d9
+2a07d9 13*280ffc 280fc9 380fdf 14*280ffc 280fc9 423fd 14*280ffc
+280fc9 380fd9 423fd 13*280ffc 280fc9 523fd 14*280ffc 280fc9
+380fd9 523fd 13*280ffc 280fc9 23fd 14*280ffc 280fc9 380fd9
+23fd 13*280ffc 280fc9 123fd 14*280ffc 280fc9 380fd9 123fd
+13*280ffc 280fc9 223fd 14*280ffc 280fc9 380fd9 223fd 13*280ffc
+280fc9 323fd 14*280ffc 280fc9 380fd9 323fd 13*280ffc 280fc9
+433fd 14*280ffc 280fc9 380fd9 433fd 13*280ffc 280fc9 533fd
+14*280ffc 280fc9 380fd9 533fd 13*280ffc 280fc9 33fd 14*280ffc
+280fc9 380fd9 33fd 13*280ffc 280fc9 133fd 14*280ffc 280fc9
+380fd9 133fd 13*280ffc 280fc9 233fd 14*280ffc 280fc9 380fd9
+233fd 13*280ffc 280fc9 333fd 14*280ffc 280fc9 380fd9 333fd
+13*280ffc 280fc9 443fd 14*280ffc 280fc9 380fd9 443fd 13*280ffc
+280fc9 543fd 14*280ffc 280fc9 380fd9 543fd 13*280ffc 280fc9
+43fd 14*280ffc 280fc9 380fd9 43fd 13*280ffc 280fc9 143fd
+14*280ffc 280fc9 380fd9 143fd 13*280ffc 280fc9 243fd 14*280ffc
+280fc9 380fd9 243fd 13*280ffc 280fc9 343fd 14*280ffc 280fc9
+380fd9 343fd 13*280ffc 280fc9 453fd 14*280ffc 280fc9 380fd9
+453fd 13*280ffc 280fc9 553fd 14*280ffc 280fc9 380fd9 553fd
+13*280ffc 280fc9 53fd 14*280ffc 280fc9 380fd9 53fd 13*280ffc
+280fc9 153fd 14*280ffc 280fc9 380fd9 153fd 13*280ffc 280fc9
+253fd 14*280ffc 280fc9 380fd9 253fd 13*280ffc 280fc9 353fd
+14*280ffc 280fc9 380fd9 353fd 13*280ffc 280fc9 43bfd 14*280ffc
+280fc9 380fd9 43bfd 13*280ffc 280fc9 53bfd 14*280ffc 280fc9
+380fd9 53bfd 13*280ffc 280fc9 3bfd 14*280ffc 280fc9 380fd9
+3bfd 13*280ffc 280fc9 13bfd 14*280ffc 280fc9 380fd9 13bfd
+13*280ffc 280fc9 23bfd 14*280ffc 280fc9 380fd9 23bfd 13*280ffc
+280fc9 33bfd 14*280ffc 280fc9 380fd9 33bfd 13*280ffc 280fc9
+463fd 14*280ffc 280fc9 380fd9 463fd 13*280ffc 280fc9 563fd
+14*280ffc 280fc9 380fd9 563fd 13*280ffc 280fc9 63fd 14*280ffc
+280fc9 380fd9 63fd 13*280ffc 280fc9 163fd 14*280ffc 280fc9
+380fd9 163fd 13*280ffc 280fc9 263fd 14*280ffc 280fc9 380fd9
+263fd 13*280ffc 280fc9 363fd 14*280ffc 280fc9 380fd9 363fd
+13*280ffc 280fc9 473fd 14*280ffc 280fc9 380fd9 473fd 13*280ffc
+280fc9 573fd 14*280ffc 280fc9 380fd9 573fd 13*280ffc 280fc9
+73fd 14*280ffc 280fc9 380fd9 73fd 13*280ffc 280fc9 173fd
+14*280ffc 280fc9 380fd9 173fd 13*280ffc 280fc9 273fd 14*280ffc
+280fc9 380fd9 273fd 13*280ffc 280fc9 373fd 14*280ffc 280fc9
+380fd9 373fd 13*280ffc 280fc9 483fd 14*280ffc 280fc9 380fd9
+483fd 13*280ffc 280fc9 583fd 14*280ffc 280fc9 380fd9 583fd
+13*280ffc 280fc9 83fd 14*280ffc 280fc9 380fd9 83fd 13*280ffc
+280fc9 183fd 14*280ffc 280fc9 380fd9 183fd 13*280ffc 280fc9
+283fd 14*280ffc 280fc9 380fd9 283fd 13*280ffc 280fc9 383fd
+14*280ffc 280fc9 380fd9 383fd 13*280ffc 280fc9 4d3fd 4e3fd
+13*280ffc 280fc9 5d3fd 5e3fd 13*280ffc 280fc9 d3fd e3fd
+13*280ffc 280fc9 1d3fd 1e3fd 13*280ffc 280fc9 2d3fd 2e3fd
+13*280ffc 280fc9 3d3fd 3e3fd 13*280ffc 176*280ffd 280fc9 310bfd
+123fd 300bfd 43fd 11*280ffc 280fc9 330bfd 123fd 320bfd
+43fd 11*280ffc 280fc9 380fd9 123fd 380fd9 43fd 11*280ffc
+16*280ffd 280fc9 310bfd 323fd 300bfd 243fd 11*280ffc 280fc9
+330bfd 323fd 320bfd 243fd 11*280ffc 144*280ffd 280fc9 4a3fd
+14*280ffc 280fc9 5a3fd 14*280ffc 280fc9 1a3fd 93fd 13*280ffc
+280fc9 3a3fd 293fd 13*280ffc 280fc9 4b3fd 14*280ffc 280fc9
+5b3fd 14*280ffc 280fc9 1b3fd c3fd 13*280ffc 280fc9 3b3fd
+2c3fd 13*280ffc 128*280ffd 280fc9 280dd9 280ed9 13*280ffc 280fc9
+2109fd 200afd 13*280ffc 280fc9 2309fd 220afd 13*280ffc 280fc9
+2709fd 260afd 13*280ffc 280fc9 380fd9 2129fd 209afd 12*280ffc
+280fc9 380fd9 2329fd 229afd 12*280ffc 280fc9 380fd9 2729fd
+269afd 12*280ffc 280fc9 380fd9 2129fd 380fd9 204afd 11*280ffc
+280fc9 380fd9 2329fd 380fd9 224afd 11*280ffc 280fc9 380fd9
+2729fd 380fd9 264afd 11*280ffc 280fc9 340bfd 2129fd 209afd
+12*280ffc 280fc9 340bfd 2329fd 229afd 12*280ffc 280fc9 340bfd
+2729fd 269afd 12*280ffc 280fc9 350bfd 2129fd 209afd 12*280ffc
+280fc9 350bfd 2329fd 229afd 12*280ffc 280fc9 350bfd 2729fd
+269afd 12*280ffc 280fc9 370bfd 2129fd 360bfd 204afd 11*280ffc
+280fc9 370bfd 2329fd 360bfd 224afd 11*280ffc 280fc9 310bfd
+2329fd 300bfd 224afd 11*280ffc 280fc9 380f5f 280edf 201dfd
+12*280ffc 280fc9 280dd9 280ed9 280ff7 12*280ffc 280fc9 280ff7
+14*280ffc 280fc9 280dd9 280ed9 280ff7 12*280ffc 280fc9 280ff7
+14*280ffc 280fc9 280dd9 280ed9 13*280ffc 280fc9 15*280ffc 280fc9
+280dd9 280ed9 280ff7 12*280ffc 280fc9 280ff7 14*280ffc 280fc9
+280dd9 280ed9 13*280ffc 280fc9 15*280ffc 280fc9 27a1fd 2692fd
+380fdf 27a1fd 2692fd 280edf 201dfd 280ff7 7*280ffc 280fc9
+380fd9 201fbf 13*280ffc 280fc9 2c07df 14*280ffc 280fc9 2d07df
+14*280ffc 280fc9 2907df 280f7d 2807df 12*280ffc 280fc9 2b07df
+280f7d 2a07df 12*280ffc 280fc9 2807df 14*280ffc 280fc9 2907df
+14*280ffc 280fc9 2a07df 14*280ffc 280fc9 2b07df 14*280ffc 280fc9
+240bbf 14*280ffc 280fc9 250bbf 14*280ffc 280fc9 210bbf 280f7d
+200bbf 12*280ffc 280fc9 230bbf 280f7d 220bbf 12*280ffc 280fc9
+200bbf 14*280ffc 280fc9 210bbf 14*280ffc 280fc9 220bbf 14*280ffc
+280fc9 230bbf 14*280ffc 280fc9 2709fd 260afd 240bbf 27b3fd
+26c3fd 10*280ffc 280fc9 2709fd 260afd 250bbf 27b3fd 26c3fd
+10*280ffc 280fc9 2709fd 260afd 200bbf 27b1fd 26c2fd 210bbf
+27b3fd 26c3fd 7*280ffc 280fc9 2709fd 260afd 220bbf 27b1fd
+26c2fd 230bbf 27b3fd 26c3fd 7*280ffc 280fc9 27a1fd 2692fd
+2c07df 12*280ffc 280fc9 27a1fd 2692fd 2d07df 12*280ffc 280fc9
+27a1fd 2692fd 2907df 27a1fd 2692fd 2807df 9*280ffc 280fc9
+27a1fd 2692fd 2b07df 27a1fd 2692fd 2a07df 9*280ffc 280fc9
+380fd9 2709fd 260afd 201fbf 380fd9 27b1fd 26c2fd 201fbf
+27b1fd 26c2fd 5*280ffc 280fc9 310bfd 2717fd 300bfd 2617fd
+11*280ffc 280fc9 330bfd 2717fd 320bfd 2617fd 11*280ffc 280fc9
+370bfd 2117fd 360bfd 2017fd 11*280ffc 280fc9 370bfd 2317fd
+360bfd 2217fd 11*280ffc 48*280ffd 280fc9 2807d9 14*280ffc 280fc9
+310bfd 2017fd 13*280ffc 280fc9 320bfd 2017fd 13*280ffc 280fc9
+330bfd 2017fd 13*280ffc 280fc9 340bfd 2017fd 13*280ffc 280fc9
+350bfd 2017fd 13*280ffc 280fc9 300bfd 2117fd 13*280ffc 280fc9
+2907d9 14*280ffc 280fc9 320bfd 2117fd 13*280ffc 280fc9 330bfd
+2117fd 13*280ffc 280fc9 340bfd 2117fd 13*280ffc 280fc9 350bfd
+2117fd 13*280ffc 280fc9 300bfd 2217fd 13*280ffc 280fc9 310bfd
+2217fd 13*280ffc 280fc9 2a07d9 14*280ffc 280fc9 330bfd 2217fd
+13*280ffc 280fc9 340bfd 2217fd 13*280ffc 280fc9 350bfd 2217fd
+13*280ffc 280fc9 300bfd 2317fd 13*280ffc 280fc9 310bfd 2317fd
+13*280ffc 280fc9 320bfd 2317fd 13*280ffc 280fc9 2b07d9 14*280ffc
+280fc9 340bfd 2317fd 13*280ffc 280fc9 350bfd 2317fd 13*280ffc
+280fc9 300bfd 2417fd 13*280ffc 280fc9 310bfd 2417fd 13*280ffc
+280fc9 320bfd 2417fd 13*280ffc 280fc9 330bfd 2417fd 13*280ffc
+280fc9 2c07d9 14*280ffc 280fc9 350bfd 2417fd 13*280ffc 280fc9
+300bfd 2517fd 13*280ffc 280fc9 310bfd 2517fd 13*280ffc 280fc9
+320bfd 2517fd 13*280ffc 280fc9 330bfd 2517fd 13*280ffc 280fc9
+340bfd 2517fd 13*280ffc 280fc9 2d07d9 14*280ffc 280fc9 300bfd
+14*280ffc 280fc9 310bfd 14*280ffc 280fc9 320bfd 14*280ffc 280fc9
+330bfd 14*280ffc 280fc9 340bfd 14*280ffc 280fc9 350bfd 14*280ffc
+280fc9 380fd9 14*280ffc 280fc9 330bfd 2117fd 320bfd 2017fd
+11*280ffc 280fc9 310bfd 2317fd 300bfd 2217fd 11*280ffc 280fc9
+2907d9 2807d9 13*280ffc 280fc9 2b07d9 2a07d9 13*280ffc 280fc9
+380fdf 14*280ffc 280fc9 423fd 14*280ffc 280fc9 380fd9 423fd
+13*280ffc 280fc9 523fd 14*280ffc 280fc9 380fd9 523fd 13*280ffc
+280fc9 23fd 14*280ffc 280fc9 380fd9 23fd 13*280ffc 280fc9
+123fd 14*280ffc 280fc9 380fd9 123fd 13*280ffc 280fc9 223fd
+14*280ffc 280fc9 380fd9 223fd 13*280ffc 280fc9 323fd 14*280ffc
+280fc9 380fd9 323fd 13*280ffc 280fc9 433fd 14*280ffc 280fc9
+380fd9 433fd 13*280ffc 280fc9 533fd 14*280ffc 280fc9 380fd9
+533fd 13*280ffc 280fc9 33fd 14*280ffc 280fc9 380fd9 33fd
+13*280ffc 280fc9 133fd 14*280ffc 280fc9 380fd9 133fd 13*280ffc
+280fc9 233fd 14*280ffc 280fc9 380fd9 233fd 13*280ffc 280fc9
+333fd 14*280ffc 280fc9 380fd9 333fd 13*280ffc 280fc9 443fd
+14*280ffc 280fc9 380fd9 443fd 13*280ffc 280fc9 543fd 14*280ffc
+280fc9 380fd9 543fd 13*280ffc 280fc9 43fd 14*280ffc 280fc9
+380fd9 43fd 13*280ffc 280fc9 143fd 14*280ffc 280fc9 380fd9
+143fd 13*280ffc 280fc9 243fd 14*280ffc 280fc9 380fd9 243fd
+13*280ffc 280fc9 343fd 14*280ffc 280fc9 380fd9 343fd 13*280ffc
+280fc9 453fd 14*280ffc 280fc9 380fd9 453fd 13*280ffc 280fc9
+553fd 14*280ffc 280fc9 380fd9 553fd 13*280ffc 280fc9 53fd
+14*280ffc 280fc9 380fd9 53fd 13*280ffc 280fc9 153fd 14*280ffc
+280fc9 380fd9 153fd 13*280ffc 280fc9 253fd 14*280ffc 280fc9
+380fd9 253fd 13*280ffc 280fc9 353fd 14*280ffc 280fc9 380fd9
+353fd 13*280ffc 280fc9 43bfd 14*280ffc 280fc9 380fd9 43bfd
+13*280ffc 280fc9 53bfd 14*280ffc 280fc9 380fd9 53bfd 13*280ffc
+280fc9 3bfd 14*280ffc 280fc9 380fd9 3bfd 13*280ffc 280fc9
+13bfd 14*280ffc 280fc9 380fd9 13bfd 13*280ffc 280fc9 23bfd
+14*280ffc 280fc9 380fd9 23bfd 13*280ffc 280fc9 33bfd 14*280ffc
+280fc9 380fd9 33bfd 13*280ffc 280fc9 463fd 14*280ffc 280fc9
+380fd9 463fd 13*280ffc 280fc9 563fd 14*280ffc 280fc9 380fd9
+563fd 13*280ffc 280fc9 63fd 14*280ffc 280fc9 380fd9 63fd
+13*280ffc 280fc9 163fd 14*280ffc 280fc9 380fd9 163fd 13*280ffc
+280fc9 263fd 14*280ffc 280fc9 380fd9 263fd 13*280ffc 280fc9
+363fd 14*280ffc 280fc9 380fd9 363fd 13*280ffc 280fc9 473fd
+14*280ffc 280fc9 380fd9 473fd 13*280ffc 280fc9 573fd 14*280ffc
+280fc9 380fd9 573fd 13*280ffc 280fc9 73fd 14*280ffc 280fc9
+380fd9 73fd 13*280ffc 280fc9 173fd 14*280ffc 280fc9 380fd9
+173fd 13*280ffc 280fc9 273fd 14*280ffc 280fc9 380fd9 273fd
+13*280ffc 280fc9 373fd 14*280ffc 280fc9 380fd9 373fd 13*280ffc
+280fc9 483fd 14*280ffc 280fc9 380fd9 483fd 13*280ffc 280fc9
+583fd 14*280ffc 280fc9 380fd9 583fd 13*280ffc 280fc9 83fd
+14*280ffc 280fc9 380fd9 83fd 13*280ffc 280fc9 183fd 14*280ffc
+280fc9 380fd9 183fd 13*280ffc 280fc9 283fd 14*280ffc 280fc9
+380fd9 283fd 13*280ffc 280fc9 383fd 14*280ffc 280fc9 380fd9
+383fd 13*280ffc 280fc9 4d3fd 4e3fd 13*280ffc 280fc9 5d3fd
+5e3fd 13*280ffc 280fc9 d3fd e3fd 13*280ffc 280fc9 1d3fd
+1e3fd 13*280ffc 280fc9 2d3fd 2e3fd 13*280ffc 280fc9 3d3fd
+3e3fd 13*280ffc 176*280ffd 280fc9 310bfd 123fd 300bfd 43fd
+11*280ffc 280fc9 330bfd 123fd 320bfd 43fd 11*280ffc 280fc9
+380fd9 123fd 380fd9 43fd 11*280ffc 16*280ffd 280fc9 310bfd
+323fd 300bfd 243fd 11*280ffc 280fc9 330bfd 323fd 320bfd
+243fd 11*280ffc 144*280ffd 280fc9 4a3fd 14*280ffc 280fc9 5a3fd
+14*280ffc 280fc9 1a3fd 93fd 13*280ffc 280fc9 3a3fd 293fd
+13*280ffc 280fc9 4b3fd 14*280ffc 280fc9 5b3fd 14*280ffc 280fc9
+1b3fd c3fd 13*280ffc 280fc9 3b3fd 2c3fd 13*280ffc 128*280ffd
 </a>
     </comp>
     <comp lib="0" loc="(1070,1710)" name="Tunnel">
@@ -1502,9 +1518,6 @@
     </comp>
     <comp lib="0" loc="(1170,320)" name="Tunnel">
       <a name="label" val="xwr"/>
-    </comp>
-    <comp lib="0" loc="(380,230)" name="Tunnel">
-      <a name="label" val="CK1"/>
     </comp>
     <comp lib="0" loc="(940,1440)" name="Splitter">
       <a name="facing" val="west"/>
@@ -1534,6 +1547,11 @@
       <a name="label" val="A"/>
       <a name="labelfont" val="SansSerif plain 10"/>
     </comp>
+    <comp lib="0" loc="(140,390)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="16"/>
+      <a name="label" val="A"/>
+    </comp>
     <comp lib="0" loc="(180,490)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="width" val="8"/>
@@ -1543,18 +1561,15 @@
       <a name="facing" val="east"/>
       <a name="label" val="RESET"/>
     </comp>
-    <comp lib="5" loc="(120,170)" name="LED">
-      <a name="facing" val="east"/>
-      <a name="color" val="#f00b00"/>
-      <a name="label" val="Halted"/>
-      <a name="labelloc" val="west"/>
-    </comp>
     <comp lib="0" loc="(1090,1750)" name="Tunnel">
       <a name="label" val="slwr"/>
     </comp>
     <comp lib="4" loc="(760,1270)" name="Counter">
       <a name="width" val="4"/>
       <a name="max" val="0xf"/>
+    </comp>
+    <comp lib="0" loc="(1170,1340)" name="Tunnel">
+      <a name="label" val="!msel"/>
     </comp>
     <comp lib="0" loc="(620,320)" name="Tunnel">
       <a name="facing" val="east"/>
@@ -1575,21 +1590,24 @@
     <comp lib="0" loc="(1740,290)" name="Tunnel">
       <a name="label" val="!setflags"/>
     </comp>
+    <comp lib="0" loc="(1170,120)" name="Tunnel">
+      <a name="label" val="MWR"/>
+    </comp>
     <comp lib="0" loc="(1410,210)" name="Tunnel">
       <a name="label" val="CHWR"/>
     </comp>
     <comp lib="0" loc="(1410,230)" name="Tunnel">
       <a name="label" val="nCHOE"/>
     </comp>
-    <comp lib="0" loc="(130,420)" name="Probe">
-      <a name="facing" val="west"/>
-      <a name="radix" val="16"/>
-      <a name="labelloc" val="north"/>
-    </comp>
     <comp lib="0" loc="(130,520)" name="Probe">
       <a name="facing" val="west"/>
       <a name="radix" val="16"/>
       <a name="labelloc" val="north"/>
+    </comp>
+    <comp lib="0" loc="(140,450)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="8"/>
+      <a name="label" val="M"/>
     </comp>
     <comp lib="1" loc="(860,560)" name="Controlled Buffer">
       <a name="width" val="8"/>
@@ -1624,19 +1642,22 @@
     <comp lib="0" loc="(1800,310)" name="Tunnel">
       <a name="label" val="CarryFlag"/>
     </comp>
+    <comp lib="0" loc="(140,390)" name="Probe">
+      <a name="facing" val="west"/>
+      <a name="radix" val="16"/>
+      <a name="labelloc" val="north"/>
+    </comp>
     <comp lib="0" loc="(540,490)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="RESET"/>
     </comp>
     <comp lib="0" loc="(700,1280)" name="Constant"/>
-    <comp lib="0" loc="(130,450)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="16"/>
-      <a name="label" val="A"/>
-    </comp>
     <comp lib="0" loc="(690,670)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="CK1"/>
+    </comp>
+    <comp lib="6" loc="(150,361)" name="Text">
+      <a name="text" val="Debug"/>
     </comp>
     <comp lib="1" loc="(850,450)" name="AND Gate">
       <a name="size" val="30"/>
@@ -1653,6 +1674,11 @@
     </comp>
     <comp lib="0" loc="(1020,1560)" name="Tunnel">
       <a name="label" val="nBLOE"/>
+    </comp>
+    <comp lib="0" loc="(140,420)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="8"/>
+      <a name="label" val="T"/>
     </comp>
     <comp lib="0" loc="(1530,320)" name="Tunnel">
       <a name="label" val="slwr"/>
@@ -1697,6 +1723,10 @@
     <comp lib="1" loc="(1030,1710)" name="NOT Gate">
       <a name="size" val="20"/>
     </comp>
+    <comp lib="0" loc="(1260,1590)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="!regoe"/>
+    </comp>
     <comp lib="0" loc="(180,490)" name="Probe">
       <a name="facing" val="west"/>
       <a name="radix" val="16"/>
@@ -1704,9 +1734,6 @@
     </comp>
     <comp lib="0" loc="(1090,1570)" name="Tunnel">
       <a name="label" val="nCHOE"/>
-    </comp>
-    <comp lib="0" loc="(380,250)" name="Tunnel">
-      <a name="label" val="CK2"/>
     </comp>
     <comp lib="0" loc="(1530,230)" name="Tunnel">
       <a name="label" val="nCLOE"/>
@@ -1719,17 +1746,18 @@
       <a name="facing" val="east"/>
       <a name="label" val="CK2"/>
     </comp>
-    <comp lib="1" loc="(180,170)" name="NOT Gate">
-      <a name="facing" val="north"/>
-      <a name="size" val="20"/>
+    <comp lib="0" loc="(120,240)" name="Clock">
+      <a name="label" val="Ctrl + K"/>
     </comp>
-    <comp lib="0" loc="(950,1560)" name="Power"/>
     <comp lib="1" loc="(1030,1680)" name="NOT Gate">
       <a name="size" val="20"/>
     </comp>
     <comp lib="0" loc="(1580,520)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="CK2"/>
+    </comp>
+    <comp lib="0" loc="(300,230)" name="Tunnel">
+      <a name="label" val="CK1"/>
     </comp>
     <comp lib="6" loc="(742,1221)" name="Text">
       <a name="text" val="Sequencer"/>
@@ -1782,10 +1810,6 @@
     <comp lib="0" loc="(1230,1330)" name="Tunnel">
       <a name="label" val="!setflags"/>
     </comp>
-    <comp lib="1" loc="(310,230)" name="OR Gate">
-      <a name="size" val="30"/>
-      <a name="inputs" val="2"/>
-    </comp>
     <comp lib="0" loc="(730,440)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="romsel"/>
@@ -1816,6 +1840,10 @@
     <comp lib="1" loc="(1030,1720)" name="NOT Gate">
       <a name="size" val="20"/>
     </comp>
+    <comp lib="0" loc="(930,1690)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="!msel"/>
+    </comp>
     <comp lib="0" loc="(1580,540)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="twr"/>
@@ -1831,6 +1859,9 @@
     </comp>
     <comp lib="0" loc="(1100,1590)" name="Tunnel">
       <a name="label" val="!xoe"/>
+    </comp>
+    <comp lib="6" loc="(1337,80)" name="Text">
+      <a name="text" val="Registers"/>
     </comp>
     <comp lib="0" loc="(1020,420)" name="Tunnel">
       <a name="width" val="8"/>
@@ -1895,14 +1926,14 @@
       <a name="width" val="8"/>
       <a name="label" val="SH"/>
     </comp>
-    <comp lib="0" loc="(950,1690)" name="Power"/>
     <comp lib="1" loc="(880,830)" name="NOR Gate">
       <a name="size" val="30"/>
       <a name="inputs" val="2"/>
     </comp>
-    <comp lib="0" loc="(930,1700)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="label" val="CK1"/>
+    <comp lib="0" loc="(140,420)" name="Probe">
+      <a name="facing" val="west"/>
+      <a name="radix" val="16"/>
+      <a name="labelloc" val="north"/>
     </comp>
     <comp lib="0" loc="(1170,210)" name="Tunnel">
       <a name="label" val="BHWR"/>
@@ -1913,19 +1944,35 @@
       <a name="label" val="SL"/>
     </comp>
     <comp lib="0" loc="(1620,430)" name="Ground"/>
+    <comp lib="1" loc="(230,230)" name="OR Gate">
+      <a name="size" val="30"/>
+      <a name="inputs" val="2"/>
+    </comp>
     <comp lib="0" loc="(1640,410)" name="Tunnel">
       <a name="label" val="tclk"/>
     </comp>
     <comp loc="(1510,300)" name="reg8LR"/>
+    <comp lib="0" loc="(930,1560)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="!msel"/>
+    </comp>
     <comp lib="1" loc="(1620,530)" name="AND Gate">
       <a name="size" val="30"/>
       <a name="inputs" val="2"/>
+    </comp>
+    <comp lib="0" loc="(300,250)" name="Tunnel">
+      <a name="label" val="CK2"/>
     </comp>
     <comp lib="1" loc="(1030,1750)" name="NOT Gate">
       <a name="size" val="20"/>
     </comp>
     <comp lib="0" loc="(1150,1740)" name="Tunnel">
       <a name="label" val="shwr"/>
+    </comp>
+    <comp lib="0" loc="(140,450)" name="Probe">
+      <a name="facing" val="west"/>
+      <a name="radix" val="16"/>
+      <a name="labelloc" val="north"/>
     </comp>
     <comp lib="0" loc="(1180,190)" name="Tunnel">
       <a name="width" val="8"/>
@@ -1937,6 +1984,14 @@
     <comp lib="1" loc="(1030,1740)" name="NOT Gate">
       <a name="size" val="20"/>
     </comp>
+    <comp lib="0" loc="(1170,100)" name="Tunnel">
+      <a name="width" val="8"/>
+      <a name="label" val="M"/>
+    </comp>
+    <comp lib="0" loc="(1260,1570)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="!msel"/>
+    </comp>
     <comp loc="(1270,190)" name="reg8LR"/>
     <comp lib="0" loc="(1230,1190)" name="Tunnel">
       <a name="label" val="!ainc"/>
@@ -1947,10 +2002,6 @@
     <comp loc="(1350,540)" name="16BitCtrRegister"/>
     <comp lib="0" loc="(1140,1720)" name="Tunnel">
       <a name="label" val="xwr"/>
-    </comp>
-    <comp lib="0" loc="(170,250)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="label" val="!BRK"/>
     </comp>
     <comp lib="0" loc="(960,1770)" name="Tunnel">
       <a name="facing" val="east"/>
@@ -1973,6 +2024,7 @@
     <comp lib="0" loc="(1160,1220)" name="Tunnel">
       <a name="label" val="!regoe"/>
     </comp>
+    <comp loc="(1150,100)" name="reg8LR"/>
     <comp lib="0" loc="(1530,210)" name="Tunnel">
       <a name="label" val="CLWR"/>
     </comp>
@@ -2029,9 +2081,6 @@ c4 14 8a 0 6e e8 3 38
     <comp lib="0" loc="(890,830)" name="Tunnel">
       <a name="label" val="ramsel"/>
     </comp>
-    <comp lib="1" loc="(370,250)" name="NOT Gate">
-      <a name="size" val="20"/>
-    </comp>
     <comp lib="1" loc="(1240,660)" name="NOT Gate">
       <a name="size" val="20"/>
     </comp>
@@ -2050,9 +2099,6 @@ c4 14 8a 0 6e e8 3 38
       <a name="facing" val="east"/>
       <a name="width" val="8"/>
       <a name="label" val="SL"/>
-    </comp>
-    <comp lib="6" loc="(150,391)" name="Text">
-      <a name="text" val="Debug"/>
     </comp>
     <comp lib="0" loc="(1120,660)" name="Tunnel">
       <a name="facing" val="east"/>
@@ -2097,6 +2143,10 @@ c4 14 8a 0 6e e8 3 38
       <a name="radix" val="16"/>
       <a name="labelloc" val="north"/>
     </comp>
+    <comp lib="0" loc="(930,1710)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="CK1"/>
+    </comp>
     <comp lib="0" loc="(540,470)" name="Probe">
       <a name="radix" val="16"/>
       <a name="label" val="Data bus"/>
@@ -2112,18 +2162,20 @@ c4 14 8a 0 6e e8 3 38
     <comp lib="6" loc="(1010,1223)" name="Text">
       <a name="text" val="Decoder"/>
     </comp>
+    <comp lib="1" loc="(1400,1630)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
     <comp lib="0" loc="(1060,1690)" name="Tunnel">
       <a name="label" val="BLWR"/>
+    </comp>
+    <comp lib="1" loc="(1370,1630)" name="OR Gate">
+      <a name="size" val="30"/>
+      <a name="inputs" val="2"/>
     </comp>
     <comp lib="0" loc="(1230,1130)" name="Tunnel">
       <a name="label" val="aout"/>
     </comp>
     <comp lib="4" loc="(1010,420)" name="Register"/>
-    <comp lib="0" loc="(130,420)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="8"/>
-      <a name="label" val="T"/>
-    </comp>
     <comp lib="0" loc="(1750,350)" name="Tunnel">
       <a name="label" val="!alu"/>
     </comp>
@@ -2172,24 +2224,30 @@ c4 14 8a 0 6e e8 3 38
       <a name="size" val="30"/>
       <a name="inputs" val="2"/>
     </comp>
+    <comp lib="0" loc="(1310,1660)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="CK1"/>
+    </comp>
     <comp loc="(1160,520)" name="pc"/>
     <comp lib="0" loc="(1700,290)" name="Tunnel">
       <a name="facing" val="south"/>
       <a name="width" val="4"/>
       <a name="label" val="opsel"/>
     </comp>
-    <comp lib="0" loc="(180,550)" name="Probe">
-      <a name="facing" val="west"/>
-      <a name="radix" val="16"/>
-      <a name="labelloc" val="north"/>
+    <comp lib="1" loc="(1330,1620)" name="OR Gate">
+      <a name="size" val="30"/>
+      <a name="inputs" val="2"/>
     </comp>
-    <comp lib="0" loc="(130,450)" name="Probe">
+    <comp lib="0" loc="(180,550)" name="Probe">
       <a name="facing" val="west"/>
       <a name="radix" val="16"/>
       <a name="labelloc" val="north"/>
     </comp>
     <comp lib="0" loc="(1080,1730)" name="Tunnel">
       <a name="label" val="ywr"/>
+    </comp>
+    <comp lib="0" loc="(1170,140)" name="Tunnel">
+      <a name="label" val="nMOE"/>
     </comp>
     <comp lib="1" loc="(950,430)" name="NOT Gate">
       <a name="size" val="20"/>
@@ -2198,22 +2256,25 @@ c4 14 8a 0 6e e8 3 38
       <a name="facing" val="east"/>
       <a name="label" val="!regoe"/>
     </comp>
-    <comp lib="0" loc="(1170,1340)" name="Tunnel">
-      <a name="label" val="!BRK"/>
-    </comp>
     <comp lib="0" loc="(950,450)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="CK1"/>
     </comp>
-    <comp lib="1" loc="(260,240)" name="AND Gate">
-      <a name="size" val="30"/>
-      <a name="inputs" val="2"/>
+    <comp lib="0" loc="(1410,1630)" name="Tunnel">
+      <a name="label" val="MWR"/>
+    </comp>
+    <comp lib="0" loc="(1350,1580)" name="Tunnel">
+      <a name="label" val="nMOE"/>
     </comp>
     <comp lib="0" loc="(1030,1580)" name="Tunnel">
       <a name="label" val="nCLOE"/>
     </comp>
     <comp lib="6" loc="(991,382)" name="Text">
       <a name="text" val="Instruction register"/>
+    </comp>
+    <comp lib="0" loc="(1260,1630)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="!regwr"/>
     </comp>
     <comp lib="0" loc="(1420,190)" name="Tunnel">
       <a name="width" val="8"/>
@@ -2222,9 +2283,6 @@ c4 14 8a 0 6e e8 3 38
     <comp lib="0" loc="(1420,300)" name="Tunnel">
       <a name="width" val="8"/>
       <a name="label" val="SH"/>
-    </comp>
-    <comp lib="6" loc="(1305,146)" name="Text">
-      <a name="text" val="Registers"/>
     </comp>
     <comp lib="0" loc="(960,1640)" name="Tunnel">
       <a name="facing" val="east"/>
@@ -2243,6 +2301,10 @@ c4 14 8a 0 6e e8 3 38
     <comp loc="(1000,1680)" name="74x138 decoder"/>
     <comp lib="0" loc="(1160,1200)" name="Tunnel">
       <a name="label" val="!ahwr"/>
+    </comp>
+    <comp lib="1" loc="(1330,1580)" name="OR Gate">
+      <a name="size" val="30"/>
+      <a name="inputs" val="2"/>
     </comp>
     <comp lib="0" loc="(1300,300)" name="Tunnel">
       <a name="width" val="8"/>

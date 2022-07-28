@@ -11,6 +11,7 @@ addrregs = ['b', 'c']
 
 REGS4 = ['x', 'y', 'b', 'c']
 REGS6 = ['x', 'y', 'bh', 'bl', 'ch', 'cl']
+REGS7 = ['x', 'y', 'bh', 'bl', 'ch', 'cl', 'm']
 
 class Token():
     def __init__(self, toktype, value):
@@ -38,7 +39,7 @@ class Tokeniser():
 
     def error(self, msg):
         print(msg)
-        sys.exit()
+        sys.exit(-1)
 
     def char(self):
         if self.pos >= len(self.str):
@@ -136,7 +137,7 @@ class Assembler():
 
     def error(self, msg):
         print(f"Error on line {self.line_num}: {msg}")
-        sys.exit()
+        sys.exit(-1)
 
     def write8(self, b):
         if self.pass1:
@@ -365,21 +366,39 @@ class Assembler():
                 self.write8(0x40 + 0x06*dest + src)
 
 
-
-    
     # ALU
 
     def get_alureg(self, reg):
-        return REGS6.index(reg)
+        return REGS7.index(reg)
 
-    def alu_common(self, base, ta, tb):
-        # accept 
-        # alu reg, t
-        # alu reg, #literal
-        # alu reg, m            -> ldt;             alu reg, t
-        # alu reg, reg2         -> mov t, reg2;     alu reg, t
-        # alu reg, [ADDR]       -> adr ADDR; ldt;   alu reg, t
+    def alu_common(self, base):
+        # first operand can be:
+        #  reg              
+        #  m
+        #  [ADDR]           -> adr ADDR;        alu m, *
+        # second operand can be:
+        #  t
+        #  #literal
+        #  m                -> ldt;             alu *, t
+        #  reg2             -> mov t, reg2;     alu *, t
+        #  [ADDR]           -> adr ADDR; ldt;   alu *, t
+        # both operands cannot be ADDR.
+
         lit = 0
+        dest_in_memory = 0
+
+        ta = self.tok.next()
+
+        if ta.type == 'symbol' and ta.value == '[':
+            self.gen_adr(self.tok.next())
+            self.tok.next() # eat ]
+            dest_in_memory = 1
+            op1 = 'm'
+        else:
+            op1 = ta.value
+
+        tb = self.tok.next()
+
         if tb.type == 'literal':
             lit = 1
         elif tb.type == 'text':
@@ -388,21 +407,25 @@ class Assembler():
             elif tb.value != 't':
                 self.movt_register(tb)
         elif tb.type == 'symbol' and tb.value == '[':
+            if dest_in_memory:
+                # This is not strictly true - some addressing modes do work
+                # But in general, the adr instruction clobbers t
+                self.error("Only one ALU operand can be an address.")
             self.gen_adr(self.tok.next())
             self.inst_ldt()
         else:
             self.error("Invalid ALU instruction.")
 
-        self.write8(base + 2*self.get_alureg(ta.value) + lit)
+        self.write8(base + 7*lit + self.get_alureg(op1))
         if lit:
             self.write8(self.get_literal8(tb))
 
     def arith_common(self, base):
-        ta = self.tok.next()
-        tb = self.tok.next()
-        if ta is None or tb is None:
-            self.error("ALU instructions require two operands.")
-        self.alu_common(base, ta, tb)
+        #ta = self.tok.next()
+        #tb = self.tok.next()
+        #if ta is None or tb is None:
+        #    self.error("ALU instructions require two operands.")
+        self.alu_common(base)
 
     def logic_common(self, base):
         self.arith_common(base)
@@ -410,26 +433,26 @@ class Assembler():
     def inst_add(self):
         self.arith_common(0x70)
     def inst_sub(self):
-        self.arith_common(0x7c)
+        self.arith_common(0x7e)
     def inst_adc(self):
-        self.arith_common(0x88)
+        self.arith_common(0x8c)
     def inst_sbc(self):
-        self.arith_common(0x94)
+        self.arith_common(0x9a)
     def inst_cmp(self):
-        self.arith_common(0xa0)
+        self.arith_common(0xa8)
 
     def inst_and(self):
-        self.logic_common(0xac)
+        self.logic_common(0xb6)
     def inst_or(self):
-        self.logic_common(0xb8)
-    def inst_xor(self):
         self.logic_common(0xc4)
+    def inst_xor(self):
+        self.logic_common(0xd2)
 
     def inst_ror(self):
         t = self.tok.next()
         if t.value not in REGS6:
             self.error("Invalid operand.")
-        self.write8(0xd0 + REGS6.index(t.value))        
+        self.write8(0xf8 + REGS6.index(t.value))        
 
     def inst_inc(self):
         t = self.tok.next()
