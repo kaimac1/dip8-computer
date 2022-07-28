@@ -4,7 +4,6 @@ flags = $4000
         mov b, $8000
         mov sp, b
 
-
         ; set all flags to true
         mov b, #flags
         mov c, #size
@@ -14,7 +13,6 @@ loop1   stl #1, b
         jnz loop1
         cmp ch, #0
         jnz loop1
-
 
         ;main loop
         mov c, #0

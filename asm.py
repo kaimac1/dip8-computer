@@ -206,44 +206,44 @@ class Assembler():
     def inst_push(self):
         t = self.tok.next()
         if is_literal(t):
-            self.write8(0x38)
+            self.write8(0x41)
             # push literal is big-endian
             value = self.get_literal16(t)
             self.write8(value >> 8)
             self.write8(value & 0xFF)
         else:
-            self.write8(0x30 + self.get_pushpopreg(t))
+            self.write8(0x39 + self.get_pushpopreg(t))
 
     def inst_pop(self):
         t = self.tok.next()
-        self.write8(0x34 + self.get_pushpopreg(t))
+        self.write8(0x3d + self.get_pushpopreg(t))
 
 
 
     # Branch
 
     def jump_common(self, base):
-        t = self.tok.next()
-        if t:
-            # address provided
-            self.write8(base)
-            self.write16(self.get_literal16(t))
-        else:
-            #use A address
-            self.write8(base + 1)
+        self.write8(base)
+        self.write16(self.get_literal16(self.tok.next()))
 
     def inst_jmp(self):
-        self.jump_common(0x14)
+        self.jump_common(0x30)
+    def inst_jmpa(self):
+        self.write8(0x31)
     def inst_jcs(self):
-        self.jump_common(0x16)
+        self.jump_common(0x32)
     def inst_jcc(self):
-        self.jump_common(0x18)
+        self.jump_common(0x33)
     def inst_jz(self):
-        self.jump_common(0x1a)
+        self.jump_common(0x34)
     def inst_jnz(self):
-        self.jump_common(0x1c)
+        self.jump_common(0x35)
+    def inst_js(self):
+        self.jump_common(0x36)
+    def inst_jns(self):
+        self.jump_common(0x37)
     def inst_ret(self):
-        self.write8(0x1e)
+        self.write8(0x38)
 
 
 
@@ -255,40 +255,42 @@ class Assembler():
             self.gen_adr(t)
         self.write8(base)
 
+    def inst_ldt(self):
+        self.write8(0x1e) # NOTE: should be ldst_common?
+
     def inst_ldx(self):
-        self.ldst_common(0x20)
+        self.ldst_common(0x1f)
     def inst_ldy(self):
-        self.ldst_common(0x21)
+        self.ldst_common(0x20)
     def inst_ldb(self):
-        self.ldst_common(0x22)
+        self.ldst_common(0x21)
     def inst_ldc(self):
-        self.ldst_common(0x23)
+        self.ldst_common(0x22)
     def inst_ldbh(self):
-        self.ldst_common(0x24)
+        self.ldst_common(0x23)
     def inst_ldbl(self):
-        self.ldst_common(0x25)
+        self.ldst_common(0x24)
     def inst_ldch(self):
-        self.ldst_common(0x26)
+        self.ldst_common(0x25)
     def inst_ldcl(self):
-        self.ldst_common(0x27)
+        self.ldst_common(0x26)
 
     def inst_stx(self):
-        self.ldst_common(0x28)
+        self.ldst_common(0x27)
     def inst_sty(self):
-        self.ldst_common(0x29)
+        self.ldst_common(0x28)
     def inst_stb(self):
-        self.ldst_common(0x2a)
+        self.ldst_common(0x29)
     def inst_stc(self):
-        self.ldst_common(0x2b)
+        self.ldst_common(0x2a)
     def inst_stbh(self):
-        self.ldst_common(0x2c)
+        self.ldst_common(0x2b)
     def inst_stbl(self):
-        self.ldst_common(0x2d)
+        self.ldst_common(0x2c)
     def inst_stch(self):
-        self.ldst_common(0x2e)
+        self.ldst_common(0x2d)
     def inst_stcl(self):
-        self.ldst_common(0x2f)        
-
+        self.ldst_common(0x2e)
 
     def inst_stl(self):
         # stl #L
@@ -297,24 +299,25 @@ class Assembler():
         t2 = self.tok.next()
         if t2:
             self.gen_adr(t2)
-        self.write8(0x1f)
+        self.write8(0x2f)
         self.write8(self.get_literal(t))
-
-    def inst_ldt(self):
-        self.write8(0x6f)
 
 
     # Move
 
     def get_movreg(self, reg):
-        return ['bh', 'bl', 'ch', 'cl', 'x', 'y'].index(reg)
+        return REGS6.index(reg)
 
     def movt_literal(self, t):
-        self.write8(0x6a)
+        self.write8(0x5b)
         self.write8(self.get_literal8(t))
     def movt_register(self, t):
         offset = self.get_movreg(t.value)
-        self.write8(0x64 + offset)
+        self.write8(0x55 + offset)
+    def movfromt(self, t):
+        offset = self.get_movreg(t.value)
+        self.write8(0x49 + offset)
+
 
     def inst_mov(self):
         ta = self.tok.next()
@@ -329,23 +332,23 @@ class Assembler():
         if ta.value == 'sp' or tb.value == 'sp':
             if ta.value == 'sp':
                 b_or_c = ['b', 'c'].index(tb.value)
-                self.write8(0x39 + b_or_c)
+                self.write8(0x42 + b_or_c)
             else:
                 b_or_c = ['b', 'c'].index(ta.value)
-                self.write8(0x3b + b_or_c)
+                self.write8(0x44 + b_or_c)
             return
 
         # b/c
         if ta.value in ['b', 'c']:
             if tb.type == 'literal':
                 b_or_c = ['b', 'c'].index(ta.value)
-                self.write8(0x6d + b_or_c)
+                self.write8(0x5e + b_or_c)
                 self.write16(self.get_literal16(tb))
             else:
                 if ta.value == 'b' and tb.value == 'c':
-                    self.write8(0x6b)
+                    self.write8(0x5c)
                 elif ta.value == 'c' and tb.value == 'b':
-                    self.write8(0x6c)
+                    self.write8(0x5d)
                 else:
                     self.error("Bad.")
             return
@@ -355,15 +358,15 @@ class Assembler():
                 self.movt_literal(tb)
             else:
                 self.movt_register(tb)
-        else:
+        elif tb.value == 't':
+            self.movfromt(ta)
+        elif tb.type == 'literal':
             dest = self.get_movreg(ta.value)
-            if tb.type == 'literal':
-                src = self.get_movreg(ta.value)
-                self.write8(0x40 + 0x06*dest + src)
-                self.write8(self.get_literal8(tb))
-            else:
-                src = self.get_movreg(tb.value)
-                self.write8(0x40 + 0x06*dest + src)
+            self.write8(0x4f + dest)
+            self.write8(self.get_literal8(tb))
+        else: # register to register
+            self.movt_register(tb)
+            self.movfromt(ta)
 
 
     # ALU
@@ -431,22 +434,22 @@ class Assembler():
         self.arith_common(base)
 
     def inst_add(self):
-        self.arith_common(0x70)
+        self.arith_common(0x60)
     def inst_sub(self):
-        self.arith_common(0x7e)
+        self.arith_common(0x6e)
     def inst_adc(self):
-        self.arith_common(0x8c)
+        self.arith_common(0x7c)
     def inst_sbc(self):
-        self.arith_common(0x9a)
+        self.arith_common(0x8a)
     def inst_cmp(self):
-        self.arith_common(0xa8)
+        self.arith_common(0x98)
 
     def inst_and(self):
-        self.logic_common(0xb6)
+        self.logic_common(0xa6)
     def inst_or(self):
-        self.logic_common(0xc4)
+        self.logic_common(0xb4)
     def inst_xor(self):
-        self.logic_common(0xd2)
+        self.logic_common(0xc2)
 
     def inst_ror(self):
         t = self.tok.next()
@@ -570,11 +573,11 @@ class Assembler():
         call_addr = self.get_literal16(t)
         ret_addr = self.addr + 6
         # push ret_addr (big endian)
-        self.write8(0x38)
+        self.write8(0x41)
         self.write8(ret_addr >> 8)
         self.write8(ret_addr & 0xFF)
         # jmp call_addr
-        self.write8(0x14)
+        self.write8(0x30)
         self.write16(call_addr)
 
 

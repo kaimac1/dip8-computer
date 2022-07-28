@@ -75,6 +75,8 @@ def main():
                     if sig == '(CC)': instruction.condition = lambda flags: not flags.C
                     if sig == '(Z)':  instruction.condition = lambda flags: flags.Z
                     if sig == '(NZ)': instruction.condition = lambda flags: not flags.Z
+                    if sig == '(S)':  instruction.condition = lambda flags: flags.N
+                    if sig == '(NS)': instruction.condition = lambda flags: not flags.N
                     instruction.sequence_bad = instruction.sequence_good.copy()
                     continue
 
