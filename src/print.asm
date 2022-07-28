@@ -25,25 +25,25 @@ UART = $f000
 ; b: string to print 
 
 printn      mov c, #UART
-pnloop      ldx b
+_loop       ldx b
             cmp x, #0
-            jz pnret
+            jz return
             stx c
             inc b
-            jmp pnloop
-pnret       ret
+            jmp loop
+_return     ret
 
-            
+
 ;print a length-prefixed string (max len 255)
 ; b: string to print
 
 prints      mov c, #UART
             ldx b           ; c = string length (8 bits)
-psloop      inc b
+_loop       inc b
             ldy b
             sty c
             dec x
-            jnz psloop
+            jnz loop
             ret
 
 
@@ -55,12 +55,12 @@ psloop      inc b
 printxh     push b
             mov b, #hexdigits
             mov y, #0
-xhloop      cmp x, #16      ; while x >= 16
-            jcc xhout
+_loop       cmp x, #16      ; while x >= 16
+            jcc write
             sub x, #16
             inc y
-            jmp xhloop
-xhout       ldy b+y         ; y = hi nib
+            jmp loop
+_write      ldy b+y         ; y = hi nib
             sty UART
             ldy b+x         ; x = low nib
             sty UART

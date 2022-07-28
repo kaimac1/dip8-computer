@@ -532,17 +532,35 @@ inst[0xcd] = f'''xor ch, #L      \n      {LoadLiteral} twr      \n      {ModifyR
 inst[0xce] = f'''xor cl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selcl opxor setflags'''
 inst[0xcf] = f'''sbc m, #L       \n      {LoadLiteral} twr      \n      {LoadRegister} msel         \n  {StoreALU} msel opxor setflags'''
 
-inst[0xf8] = f'''ror x           \n      {ModifyRegister} selx  opror1 setflags \n      {ModifyRegister} selx  opror2 setflags'''
-inst[0xf9] = f'''ror y           \n      {ModifyRegister} sely  opror1 setflags \n      {ModifyRegister} sely  opror2 setflags'''
-inst[0xfa] = f'''ror bh          \n      {ModifyRegister} selbh opror1 setflags \n      {ModifyRegister} selbh opror2 setflags'''
-inst[0xfb] = f'''ror bl          \n      {ModifyRegister} selbl opror1 setflags \n      {ModifyRegister} selbl opror2 setflags'''
-inst[0xfc] = f'''ror ch          \n      {ModifyRegister} selch opror1 setflags \n      {ModifyRegister} selch opror2 setflags'''
-inst[0xfd] = f'''ror cl          \n      {ModifyRegister} selcl opror1 setflags \n      {ModifyRegister} selcl opror2 setflags'''
+# Note:
+# For the 16-bit inc/dec of b or c, the flags come from the low byte.
+# setflags is asserted for the high byte, but the ALU operation (opci/opcd) only reads the user flags, and does not set them.
 
+inst[0xd0] = f'''inc x          \n      {ModifyRegister} selx  opinc setflags'''
+inst[0xd1] = f'''inc y          \n      {ModifyRegister} sely  opinc setflags'''
+inst[0xd2] = f'''inc b          \n      {ModifyRegister} selbl opinc setflags   \n  {ModifyRegister} selbh opci setflags'''
+inst[0xd3] = f'''inc c          \n      {ModifyRegister} selcl opinc setflags   \n  {ModifyRegister} selch opci setflags'''
+inst[0xd4] = f'''dec x          \n      {ModifyRegister} selx  opdec setflags'''
+inst[0xd5] = f'''dec y          \n      {ModifyRegister} sely  opdec setflags'''
+inst[0xd6] = f'''dec b          \n      {ModifyRegister} selbl opdec setflags   \n  {ModifyRegister} selbh opcd setflags'''
+inst[0xd7] = f'''dec c          \n      {ModifyRegister} selcl opdec setflags   \n  {ModifyRegister} selch opcd setflags'''
+
+inst[0xd8] = f'''ror x           \n      {ModifyRegister} selx  opror1 setflags \n      {ModifyRegister} selx  opror2 setflags'''
+inst[0xd9] = f'''ror y           \n      {ModifyRegister} sely  opror1 setflags \n      {ModifyRegister} sely  opror2 setflags'''
+inst[0xda] = f'''ror bh          \n      {ModifyRegister} selbh opror1 setflags \n      {ModifyRegister} selbh opror2 setflags'''
+inst[0xdb] = f'''ror bl          \n      {ModifyRegister} selbl opror1 setflags \n      {ModifyRegister} selbl opror2 setflags'''
+inst[0xdc] = f'''ror ch          \n      {ModifyRegister} selch opror1 setflags \n      {ModifyRegister} selch opror2 setflags'''
+inst[0xdd] = f'''ror cl          \n      {ModifyRegister} selcl opror1 setflags \n      {ModifyRegister} selcl opror2 setflags'''
+# inst[0xde] = f'''ror b           \n      {ModifyRegister} selbh opror1 setflags \n      {ModifyRegister} selbh opror2 setflags'''
+# inst[0xdf] = f'''ror c           \n      {ModifyRegister} selbh opror1 setflags \n      {ModifyRegister} selbh opror2 setflags'''
 
 
 
 # 16-bit
+
+inst[0xe0] = f'''addw b, t
+    {ModifyRegister} selbl opadd setflags
+    {ModifyRegister} selbh opci  setflags'''
 
 inst[0xe1] = f'''addw b, b
     {RegisterToT} selbl
@@ -562,6 +580,11 @@ inst[0xe3] = f'''addw b, #LL
     {LoadLiteral} twr
     {ModifyRegister} selbh opadc setflags'''
 
+
+inst[0xe4] = f'''addw c, t
+    {ModifyRegister} selcl opadd setflags
+    {ModifyRegister} selch opci  setflags'''
+
 inst[0xe5] = f'''addw c, b
     {RegisterToT} selbl
     {ModifyRegister} selcl opadd setflags
@@ -574,18 +597,10 @@ inst[0xe6] = f'''addw c, c
     {RegisterToT} selch
     {ModifyRegister} selch opadc setflags'''
 
+inst[0xe7] = f'''addw c, #LL
+    {LoadLiteral} twr
+    {ModifyRegister} selcl opadd setflags
+    {LoadLiteral} twr
+    {ModifyRegister} selch opadc setflags'''
 
-
-# Note:
-# For the 16-bit inc/dec of b or c, the flags come from the low byte.
-# setflags is asserted for the high byte, but the ALU operation (opci/opcd) only reads the user flags, and does not set them.
-
-inst[0xf0] = f'''inc x          \n      {ModifyRegister} selx  opinc setflags'''
-inst[0xf1] = f'''inc y          \n      {ModifyRegister} sely  opinc setflags'''
-inst[0xf2] = f'''inc b          \n      {ModifyRegister} selbl opinc setflags   \n  {ModifyRegister} selbh opci setflags'''
-inst[0xf3] = f'''inc c          \n      {ModifyRegister} selcl opinc setflags   \n  {ModifyRegister} selch opci setflags'''
-inst[0xf4] = f'''dec x          \n      {ModifyRegister} selx  opdec setflags'''
-inst[0xf5] = f'''dec y          \n      {ModifyRegister} sely  opdec setflags'''
-inst[0xf6] = f'''dec b          \n      {ModifyRegister} selbl opdec setflags   \n  {ModifyRegister} selbh opcd setflags'''
-inst[0xf7] = f'''dec c          \n      {ModifyRegister} selcl opdec setflags   \n  {ModifyRegister} selch opcd setflags'''
-
+    

@@ -1,17 +1,22 @@
 #!/bin/python3
+# DIP-8 assembler
+# Kyle McInnes 2022
+
 import argparse
 import sys
 import string
 
-ANSI_RED = '\x1b[31m'
+ANSI_RED   = '\x1b[31m'
 ANSI_GREEN = '\x1b[92m'
 ANSI_RESET = '\x1b[0m'
 
-addrregs = ['b', 'c']
-
+REGS2 = ['b', 'c']
 REGS4 = ['x', 'y', 'b', 'c']
 REGS6 = ['x', 'y', 'bh', 'bl', 'ch', 'cl']
 REGS7 = ['x', 'y', 'bh', 'bl', 'ch', 'cl', 'm']
+
+LOCAL_LABEL_CHAR = '_'
+
 
 class Token():
     def __init__(self, toktype, value):
@@ -127,8 +132,12 @@ class Tokeniser():
 
 
 
+
+
 def is_literal(t):
     return t.type == 'literal'
+
+
 
 class Assembler():
     def __init__(self):
@@ -160,6 +169,17 @@ class Assembler():
         print(f"{ANSI_GREEN}[0x{dd:04x}]{ANSI_RESET} ", end='')
         self.addr += 2
 
+    def get_symbol(self, name):
+        local_name = self.parent_label + '/' + name
+        if local_name in self.syms:
+            return self.syms[local_name]
+        elif name in self.syms:
+            return self.syms[name]
+        else:
+            if self.pass1: # don't complain on pass1 if not defined yet
+                return 0 
+            self.error(f"Undefined symbol: {name}")
+
     def get_literal(self, t):
         try:
             return int(t.value)
@@ -169,19 +189,12 @@ class Assembler():
             else:
                 name = t.value
 
-            if name in self.syms:
-                value = self.syms[name]
-
-                if t.value[0] == '<':
-                    value = value & 0xFF
-                elif t.value[0] == '>':
-                    value = value >> 8
-                return value
-
-            else:
-                if self.pass1: # don't complain on pass1 if the symbol is not defined yet
-                    return 0
-                self.error(f"Undefined symbol: {name}")
+            value = self.get_symbol(name)
+            if t.value[0] == '<':
+                value = value & 0xFF
+            elif t.value[0] == '>':
+                value = value >> 8
+            return value
 
     def get_literal8(self, t):
         val = self.get_literal(t) & 0xFF
@@ -256,8 +269,7 @@ class Assembler():
         self.write8(base)
 
     def inst_ldt(self):
-        self.write8(0x1e) # NOTE: should be ldst_common?
-
+        self.ldst_common(0x1e)
     def inst_ldx(self):
         self.ldst_common(0x1f)
     def inst_ldy(self):
@@ -291,16 +303,10 @@ class Assembler():
         self.ldst_common(0x2d)
     def inst_stcl(self):
         self.ldst_common(0x2e)
-
     def inst_stl(self):
-        # stl #L
-        # stl #L, MEM   -> adr MEM; stl #L
-        t = self.tok.next()
-        t2 = self.tok.next()
-        if t2:
-            self.gen_adr(t2)
-        self.write8(0x2f)
-        self.write8(self.get_literal(t))
+        literal = self.tok.next()
+        self.ldst_common(0x2f)
+        self.write8(self.get_literal(literal))
 
 
     # Move
@@ -331,17 +337,17 @@ class Assembler():
         # sp moves
         if ta.value == 'sp' or tb.value == 'sp':
             if ta.value == 'sp':
-                b_or_c = ['b', 'c'].index(tb.value)
+                b_or_c = REGS2.index(tb.value)
                 self.write8(0x42 + b_or_c)
             else:
-                b_or_c = ['b', 'c'].index(ta.value)
+                b_or_c = REGS2.index(ta.value)
                 self.write8(0x44 + b_or_c)
             return
 
         # b/c
-        if ta.value in ['b', 'c']:
+        if ta.value in REGS2:
             if tb.type == 'literal':
-                b_or_c = ['b', 'c'].index(ta.value)
+                b_or_c = REGS2.index(ta.value)
                 self.write8(0x5e + b_or_c)
                 self.write16(self.get_literal16(tb))
             else:
@@ -472,7 +478,7 @@ class Assembler():
 
 
     def get_aluregw(self, reg):
-        return ['b', 'c'].index(reg)
+        return REGS2.index(reg)
 
     def inst_addw(self):
         ta = self.tok.next()
@@ -628,6 +634,7 @@ class Assembler():
         print("pass 1:")
         self.addr = 0
         self.pass1 = True
+        self.parent_label = ''
         for i, line in enumerate(lines):
             self.line_num = i+1
             self.nbytes = 0
@@ -647,6 +654,20 @@ class Assembler():
             #print()
 
         return self.output
+
+
+    def define_label(self, name, value):
+        if name[0] == LOCAL_LABEL_CHAR:
+            # Local label
+            if self.pass1:
+                print(f"\nDefining local label {name}")
+                name = self.parent_label + '/' + name[1:]
+                self.syms[name] = value
+        else:
+            self.parent_label = name
+            if self.pass1:
+                print(f"\nDefining global label {name}")
+                self.syms[name] = value
 
 
     def define_symbol(self, name, value, allow_redefine=False):
@@ -685,8 +706,7 @@ class Assembler():
         token2 = self.tok.next()
         if token2 is None:
             # token1 is just a label
-            if self.pass1:
-                self.define_symbol(word1, self.addr)
+            self.define_label(word1, self.addr)
             return
         elif token2.value == '=':
             # symbol definition
@@ -700,8 +720,7 @@ class Assembler():
         word2 = token2.value
 
         # Store symbol/label address
-        if self.pass1:
-            self.define_symbol(word1, self.addr)
+        self.define_label(word1, self.addr)
 
         if self.is_instruction(word2):
             self.run_instruction(word2)
