@@ -4,6 +4,7 @@ import sys
 import time
 
 DECODER_ROM_FILES = ['rom/decoder0.bin', 'rom/decoder1.bin', 'rom/decoder2.bin']
+ALU_ROM_FILE = 'rom/alu.bin'
 MEMSIZE = 65536
 
 def inc16(w):
@@ -37,7 +38,7 @@ class Memory():
             sys.stdout.flush()
 
 
-def decoder_rom(file):
+def read_rom(file):
     with open(file, 'rb') as f:
             data = f.read()
     return data
@@ -49,9 +50,10 @@ class CPU():
         self.mem = Memory()
         self.halted = False
 
-        self.dec0 = decoder_rom(DECODER_ROM_FILES[0])
-        self.dec1 = decoder_rom(DECODER_ROM_FILES[1])
-        self.dec2 = decoder_rom(DECODER_ROM_FILES[2])
+        self.dec0 = read_rom(DECODER_ROM_FILES[0])
+        self.dec1 = read_rom(DECODER_ROM_FILES[1])
+        self.dec2 = read_rom(DECODER_ROM_FILES[2])
+        self.alurom = read_rom(ALU_ROM_FILE)
 
         self.tick = 0
         self.Cint = 0   # internal carry
@@ -67,6 +69,7 @@ class CPU():
 
         self.cycles = 0     # stats
         self.instructions = 0
+        self.real_time = 0.0
 
 
     # Run until a brk (halt) instruction
@@ -76,8 +79,10 @@ class CPU():
         self.opcode = 0x00
         self.instruction_bytes = []
 
+        st = time.time()
         while not self.halted:
             self.clock()
+        self.real_time = time.time() - st
 
         self.print_instruction() # Print final instruction
 
@@ -173,64 +178,49 @@ class CPU():
 
 
     def alu(self, a, opsel, setflags):
+        nsetflags = not setflags
         b = self.t
-        cin = self.C if setflags else self.Cint
-        c = 0
 
-        if opsel == 0: # a
-            q = a
-        elif opsel == 1: # b
-            q = b
-        elif opsel == 2: # add
-            q = a + b
-            c = q > 255
-        elif opsel == 3: # sub
-            q = a + ~b + 1
-            c = q >= 0
-        elif opsel == 4: # adc
-            q = a + b + cin
-            c = q > 255
-        elif opsel == 5: # sbc
-            q = a + ~b + cin
-            c = q >= 0
-        elif opsel == 6: # and
-            q = a & b
-        elif opsel == 7: # or
-            q = a | b
-        elif opsel == 8: # xor
-            q = a ^ b
-        elif opsel == 9: # inc if carry set
-            q = a + cin
-        elif opsel == 10: # inc
-            q = a + 1
-            c = q > 255
-        elif opsel == 11: # dec 
-            q = a - 1
-            c = q >= 0
-        elif opsel == 12: # dec if carry clear
-            q = a + ~0 + cin
-        elif opsel == 13: # ror1
-            # nop
-            q = a
-            c = cin
-        elif opsel == 14: # ror2
-            c = a & 0x01
-            q = cin << 7 | a >> 1
-        else:
-            print(f"Error: invalid ALU op {opsel}")
-            sys.exit(-1)
+        # low nibble
 
-        q &= 0xFF
+        al = a & 0xF
+        bl = b & 0xF
 
-        # Set flags if the operator allows it
-        canset = opsel in [2,3,4,5,6,7,8,10,11,13,14]
-        if canset:
-            if setflags:
-                self.C = c
-                self.Z = (q == 0)
-                self.N = bool(q & 0x80)
-            else:
-                self.Cint = c
+        addr_lo = (al << 0) | (bl << 4) | (nsetflags << 8) | (opsel << 9) | (self.Cint << 13) | (self.C << 14) | (0 << 15)
+        alu0 = self.alurom[addr_lo]
+
+        q0 = alu0 & 0xF
+        c0 = bool(alu0 & 0b00010000)
+        z0 = bool(alu0 & 0b00100000)
+        #n = bool(alu & 0b01000000)
+        nclkint = bool(alu0 & 0b10000000)
+
+        # high nibble
+
+        ah = a >> 4
+        bh = b >> 4
+
+        addr_hi = (ah << 0) | (bh << 4) | (nsetflags << 8) | (opsel << 9) | (c0 << 13) | (c0 << 14) | (1 << 15)
+        alu1 = self.alurom[addr_hi]
+
+        q1 = alu1 & 0xF
+        c1 = bool(alu1 & 0b00010000)
+        z1 = bool(alu1 & 0b00100000)
+        n1 = bool(alu1 & 0b01000000)
+        nclkuser = bool(alu1 & 0b10000000)        
+
+
+        q = (q1 << 4) | q0
+        c = c1
+        z = z0 and z1
+        n = n1
+
+        if not nclkint:
+            self.Cint = c
+        if not nclkuser:
+            self.C = c
+            self.Z = z
+            self.N = n
 
         return q
 
@@ -294,6 +284,11 @@ if __name__ == "__main__":
     print(f"    {cputime} sec at {cpufreq/1E6} MHz")
     cperi = cpu.cycles / cpu.instructions
     print(f"    {cperi:.2f} cycles/inst")
+    print()
+    print(f"    Emulator took {cpu.real_time:.2f} seconds")
+    time_factor = cpu.real_time / cputime
+    print(f"    ({time_factor:.2f}x)")
+
 
     if args.dump_registers:
         cpu.dumpregs()
