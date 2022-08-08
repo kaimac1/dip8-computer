@@ -1,0 +1,47 @@
+function main
+	allocreg c
+	move pointer #P4096->M0+0(FP)(flags) size=2
+	move unsigned int #UI0->M0+2(FP)(count) size=2
+	move unsigned int #UI0->M0+4(FP)(i) size=2
+	move unsigned int M0+4(FP)(i)->M0+c(i) size=2
+L3 (while-loop)
+	allocreg b
+	add-int-to-pointer unsigned int M0+0(FP)(flags),M0+c(i)->M0+b(0x55e450bae7c0)[S] ptype=pointer
+	move unsigned char #UC1->([pointer]M0+b(0x55e450bae7c0)[S]) size=1
+	freereg b
+	add unsigned int M0+c(i),#UI1->M0+c(i)
+	compare unsigned int M0+c(i),#UI8191
+	blt L3
+	move unsigned int #UI0->M0+c(i) size=2
+L17 (while-loop)
+	allocreg b
+	add-int-to-pointer unsigned int M0+0(FP)(flags),M0+c(i)->M0+b(0x55e450baf7e0)[S] ptype=pointer
+	test unsigned char ([pointer]M0+b(0x55e450baf7e0)[S])
+	freereg b
+	beq L12
+	allocreg b
+	add unsigned int M0+c(i),M0+c(i)->M0+b(0x55e450bafed0)[S]
+	add unsigned int M0+b(0x55e450bafed0)[S],#UI3->M0+6(FP)(prime)
+	freereg b
+	add unsigned int M0+6(FP)(prime),M0+c(i)->M0+8(FP)(k)
+	move unsigned int M0+c(i)->M0+4(FP)(i) size=2
+	compare unsigned int M0+8(FP)(k),#UI8191
+	bge L21
+	move unsigned int M0+8(FP)(k)->M0+c(k) size=2
+L13 (while-loop)
+	allocreg b
+	add-int-to-pointer unsigned int M0+0(FP)(flags),M0+c(k)->M0+b(0x55e450bb0e50)[S] ptype=pointer
+	move unsigned char #UC0->([pointer]M0+b(0x55e450bb0e50)[S]) size=1
+	freereg b
+	add unsigned int M0+c(k),M0+6(FP)(prime)->M0+c(k)
+	compare unsigned int M0+c(k),#UI8191
+	blt L13
+L21
+	move unsigned int M0+4(FP)(i)->M0+c(i) size=2
+	add unsigned int M0+2(FP)(count),#UI1->M0+2(FP)(count)
+L12
+	add unsigned int M0+c(i),#UI1->M0+c(i)
+	compare unsigned int M0+c(i),#UI8191
+	blt L17
+	set-return int M0+2(FP)(count)
+	freereg c

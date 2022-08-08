@@ -1,0 +1,8 @@
+function main
+	move unsigned char #UC60->M0+0(FP)(x) size=1
+	move char M0+0(FP)(x)->M0+2(FP)(0x55e44cb2dac0)[S] size=1 align=257
+
+	and char M0+2(FP)(0x55e44cb2dac0)[S],#C15->M0+3(FP)(0x55e44cb2dbe0)[S]
+	convert unsigned char M0+3(FP)(0x55e44cb2dbe0)[S]->M0+1(FP)(xlo) from char
+	set-return int #I0
+L2
