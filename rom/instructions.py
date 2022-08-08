@@ -5,7 +5,7 @@
 raw_signals = 'next aout pcinc pcwr irwr memrd memwr alwr ahwr ainc regoe regwr twr alu setflags msel'
 
 regsel = ['selbh', 'selbl', 'selch', 'selcl', 'selx', 'sely', 'selsh', 'selsl']
-alusel = ['opa', 'opb', 'opadd', 'opsub', 'opadc', 'opsbc', 'opand', 'opor', 'opxor', 'opci', 'opinc', 'opdec', 'opcd', 'opror1', 'opror2']
+alusel = ['opa', 'opb', 'opadd', 'opsub', 'opadc', 'opsbc', 'opand', 'opor', 'opxor', 'opci', 'opinc', 'opdec', 'opcd', 'opror1', 'opror2', 'opsig']
 
 raw_signals = raw_signals.split(" ")
 raw_signals.extend(regsel)
@@ -174,32 +174,32 @@ inst[0x31] = f'''jmpa
 inst[0x32] = f'''jcs ADDR
     {LoadLiteral} alwr
     {LoadLiteral} ahwr
-    (CS) aout pcwr'''
+    (C=1) aout pcwr : next'''
 
 inst[0x33] = f'''jcc ADDR
     {LoadLiteral} alwr
     {LoadLiteral} ahwr
-    (CC) aout pcwr'''
+    (C=0) aout pcwr : next'''
 
 inst[0x34] = f'''jz ADDR
     {LoadLiteral} alwr
     {LoadLiteral} ahwr
-    (Z) aout pcwr'''
+    (Z=1) aout pcwr : next'''
 
 inst[0x35] = f'''jnz ADDR
     {LoadLiteral} alwr
     {LoadLiteral} ahwr
-    (NZ) aout pcwr'''
+    (Z=0) aout pcwr : next'''
 
 inst[0x36] = f'''js ADDR
     {LoadLiteral} alwr
     {LoadLiteral} ahwr
-    (S) aout pcwr'''
+    (N=1) aout pcwr : next'''
 
 inst[0x37] = f'''jns ADDR
     {LoadLiteral} alwr
     {LoadLiteral} ahwr
-    (NS) aout pcwr'''
+    (N=0) aout pcwr : next'''
 
 
 inst[0x38] = f'''ret
@@ -351,6 +351,20 @@ inst[0x45] = f'''mov c, sp
     regoe   selsh   alu opa twr
     regwr   selch   alu opb'''    
 
+inst[0x46] = f'''addsp #LL
+    {LoadLiteral} twr
+    {ModifyRegister} selsl opadd setflags
+    {LoadLiteral} twr
+    {ModifyRegister} selsh opadc setflags'''
+
+inst[0x47] = f'''subsp #LL
+    {LoadLiteral} twr
+    {ModifyRegister} selsl opsub setflags
+    {LoadLiteral} twr
+    {ModifyRegister} selsh opsbc setflags'''
+
+
+
 
 # move reg=literal
 
@@ -472,20 +486,23 @@ inst[0x95] = f'''sbc ch, #L      \n      {LoadLiteral} twr      \n      {ModifyR
 inst[0x96] = f'''sbc cl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selcl opsbc   setflags'''
 inst[0x97] = f'''sbc m, #L       \n      {LoadLiteral} twr      \n      {LoadRegister} msel         \n  {StoreALU} msel opsbc setflags'''
 
-inst[0x98] = f'''cmp x, t        \n      regoe alu selx  opsub   setflags'''
-inst[0x99] = f'''cmp y, t        \n      regoe alu sely  opsub   setflags'''
-inst[0x9a] = f'''cmp bh, t       \n      regoe alu selbh opsub   setflags'''
-inst[0x9b] = f'''cmp bl, t       \n      regoe alu selbl opsub   setflags'''
-inst[0x9c] = f'''cmp ch, t       \n      regoe alu selch opsub   setflags'''
-inst[0x9d] = f'''cmp cl, t       \n      regoe alu selcl opsub   setflags'''
-inst[0x9e] = f'''cmp m, t        \n      {LoadRegister} msel    \n      regoe alu msel  opsub   setflags'''
-inst[0x9f] = f'''cmp x, #L       \n      {LoadLiteral} twr      \n      regoe alu selx  opsub   setflags'''
-inst[0xa0] = f'''cmp y, #L       \n      {LoadLiteral} twr      \n      regoe alu sely  opsub   setflags'''
-inst[0xa1] = f'''cmp bh, #L      \n      {LoadLiteral} twr      \n      regoe alu selbh opsub   setflags'''
-inst[0xa2] = f'''cmp bl, #L      \n      {LoadLiteral} twr      \n      regoe alu selbl opsub   setflags'''
-inst[0xa3] = f'''cmp ch, #L      \n      {LoadLiteral} twr      \n      regoe alu selch opsub   setflags'''
-inst[0xa4] = f'''cmp cl, #L      \n      {LoadLiteral} twr      \n      regoe alu selcl opsub   setflags'''
-inst[0xa5] = f'''cmp m, #L       \n      {LoadLiteral} twr      \n      {LoadRegister} msel         \n  regoe alu msel opsub setflags'''
+
+# If Z=1, N=1 (set by sig instruction) we are doing a *signed* comparison
+# Indicate this to the ALU by de-asserting setflags
+inst[0x98] = f'''cmp x, t        \n      (Z=1,N=1) regoe alu selx  opsub   :   regoe alu selx  opsub   setflags'''
+inst[0x99] = f'''cmp y, t        \n      (Z=1,N=1) regoe alu sely  opsub   :   regoe alu sely  opsub   setflags'''
+inst[0x9a] = f'''cmp bh, t       \n      (Z=1,N=1) regoe alu selbh opsub   :   regoe alu selbh opsub   setflags'''
+inst[0x9b] = f'''cmp bl, t       \n      (Z=1,N=1) regoe alu selbl opsub   :   regoe alu selbl opsub   setflags'''
+inst[0x9c] = f'''cmp ch, t       \n      (Z=1,N=1) regoe alu selch opsub   :   regoe alu selch opsub   setflags'''
+inst[0x9d] = f'''cmp cl, t       \n      (Z=1,N=1) regoe alu selcl opsub   :   regoe alu selcl opsub   setflags'''
+inst[0x9e] = f'''cmp m, t        \n      {LoadRegister} msel    \n      (Z=1,N=1) regoe alu msel  opsub   :   regoe alu msel  opsub setflags'''
+inst[0x9f] = f'''cmp x, #L       \n      {LoadLiteral} twr      \n      (Z=1,N=1) regoe alu selx  opsub   :   regoe alu selx  opsub setflags'''
+inst[0xa0] = f'''cmp y, #L       \n      {LoadLiteral} twr      \n      (Z=1,N=1) regoe alu sely  opsub   :   regoe alu sely  opsub setflags'''
+inst[0xa1] = f'''cmp bh, #L      \n      {LoadLiteral} twr      \n      (Z=1,N=1) regoe alu selbh opsub   :   regoe alu selbh opsub setflags'''
+inst[0xa2] = f'''cmp bl, #L      \n      {LoadLiteral} twr      \n      (Z=1,N=1) regoe alu selbl opsub   :   regoe alu selbl opsub setflags'''
+inst[0xa3] = f'''cmp ch, #L      \n      {LoadLiteral} twr      \n      (Z=1,N=1) regoe alu selch opsub   :   regoe alu selch opsub setflags'''
+inst[0xa4] = f'''cmp cl, #L      \n      {LoadLiteral} twr      \n      (Z=1,N=1) regoe alu selcl opsub   :   regoe alu selcl opsub setflags'''
+inst[0xa5] = f'''cmp m, #L       \n      {LoadLiteral} twr      \n      {LoadRegister} msel         \n  (Z=1,N=1) regoe alu msel opsub   :   regoe alu msel opsub setflags'''
 
 inst[0xa6] = f'''and x, t        \n      {ModifyRegister} selx  opand setflags'''
 inst[0xa7] = f'''and y, t        \n      {ModifyRegister} sely  opand setflags'''
@@ -558,49 +575,151 @@ inst[0xdd] = f'''ror cl          \n      {ModifyRegister} selcl opror1 setflags 
 
 # 16-bit
 
-inst[0xe0] = f'''addw b, t
-    {ModifyRegister} selbl opadd setflags
-    {ModifyRegister} selbh opci  setflags'''
-
-inst[0xe1] = f'''addw b, b
+inst[0xe0] = f'''addw b, b
     {RegisterToT} selbl
     {ModifyRegister} selbl opadd setflags
     {RegisterToT} selbh
     {ModifyRegister} selbh opadc setflags'''
 
-inst[0xe2] = f'''addw b, c
+inst[0xe1] = f'''addw b, c
     {RegisterToT} selcl
     {ModifyRegister} selbl opadd setflags
     {RegisterToT} selch
     {ModifyRegister} selbh opadc setflags'''
 
-inst[0xe3] = f'''addw b, #LL
+inst[0xe2] = f'''addw b, #LL
     {LoadLiteral} twr
     {ModifyRegister} selbl opadd setflags
     {LoadLiteral} twr
     {ModifyRegister} selbh opadc setflags'''
 
+inst[0xe3] = f'''addw b, m
+    aout memrd twr
+    {ModifyRegister} selbl opadd setflags ainc
+    aout memrd twr
+    {ModifyRegister} selbh opadc setflags'''
 
-inst[0xe4] = f'''addw c, t
-    {ModifyRegister} selcl opadd setflags
-    {ModifyRegister} selch opci  setflags'''
-
-inst[0xe5] = f'''addw c, b
+inst[0xe4] = f'''addw c, b
     {RegisterToT} selbl
     {ModifyRegister} selcl opadd setflags
     {RegisterToT} selbh
     {ModifyRegister} selch opadc setflags'''
 
-inst[0xe6] = f'''addw c, c
+inst[0xe5] = f'''addw c, c
     {RegisterToT} selcl
     {ModifyRegister} selcl opadd setflags
     {RegisterToT} selch
     {ModifyRegister} selch opadc setflags'''
 
-inst[0xe7] = f'''addw c, #LL
+inst[0xe6] = f'''addw c, #LL
     {LoadLiteral} twr
     {ModifyRegister} selcl opadd setflags
     {LoadLiteral} twr
     {ModifyRegister} selch opadc setflags'''
 
+inst[0xe7] = f'''addw c, m
+    aout memrd twr
+    {ModifyRegister} selcl opadd setflags ainc
+    aout memrd twr
+    {ModifyRegister} selch opadc setflags'''
+
+inst[0xe8] = f'''addw m, b
+    {RegisterToT} selbl
+    {LoadRegister} msel
+    {StoreALU} msel opadd setflags ainc
+    {RegisterToT} selbh
+    {LoadRegister} msel
+    {StoreALU} msel opadc setflags'''
+
+inst[0xe9] = f'''addw m, c
+    {RegisterToT} selcl
+    {LoadRegister} msel
+    {StoreALU} msel opadd setflags ainc
+    {RegisterToT} selch
+    {LoadRegister} msel
+    {StoreALU} msel opadc setflags'''
     
+inst[0xea] = f'''addw m, #LL
+    {LoadLiteral} twr
+    {LoadRegister} msel
+    {StoreALU} msel opadd setflags ainc
+    {LoadLiteral} twr
+    {LoadRegister} msel
+    {StoreALU} msel opadc setflags'''
+
+
+
+inst[0xeb] = f'''subw b, c
+    {RegisterToT} selcl
+    {ModifyRegister} selbl opsub setflags
+    {RegisterToT} selch
+    {ModifyRegister} selbh opsbc setflags'''
+
+inst[0xec] = f'''subw b, #LL
+    {LoadLiteral} twr
+    {ModifyRegister} selbl opsub setflags
+    {LoadLiteral} twr
+    {ModifyRegister} selbh opsbc setflags'''   
+    
+inst[0xed] = f'''subw b, m
+    aout memrd twr
+    {ModifyRegister} selbl opsub setflags ainc
+    aout memrd twr
+    {ModifyRegister} selbh opsbc setflags''' 
+
+inst[0xee] = f'''subw c, b
+    {RegisterToT} selbl
+    {ModifyRegister} selcl opsub setflags
+    {RegisterToT} selbh
+    {ModifyRegister} selch opsbc setflags'''
+
+inst[0xef] = f'''subw c, #LL
+    {LoadLiteral} twr
+    {ModifyRegister} selcl opsub setflags
+    {LoadLiteral} twr
+    {ModifyRegister} selch opsbc setflags'''   
+    
+inst[0xf0] = f'''subw c, m
+    aout memrd twr
+    {ModifyRegister} selcl opsub setflags ainc
+    aout memrd twr
+    {ModifyRegister} selch opsbc setflags''' 
+
+inst[0xf1] = f'''subw m, b
+    {RegisterToT} selbl
+    {LoadRegister} msel
+    {StoreALU} msel opsub setflags ainc
+    {RegisterToT} selbh
+    {LoadRegister} msel
+    {StoreALU} msel opsbc setflags'''
+
+inst[0xf2] = f'''subw m, c
+    {RegisterToT} selcl
+    {LoadRegister} msel
+    {StoreALU} msel opsub setflags ainc
+    {RegisterToT} selch
+    {LoadRegister} msel
+    {StoreALU} msel opsbc setflags'''
+    
+inst[0xf3] = f'''subw m, #LL
+    {LoadLiteral} twr
+    {LoadRegister} msel
+    {StoreALU} msel opsub setflags ainc
+    {LoadLiteral} twr
+    {LoadRegister} msel
+    {StoreALU} msel opsbc setflags'''
+
+
+# inst[0xef] = f'''addw8 b, t
+#     {ModifyRegister} selbl opadd setflags
+#     {ModifyRegister} selbh opci  setflags'''
+
+# inst[0xe4] = f'''addw c, t
+#     {ModifyRegister} selcl opadd setflags
+#     {ModifyRegister} selch opci  setflags'''
+
+
+inst[0xfe] = f'''sig
+    regoe alu selx opsig setflags'''
+
+

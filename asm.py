@@ -26,7 +26,7 @@ class Token():
     def __repr__(self):
         return f"{self.type}({repr(self.value)})"
 
-SYMBOLS = '+[]'
+SYMBOLS = '+[]*'
 
 def is_whitespace(char):
     return char in [' ', '\t', ',']
@@ -41,6 +41,7 @@ class Tokeniser():
     def __init__(self, input):
         self.str = input
         self.pos = 0
+        self.token = None
 
     def error(self, msg):
         print(msg)
@@ -114,10 +115,12 @@ class Tokeniser():
 
         c = self.char()
         if c is None:
-            return None
+            self.token = None
+            return self.token
         elif c == ';':
             self.pos = len(self.str)
-            return None
+            self.token = None
+            return self.token
         elif is_literal_start(c):
             token = Token('literal', self.get_literal())
         elif c == '"':
@@ -128,7 +131,8 @@ class Tokeniser():
             token = Token('text', self.get_word())
 
         print(token, end=' ')
-        return token
+        self.token = token
+        return self.token
 
 
 
@@ -231,6 +235,15 @@ class Assembler():
         t = self.tok.next()
         self.write8(0x3d + self.get_pushpopreg(t))
 
+    def inst_addsp(self):
+        t = self.tok.next()
+        self.write8(0x46)
+        self.write16(self.get_literal16(t))
+
+    def inst_subsp(self):
+        t = self.tok.next()
+        self.write8(0x47)
+        self.write16(self.get_literal16(t))
 
 
     # Branch
@@ -400,7 +413,7 @@ class Assembler():
 
         if ta.type == 'symbol' and ta.value == '[':
             self.gen_adr(self.tok.next())
-            self.tok.next() # eat ]
+            if self.tok.token.value != ']': self.tok.next() # consume ]
             dest_in_memory = 1
             op1 = 'm'
         else:
@@ -421,6 +434,7 @@ class Assembler():
                 # But in general, the adr instruction clobbers t
                 self.error("Only one ALU operand can be an address.")
             self.gen_adr(self.tok.next())
+            if self.tok.token.value != ']': self.tok.next() # consume ]
             self.inst_ldt()
         else:
             self.error("Invalid ALU instruction.")
@@ -461,49 +475,68 @@ class Assembler():
         t = self.tok.next()
         if t.value not in REGS6:
             self.error("Invalid operand.")
-        self.write8(0xf8 + REGS6.index(t.value))        
+        self.write8(0xd8 + REGS6.index(t.value))
 
     def inst_inc(self):
         t = self.tok.next()
         if t.value not in REGS4:
             self.error("Invalid operand.")
-        self.write8(0xf0 + REGS4.index(t.value))
+        self.write8(0xd0 + REGS4.index(t.value))
 
     def inst_dec(self):
         t = self.tok.next()
         if t.value not in REGS4:
             self.error("Invalid operand.")
-        self.write8(0xf4 + REGS4.index(t.value))
+        self.write8(0xd4 + REGS4.index(t.value))
 
 
 
     def get_aluregw(self, reg):
         return REGS2.index(reg)
 
+    def inst_addsubw_memresult(self, base, ta, tb):
+        if ta.type == 'symbol' and ta.value == '[':
+            self.gen_adr(tb)
+            self.tok.next() # eat ]
+            tb = self.tok.next()
+
+        lit = 0
+        if tb.type == 'literal':
+            lit = 1
+            offs = 2
+        elif tb.type == 'text' and tb.value in ['b', 'c']:
+            offs = 0 if tb.value == 'b' else 1
+        else:
+            self.error("Invalid ALU instruction.")
+
+        self.write8(base + offs)
+        if lit:
+            self.write16(self.get_literal16(tb))
+
     def inst_addw(self):
         ta = self.tok.next()
         tb = self.tok.next()
         if ta is None or tb is None:
             self.error("ALU instructions require two operands.")
+
+        if ta.value in ['m', '[']:
+            self.inst_addsubw_memresult(0xe8, ta, tb)
+            return
                     
         lit = 0
         if tb.type == 'text':
             if tb.value == 'm':
-                self.inst_ldt()
-                offs = 0
-            elif tb.value == 't':
-                offs = 0
+                offs = 3
             elif tb.value in ['b', 'c']:
-                offs = 1 if tb.value == 'b' else 2
+                offs = 0 if tb.value == 'b' else 1
             else:
                 self.error("Invalid ALU instruction.")
         elif tb.type == 'literal':
             lit = 1
-            offs = 3
+            offs = 2
         elif tb.type == 'symbol' and tb.value == '[':
             self.gen_adr(self.tok.next())
-            self.inst_ldt()
-            offs = 0
+            offs = 3
         else:
             self.error("Invalid ALU instruction.")
 
@@ -511,7 +544,39 @@ class Assembler():
         if lit:
             self.write16(self.get_literal16(tb))
 
+    def inst_subw(self):
+        ta = self.tok.next()
+        tb = self.tok.next()
+        if ta is None or tb is None:
+            self.error("ALU instructions require two operands.")
 
+        if ta.value in ['m', '[']:
+            self.inst_addsubw_memresult(0xf1, ta, tb)
+            return
+                    
+        lit = 0
+        if tb.type == 'text':
+            if tb.value == 'm':
+                offs = 2
+            elif tb.value in ['b', 'c']:
+                offs = 0
+            else:
+                self.error("Invalid ALU instruction.")
+        elif tb.type == 'literal':
+            lit = 1
+            offs = 1
+        elif tb.type == 'symbol' and tb.value == '[':
+            self.gen_adr(self.tok.next())
+            offs = 2
+        else:
+            self.error("Invalid ALU instruction.")
+
+        if ta.value == tb.value: # sub b,b / sub c,c do not exist
+            self.error("Invalid ALU instruction.")
+
+        self.write8(0xeb + 3*self.get_aluregw(ta.value) + offs)
+        if lit:
+            self.write16(self.get_literal16(tb))
 
 
 
@@ -521,43 +586,57 @@ class Assembler():
         return ['b', 'c', 'sp'].index(t.value)
 
     def gen_adr(self, t):
+        lit8 = lit16 = None
+
+        # Count number of indirects 
+        num_indirect = 0
+        while t.type == 'symbol' and t.value == '*':
+            num_indirect += 1
+            t = self.tok.next()
+
         if t.value in ['b', 'c', 'sp']:
             t2 = self.tok.next()
             if (not t2) or (t2.value == ']'): # no offset
-                self.write8(0x01 + self.get_adrarg(t))
+                out = 0x01 + self.get_adrarg(t)
             elif t2.type == 'symbol' and t2.value == '+': # offset
                 t3 = self.tok.next()
                 if t3.value == 'x':
-                    self.write8(0x0a + self.get_adrarg(t))
+                    out = 0x0a + self.get_adrarg(t)
                 elif t3.value == 'y':
-                    self.write8(0x0d + self.get_adrarg(t))
+                    out = 0x0d + self.get_adrarg(t)
                 elif t3.value == 'b':
                     if t.value != 'sp':
                         self.error("Bad addressing mode.")
-                    self.write8(0x10)
+                    out = 0x10
                 elif t3.value == 'c':
                     if t.value == 'sp':
-                        self.write8(0x11)
+                        out = 0x11
                     elif t.value == 'b':
-                        self.write8(0x12)
+                        out = 0x12
                     else:
                         self.error("Bad addressing mode.")
                 else:
                     offset = self.get_literal(t3)
                     if 0 <= offset <= 255:
-                        self.write8(0x04 + self.get_adrarg(t))
-                        self.write8(offset)
+                        out = 0x04 + self.get_adrarg(t)
+                        lit8 = offset
                     elif 0 <= offset <= 65535:
-                        self.write8(0x07 + self.get_adrarg(t))
-                        self.write16(offset)
+                        out = 0x07 + self.get_adrarg(t)
+                        lit16 = offset
                     else:
                         self.error("Offset out of range.")
             else:
                 self.error("Bad addressing mode.")
         else: # immediate
             addr = self.get_literal(t)
-            self.write8(0x00)
-            self.write16(addr)
+            out = 0x00
+            lit16 = addr
+
+        self.write8(out)
+        if lit8 is not None: self.write8(lit8)
+        if lit16 is not None: self.write16(lit16)
+        for _ in range(num_indirect):
+            self.write8(0x13) # adra
 
     def inst_adr(self):
         t = self.tok.next()
@@ -567,6 +646,8 @@ class Assembler():
         self.write8(0x13)
 
 
+    def inst_sig(self):
+        self.write8(0xfe)
 
     def inst_brk(self):
         self.write8(0xff)
@@ -624,6 +705,15 @@ class Assembler():
         self.write8(length)
         for b in output:
             self.write8(b)
+
+
+
+    def direc_text(self):
+        pass
+    def direc_data(self):
+        pass        
+    def direc_global(self):
+        self.tok.next()
 
 
 

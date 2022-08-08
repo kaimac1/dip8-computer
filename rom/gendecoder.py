@@ -43,11 +43,50 @@ def create_logisim_file(filename, rom):
 invert = [sig.startswith("!") for sig in output_signals]
 signal_names = [sig.strip("!") for sig in output_signals] # without !
 
+class Cycle:
+    def __init__(self):
+        self.condition = lambda flags: True
+        self.signals_met = []
+        self.signals_unmet = []
+
+fetch_cycle = Cycle()
+fetch_cycle.signals_met = t0
+next_cycle = Cycle()
+next_cycle.signals_met = ['next']
+
 class Instruction:
     def __init__(self):
-        self.sequence_good = []
-        self.sequence_bad = []
-        self.condition = lambda flags: True
+        self.sequence = [fetch_cycle] # list of Cycles
+
+default_instruction = Instruction()
+
+
+def get_signals(sigs):
+    sigsout = []
+
+    for sig in sigs:
+        if sig not in raw_signals:
+            print (f"ERROR 0x{opcode:02x}: Undefined signal '{sig}'")
+            sys.exit(-1)
+
+        # Replace individual ALU op/register selection signals with multiplexed regsel/opsel bits
+        if sig in regsel:
+            regnum = regsel.index(sig)
+            if regnum & 1: sigsout.append('regsel0')
+            if regnum & 2: sigsout.append('regsel1')
+            if regnum & 4: sigsout.append('regsel2')
+        elif sig in alusel:
+            opnum = alusel.index(sig)
+            if opnum & 1: sigsout.append('opsel0')
+            if opnum & 2: sigsout.append('opsel1')
+            if opnum & 4: sigsout.append('opsel2')
+            if opnum & 8: sigsout.append('opsel3')
+        else:
+            sigsout.append(sig)
+
+    return sigsout
+
+
 
 
 def main():
@@ -55,52 +94,39 @@ def main():
 
     for opcode in inst:
         text = inst[opcode]
-
         instruction = Instruction()
-        instruction.sequence_good = [t0]
-        instruction.sequence_bad = [t0]
+
 
         lines = [line.strip() for line in text.split('\n')]
         name = lines[0]
-        sections = lines[1:]
+        cycles = lines[1:]
 
-        for s in sections:
+        for c in cycles:
+            this_cycle = Cycle()
             sigsout = []
-            sigs = [sig for sig in s.split(" ") if sig != '']
-            cond = False
-            for sig in sigs:
+            words = [word for word in c.split(" ") if word != '']
 
-                if sig[0] == '(':
-                    if sig == '(CS)': instruction.condition = lambda flags: flags.C
-                    if sig == '(CC)': instruction.condition = lambda flags: not flags.C
-                    if sig == '(Z)':  instruction.condition = lambda flags: flags.Z
-                    if sig == '(NZ)': instruction.condition = lambda flags: not flags.Z
-                    if sig == '(S)':  instruction.condition = lambda flags: flags.N
-                    if sig == '(NS)': instruction.condition = lambda flags: not flags.N
-                    instruction.sequence_bad = instruction.sequence_good.copy()
-                    continue
+            if words[0][0] == '(':
+                colon_pos = words.index(':')
+                then_words = words[1:colon_pos]
+                else_words = words[colon_pos+1:]
+                cond = words[0]
 
-                elif sig not in raw_signals:
-                    print (f"ERROR 0x{opcode:02x}: Undefined signal '{sig}'")
-                    return False
+                # somewhat hacky!
+                if cond == '(C=1)': this_cycle.condition = lambda flags: flags.C
+                if cond == '(C=0)': this_cycle.condition = lambda flags: not flags.C
+                if cond == '(Z=1)': this_cycle.condition = lambda flags: flags.Z
+                if cond == '(Z=0)': this_cycle.condition = lambda flags: not flags.Z
+                if cond == '(N=1)': this_cycle.condition = lambda flags: flags.N
+                if cond == '(N=0)': this_cycle.condition = lambda flags: not flags.N
+                if cond == '(Z=1,N=1)': this_cycle.condition = lambda flags: flags.Z and flags.N
 
-                # Replace individual ALU op/register selection signals with multiplexed regsel/opsel bits
-                if sig in regsel:
-                    regnum = regsel.index(sig)
-                    if regnum & 1: sigsout.append('regsel0')
-                    if regnum & 2: sigsout.append('regsel1')
-                    if regnum & 4: sigsout.append('regsel2')
-                elif sig in alusel:
-                    opnum = alusel.index(sig)
-                    if opnum & 1: sigsout.append('opsel0')
-                    if opnum & 2: sigsout.append('opsel1')
-                    if opnum & 4: sigsout.append('opsel2')
-                    if opnum & 8: sigsout.append('opsel3')
-                else:
-                    sigsout.append(sig)
+                this_cycle.signals_met = get_signals(then_words)
+                this_cycle.signals_unmet = get_signals(else_words)
+            else:
+                this_cycle.signals_met = get_signals(words)
 
-            instruction.sequence_good.append(sigsout)
-
+            instruction.sequence.append(this_cycle)
         instructions[opcode] = instruction
 
 
@@ -110,27 +136,28 @@ def main():
         flags = create_flags(flagcode)
 
         for opcode in range(256):
-
             if opcode in instructions:
-                # Select sequence based on whether the condition is met
                 instruction = instructions[opcode]
-                good = instruction.condition(flags)
-                seq = instruction.sequence_good if good else instruction.sequence_bad
-                seq = seq + [['next']]
-                if len(seq) >= 2**cyclebits:
-                    raise Exception("Instruction sequence too long", opcode)
+                sequence = instruction.sequence.copy()
+                sequence.append(next_cycle)
+                if len(sequence) >= 2**cyclebits:
+                    raise Exception(f"Instruction sequence too long: 0x{opcode:02x}")
             else:
                 # Unimplemented instruction
-                seq = default_seq
+                instruction = default_instruction
+                sequence = instruction.sequence.copy()
 
             #if opcode == 0xfe: print(opcode, seq)
 
             for cycle in range(2**cyclebits):
-                addr = create_address(opcode, cycle, flags)
-                if cycle < len(seq):
-                    data = create_data(seq[cycle])
+                if cycle < len(sequence):
+                    this_cycle = sequence[cycle]
+                    sigs = this_cycle.signals_met if this_cycle.condition(flags) else this_cycle.signals_unmet
                 else:
-                    data = create_data(['next'])
+                    sigs = ['next']
+
+                addr = create_address(opcode, cycle, flags)
+                data = create_data(sigs)
                 rom[addr] = data
 
 

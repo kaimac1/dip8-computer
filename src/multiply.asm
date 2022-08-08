@@ -4,20 +4,35 @@
             mov b, #$8000
             mov sp, b
 
-            ldx var1
-            call printdx
-            mov b, #string1
-            call prints
-            ldx var2
-            call printdx
-            mov b, #string2
-            call prints
+            mov b, #$6969
+            mov c, #$0420
+            call mul16
 
-            ldbh var1
-            ldbl var2
-            call mulb
+            brk
 
-            call printdb
+            ldx mulq3
+            call printxh
+            ldx mulq2
+            call printxh
+            ldx mulq1
+            call printxh
+            ldx mulq0 
+            call printxh
+
+            ; ldx var1
+            ; call printdx
+            ; mov b, #string1
+            ; call prints
+            ; ldx var2
+            ; call printdx
+            ; mov b, #string2
+            ; call prints
+
+            ; ldbh var1
+            ; ldbl var2
+            ; call mulb
+
+            ; call printdb
 
             brk
 string1     .string " x "
@@ -34,7 +49,6 @@ var2        .byte 69
 ; b        16-bit output
 
 mulb        mov x, #0
-            mov y, #8
             add x, #0       ; clear carry
             ror bl          ; lsr bl
             jcc mbn1
@@ -71,6 +85,43 @@ mbn8        ror x
             ror bl
             mov bh, x
             ret
+
+
+;multiply (16x16 bit = 32 bit result)
+; b, c      inputs
+; mulq3:0   output
+
+mulin1  .word   0
+mulq0   .byte   0
+mulq1   .byte   0
+mulq2   .byte   0
+mulq3   .byte   0
+
+
+mul16       stb mulin1
+            mov bh, cl
+            call mulb           ; bl.cl
+            stb mulq0           ; q1q0 = bl.cl
+
+            ldb mulin1
+            mov bl, ch
+            call mulb           ; bh.ch
+            stb mulq2           ; q3q2 = bh.ch
+            
+            ldb mulin1
+            mov bh, ch
+            call mulb           ; ch.bl
+            add [mulq1], bl     ; q2q1 += bl.ch
+            adc [mulq2], bh
+
+            ldb mulin1
+            mov bl, cl
+            call mulb           ; bh.cl
+            add [mulq1], bl     ; q2q1 += bh.cl
+            adc [mulq2], bh
+
+            ret
+
 
 
 
@@ -143,3 +194,25 @@ psloop      inc b
             dec x
             jnz psloop
             ret
+
+;print an 8-bit hexadecimal value
+; x   number to print
+; y   clobbered
+; bc  saved
+
+printxh     push b
+            mov b, #hexdigits
+            mov y, #0
+_loop       cmp x, #16      ; while x >= 16
+            jcc write
+            sub x, #16
+            inc y
+            jmp loop
+_write      ldy b+y         ; y = hi nib
+            sty UART
+            ldy b+x         ; x = low nib
+            sty UART
+            pop b
+            ret
+
+hexdigits   .byte "0123456789abcdef"
