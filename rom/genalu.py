@@ -123,7 +123,7 @@ class ALU():
     def opci(self, a, b, c):
         r = a + c
         q = r % 16
-        self.setflags(True, C=r>15)
+        self.setflags(False, C=r>15)
         return q
 
     # decrement if carry clear
@@ -131,7 +131,7 @@ class ALU():
         r = a + ~0 + c
         cout = r >= 0
         q = r % 16
-        self.setflags(True, C=cout)
+        self.setflags(False, C=cout)
         return q
 
 
