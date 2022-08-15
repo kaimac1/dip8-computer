@@ -287,7 +287,7 @@ if __name__ == "__main__":
     print()
     print(f"    Emulator took {cpu.real_time:.2f} seconds")
     time_factor = cpu.real_time / cputime
-    print(f"    ({time_factor:.2f}x)")
+    print(f"    ({time_factor:.2f}x slowdown)")
 
 
     if args.dump_registers:

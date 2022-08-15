@@ -38,7 +38,8 @@ def is_literal_start(char):
     return char in ['#', '$', '%', "'"]
 
 class Tokeniser():
-    def __init__(self, input):
+    def __init__(self, input, debugmode):
+        self.debugmode = debugmode
         self.str = input
         self.pos = 0
         self.token = None
@@ -130,7 +131,7 @@ class Tokeniser():
         else:
             token = Token('text', self.get_word())
 
-        print(token, end=' ')
+        if self.debugmode: print(token, end=' ')
         self.token = token
         return self.token
 
@@ -148,6 +149,10 @@ class Assembler():
         self.pidx = 0
         self.syms = {}
 
+    def debug(self, msg, *args, **kwargs):
+        if self.debugmode:
+            print(msg, *args, **kwargs)
+
     def error(self, msg):
         print(f"Error on line {self.line_num}: {msg}")
         sys.exit(-1)
@@ -159,7 +164,7 @@ class Assembler():
             return
 
         self.output.append(b)
-        print(f"{ANSI_GREEN}[0x{b:02x}]{ANSI_RESET} ", end='')
+        self.debug(f"{ANSI_GREEN}[0x{b:02x}]{ANSI_RESET} ", end='')
         self.addr += 1
 
     def write16(self, dd):
@@ -170,7 +175,7 @@ class Assembler():
         # Little endian
         self.output.append(dd & 0xFF)
         self.output.append(dd >> 8)
-        print(f"{ANSI_GREEN}[0x{dd:04x}]{ANSI_RESET} ", end='')
+        self.debug(f"{ANSI_GREEN}[0x{dd:04x}]{ANSI_RESET} ", end='')
         self.addr += 2
 
     def get_symbol(self, name):
@@ -721,7 +726,7 @@ class Assembler():
         lines = src.split('\n')
 
         # pass 1
-        print("pass 1:")
+        self.debug("pass 1:")
         self.addr = 0
         self.pass1 = True
         self.parent_label = ''
@@ -732,16 +737,15 @@ class Assembler():
             self.addr += self.nbytes
 
         # pass 2
-        print("\n\npass 2:")
+        self.debug("\n\npass 2:")
         self.output = bytearray()
         self.addr = 0
         self.pass1 = False
         self.line_num = 0
         for i, line in enumerate(lines):
             self.line_num = i+1
-            print(f"\n{self.addr:04x}\t", end='')
+            self.debug(f"\n{self.addr:04x}\t", end='')
             self.asm_line(line)
-            #print()
 
         return self.output
 
@@ -750,13 +754,13 @@ class Assembler():
         if name[0] == LOCAL_LABEL_CHAR:
             # Local label
             if self.pass1:
-                print(f"\nDefining local label {name}")
+                self.debug(f"\nDefining local label {name}")
                 name = self.parent_label + '/' + name[1:]
                 self.syms[name] = value
         else:
             self.parent_label = name
             if self.pass1:
-                print(f"\nDefining global label {name}")
+                self.debug(f"\nDefining global label {name}")
                 self.syms[name] = value
 
 
@@ -780,7 +784,7 @@ class Assembler():
         return getattr(self, "inst_" + inst)()
 
     def asm_line(self, line):
-        self.tok = Tokeniser(line)
+        self.tok = Tokeniser(line, self.debugmode)
 
         token1 = self.tok.next()
         if token1 is None: return
@@ -829,6 +833,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="DIP8 assembler")
     parser.add_argument('srcfile')
     parser.add_argument('outfile', nargs='?', default='out.bin')
+    parser.add_argument('-d', '--debug', action="store_true")
     parser.add_argument('-l', '--logisim', action="store_true")
     args = parser.parse_args()
 
@@ -836,11 +841,12 @@ if __name__ == "__main__":
         src = f.read()
 
     asm = Assembler()
+    asm.debugmode = args.debug
     out = asm.assemble(src)
 
     import binascii
-    print(f"\nSymbols: {asm.syms}")
-    print(f"{len(out)} bytes.")
+    asm.debug(f"\nSymbols: {asm.syms}")
+    print(f"{len(out)} bytes")
 
     if args.logisim:
         print("Creating logisim image.")
