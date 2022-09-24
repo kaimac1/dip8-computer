@@ -147,7 +147,8 @@ static char *labprefix="l",*idprefix="";
 static char *tmpprefix="b";
 static int tmplabel = 0;
 
-static long stackoffset = 1;
+static long stackoffset = 3;
+static long function_arg_bytes = 0;
 static long notpopped,dontpop,maxpushed;
 static long localsize,rsavesize,argsize;
 
@@ -249,14 +250,16 @@ static int spilled_reg;
 
 static void spill_reg(FILE *f, int r) {
     spilled_reg = r;
-    emit(f, "\tpush  %s\t\t;spill\n", regnames[r]);
-
-    stackoffset += regsize[r];
+    
+    //emit(f, "\tpush  %s\t\t;spill\n", regnames[r]);
+    //stackoffset += regsize[r];
+    emit(f, "\tst%s sp+%d\t\t;spill\n", regnames[r], stackoffset-2);
 }
 static void unspill_reg(FILE *f) {
     if (spilled_reg != 0) {
-        emit(f, "\tpop   %s\t\t;unspill\n", regnames[spilled_reg]);
-        stackoffset -= regsize[spilled_reg];
+        //emit(f, "\tpop   %s\t\t;unspill\n", regnames[spilled_reg]);
+        //stackoffset -= regsize[spilled_reg];
+        emit(f, "\tld%s sp+%d\t\t;unspill\n", regnames[spilled_reg], stackoffset-2);
 
         spilled_reg = 0;
     }
@@ -1451,7 +1454,7 @@ void gen_code(FILE *f,struct IC *p,struct Var *v,zmax offset) {
 
 
 
-    localsize=(zm2l(offset)+3)/4*4;
+    localsize=(zm2l(offset)+3)/4*4 + 2;
     function_top(f,v,localsize);
 
     // Code generation pass
@@ -1502,6 +1505,9 @@ void gen_code(FILE *f,struct IC *p,struct Var *v,zmax offset) {
           if(regscratch[i]) BSET(regs_modified,i);
         }
           }
+
+          stackoffset -= function_arg_bytes;
+          function_arg_bytes = 0;
           continue;
         }    
 
@@ -1618,9 +1624,16 @@ void gen_code(FILE *f,struct IC *p,struct Var *v,zmax offset) {
             // Push function argument
             case PUSH:
                 if (t==0) ierror(0);
-                emit(f,"\tpush.%s\t",dt(t));
-                emit_obj(f,&p->q1,t, 0);
+                allocate_result_reg(f, p, 0);
+                load_reg(f, zreg, &p->q1, t);
+                
+                emit(f,"\tpush\t");
+                emit(f, "%s", regnames[zreg]);
+                //emit_obj(f,&p->q1,t, 0);
                 emit(f,"\n");
+
+                function_arg_bytes += regsize[zreg];
+                stackoffset += regsize[zreg];
                 continue;
 
         }
