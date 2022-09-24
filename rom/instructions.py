@@ -17,12 +17,12 @@ raw_signals.extend(alusel)
 output_signals = [
 '!next',    # 0
 'aout',     # 1
-'!pcinc',   # 2
+'pcinc',    # 2
 '!pcwr',    # 3
 '!irwr',    # 4
 '!memrd',   # 5
 '!memwr',   # 6
-'!ainc',    # 7
+'ainc',     # 7
 '!ahwr',     # 0
 '!alwr',     # 1
 '!regoe',    # 2

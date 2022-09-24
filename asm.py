@@ -186,7 +186,7 @@ class Assembler():
             return self.syms[name]
         else:
             if self.pass1: # don't complain on pass1 if not defined yet
-                return 0 
+                return 65535 # default address: max
             self.error(f"Undefined symbol: {name}")
 
     def get_literal(self, t):

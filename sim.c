@@ -140,12 +140,12 @@ void clock_cycle(void) {
     }
 
     bool sig_aout  =   d0 & 0b00000010;
-    bool sig_pcinc = !(d0 & 0b00000100);
+    bool sig_pcinc =  (d0 & 0b00000100);
     bool sig_pcwr  = !(d0 & 0b00001000);
     bool sig_irwr  = !(d0 & 0b00010000);
     bool sig_memrd = !(d0 & 0b00100000);
     bool sig_memwr = !(d0 & 0b01000000);
-    bool sig_ainc  = !(d0 & 0b10000000);
+    bool sig_ainc  =  (d0 & 0b10000000);
     bool sig_ahwr  = !(d1 & 0b00000001);
     bool sig_alwr  = !(d1 & 0b00000010);
     bool sig_regoe = !(d1 & 0b00000100);
@@ -251,7 +251,6 @@ int main(int argc, char *argv[]) {
         fclose(f);
         return -1;
     }
-    printf("Read %lu bytes.\n", size);
     fclose(f);
 
     // Run simulation
@@ -261,24 +260,17 @@ int main(int argc, char *argv[]) {
     printf("    %d instructions\n", instructions);
     printf("    %d cycles\n", cycles);
     float cpu_secs = (float)cycles / CPU_FREQ;
-    printf("    %.3f sec at %.1f MHz\n", cpu_secs, CPU_FREQ/1000000.0f);
-
-    printf("\n");
     float speed_percent = cpu_secs/sim_secs * 100.0f;
-    printf("    Simulator took %.3f sec (%.0f%% speed)\n", sim_secs, speed_percent);
-
-
-    printf("Registers:\n");
-    printf("    a  0x%04x  %d\n", a, a);
-    printf("    t  0x%02x    %d\n", t, t);
+    printf("    %.3f sec at %.1f MHz (%.0f%% speed)\n", cpu_secs, CPU_FREQ/1000000.0f, speed_percent);
+    
     uint16_t breg = regs[0]<<8 | regs[1];
     uint16_t creg = regs[2]<<8 | regs[3];
     uint16_t spreg = regs[6]<<8 | regs[7];
-    printf("    b  0x%04x  %d\n", breg, breg);
-    printf("    c  0x%04x  %d\n", creg, creg);
-    printf("   pc  0x%04x  %d\n", pc, pc);
-    printf("   sp  0x%04x  %d\n", spreg, spreg);
-    printf("flags  %c%c%c\n", C?'C':' ', Z?'Z':' ', N?'N':' ');
+    printf("Registers:\n");
+    printf("    b: 0x%04x %5d    c: 0x%04x %5d\n", breg, breg, creg, creg);
+    printf("    x: 0x%02x   %5d    y: 0x%02x   %5d\n", regs[4], regs[4], regs[5], regs[5]);
+    printf("   pc: 0x%04x %5d   sp: 0x%04x %5d\n", pc, pc, spreg, spreg);
+    printf("flags: %c%c%c\n", C?'C':' ', Z?'Z':' ', N?'N':' ');
 
 
     

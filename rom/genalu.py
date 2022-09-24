@@ -238,7 +238,7 @@ def main():
                                 data = create_data(q, flags, clken)
                                 rom[addr] = data
 
-    create_logisim_file("alu.rom", rom)
+    create_logisim_file("alu_logisim.rom", rom)
 
     byte = bytearray([word for word in rom])
     with open('alu.bin', 'wb') as f:
