@@ -47,7 +47,7 @@ long int microseconds_since(struct timeval start) {
 // Write to memory or peripheral
 void memwr(uint16_t addr, uint8_t data) {
     memory[addr] = data;
-    if (addr == 0xF000) {
+    if (addr == 0xFF00) {
         // UART
         putchar(data);
         fflush(stdout);
