@@ -8,7 +8,6 @@ from instructions import *
 flagbits = 3
 cyclebits = 4
 inbits = 16
-default_seq = [['']] * (2**cyclebits)
 
 def create_flags(flagcode):
     out = namedtuple('flags', ('C', 'Z', 'N'))
@@ -59,6 +58,10 @@ class Instruction:
         self.sequence = [fetch_cycle] # list of Cycles
 
 default_instruction = Instruction()
+
+brk_opcode = 0xff
+brk_instruction = Instruction()
+brk_instruction.sequence = []
 
 
 def get_signals(sigs):
@@ -143,18 +146,22 @@ def main():
                 if len(sequence) >= 2**cyclebits:
                     raise Exception(f"Instruction sequence too long: 0x{opcode:02x}")
             else:
-                # Unimplemented instruction
-                instruction = default_instruction
+                if opcode == brk_opcode:
+                    instruction = brk_instruction
+                else:
+                    # Unimplemented instruction
+                    instruction = default_instruction
                 sequence = instruction.sequence.copy()
-
-            #if opcode == 0xfe: print(opcode, seq)
 
             for cycle in range(2**cyclebits):
                 if cycle < len(sequence):
                     this_cycle = sequence[cycle]
                     sigs = this_cycle.signals_met if this_cycle.condition(flags) else this_cycle.signals_unmet
+                elif opcode == brk_opcode:
+                    sigs = []
                 else:
                     sigs = ['next']
+
 
                 addr = create_address(opcode, cycle, flags)
                 data = create_data(sigs)
