@@ -462,14 +462,14 @@ inst[0x7e] = f'''adc bh, t       \n      {ModifyRegister} selbh opadc   setflags
 inst[0x7f] = f'''adc bl, t       \n      {ModifyRegister} selbl opadc   setflags'''
 inst[0x80] = f'''adc ch, t       \n      {ModifyRegister} selch opadc   setflags'''
 inst[0x81] = f'''adc cl, t       \n      {ModifyRegister} selcl opadc   setflags'''
-inst[0x82] = f'''adc m, t        \n      {LoadRegister} msel    \n      {StoreALU} msel opadc setflags'''
+inst[0x82] = f'''adc m, t        \n      {LoadRegister} msel    \n      {ModifyRegister} msel  opadc   setflags     \n  {StoreRegister} msel'''
 inst[0x83] = f'''adc x, #L       \n      {LoadLiteral} twr      \n      {ModifyRegister} selx  opadc   setflags'''
 inst[0x84] = f'''adc y, #L       \n      {LoadLiteral} twr      \n      {ModifyRegister} sely  opadc   setflags'''
 inst[0x85] = f'''adc bh, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selbh opadc   setflags'''
 inst[0x86] = f'''adc bl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selbl opadc   setflags'''
 inst[0x87] = f'''adc ch, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selch opadc   setflags'''
 inst[0x88] = f'''adc cl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selcl opadc   setflags'''
-inst[0x89] = f'''adc m, #L       \n      {LoadLiteral} twr      \n      {LoadRegister} msel         \n  {StoreALU} msel opadc setflags'''
+inst[0x89] = f'''adc m, #L       \n      {LoadLiteral} twr      \n      {LoadRegister} msel         \n  {ModifyRegister} msel opadc setflags \n {StoreRegister} msel'''
 
 inst[0x8a] = f'''sbc x, t        \n      {ModifyRegister} selx  opsbc   setflags'''
 inst[0x8b] = f'''sbc y, t        \n      {ModifyRegister} sely  opsbc   setflags'''
@@ -477,14 +477,14 @@ inst[0x8c] = f'''sbc bh, t       \n      {ModifyRegister} selbh opsbc   setflags
 inst[0x8d] = f'''sbc bl, t       \n      {ModifyRegister} selbl opsbc   setflags'''
 inst[0x8e] = f'''sbc ch, t       \n      {ModifyRegister} selch opsbc   setflags'''
 inst[0x8f] = f'''sbc cl, t       \n      {ModifyRegister} selcl opsbc   setflags'''
-inst[0x90] = f'''sbc m, t        \n      {LoadRegister} msel    \n      {StoreALU} msel opsbc setflags'''
+inst[0x90] = f'''sbc m, t        \n      {LoadRegister} msel    \n      {ModifyRegister} msel opsbc setflags        \n {StoreRegister} msel'''
 inst[0x91] = f'''sbc x, #L       \n      {LoadLiteral} twr      \n      {ModifyRegister} selx  opsbc   setflags'''
 inst[0x92] = f'''sbc y, #L       \n      {LoadLiteral} twr      \n      {ModifyRegister} sely  opsbc   setflags'''
 inst[0x93] = f'''sbc bh, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selbh opsbc   setflags'''
 inst[0x94] = f'''sbc bl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selbl opsbc   setflags'''
 inst[0x95] = f'''sbc ch, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selch opsbc   setflags'''
 inst[0x96] = f'''sbc cl, #L      \n      {LoadLiteral} twr      \n      {ModifyRegister} selcl opsbc   setflags'''
-inst[0x97] = f'''sbc m, #L       \n      {LoadLiteral} twr      \n      {LoadRegister} msel         \n  {StoreALU} msel opsbc setflags'''
+inst[0x97] = f'''sbc m, #L       \n      {LoadLiteral} twr      \n      {LoadRegister} msel         \n  {ModifyRegister} msel opsbc setflags \n {StoreRegister} msel'''
 
 
 # If Z=1, N=1 (set by sig instruction) we are doing a *signed* comparison
@@ -626,26 +626,29 @@ inst[0xe7] = f'''addw c, m
 inst[0xe8] = f'''addw m, b
     {RegisterToT} selbl
     {LoadRegister} msel
-    {StoreALU} msel opadd setflags ainc
-    {RegisterToT} selbh
+    {StoreALU} msel opadd setflags
+    {RegisterToT} selbh ainc
     {LoadRegister} msel
-    {StoreALU} msel opadc setflags'''
+    {ModifyRegister} msel opadc setflags
+    {StoreRegister} msel'''
 
 inst[0xe9] = f'''addw m, c
     {RegisterToT} selcl
     {LoadRegister} msel
-    {StoreALU} msel opadd setflags ainc
-    {RegisterToT} selch
+    {StoreALU} msel opadd setflags
+    {RegisterToT} selch ainc
     {LoadRegister} msel
-    {StoreALU} msel opadc setflags'''
+    {ModifyRegister} msel opadc setflags
+    {StoreRegister} msel'''
     
 inst[0xea] = f'''addw m, #LL
     {LoadLiteral} twr
     {LoadRegister} msel
-    {StoreALU} msel opadd setflags ainc
-    {LoadLiteral} twr
+    {StoreALU} msel opadd setflags
+    {LoadLiteral} twr ainc
     {LoadRegister} msel
-    {StoreALU} msel opadc setflags'''
+    {ModifyRegister} msel opadc setflags
+    {StoreRegister} msel'''
 
 
 
@@ -688,26 +691,29 @@ inst[0xf0] = f'''subw c, m
 inst[0xf1] = f'''subw m, b
     {RegisterToT} selbl
     {LoadRegister} msel
-    {StoreALU} msel opsub setflags ainc
-    {RegisterToT} selbh
+    {StoreALU} msel opsub setflags
+    {RegisterToT} selbh ainc
     {LoadRegister} msel
-    {StoreALU} msel opsbc setflags'''
+    {ModifyRegister} msel opsbc setflags
+    {StoreRegister} msel'''
 
 inst[0xf2] = f'''subw m, c
     {RegisterToT} selcl
     {LoadRegister} msel
-    {StoreALU} msel opsub setflags ainc
-    {RegisterToT} selch
+    {StoreALU} msel opsub setflags
+    {RegisterToT} selch ainc
     {LoadRegister} msel
-    {StoreALU} msel opsbc setflags'''
+    {ModifyRegister} msel opsbc setflags
+    {StoreRegister} msel'''
     
 inst[0xf3] = f'''subw m, #LL
     {LoadLiteral} twr
     {LoadRegister} msel
-    {StoreALU} msel opsub setflags ainc
-    {LoadLiteral} twr
+    {StoreALU} msel opsub setflags
+    {LoadLiteral} twr ainc
     {LoadRegister} msel
-    {StoreALU} msel opsbc setflags'''
+    {ModifyRegister} msel opsbc setflags
+    {StoreRegister} msel'''
 
 
 # inst[0xef] = f'''addw8 b, t
