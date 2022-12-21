@@ -4,7 +4,7 @@
 #include <string.h>
 #include <time.h>
 #include <sys/time.h>
-#define CPU_FREQ 2000000
+#define CPU_FREQ 4000000
 #define ROM_SIZE 65536
 #define MEM_SIZE 65536
 
@@ -47,7 +47,7 @@ long int microseconds_since(struct timeval start) {
 // Write to memory or peripheral
 void memwr(uint16_t addr, uint8_t data) {
     memory[addr] = data;
-    if (addr == 0xFF00) {
+    if (addr == 0xFF03) {
         // UART
         putchar(data);
         fflush(stdout);

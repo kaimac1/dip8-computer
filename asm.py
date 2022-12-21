@@ -148,6 +148,7 @@ class Assembler():
     def __init__(self):
         self.pidx = 0
         self.syms = {}
+        self.varaddr = 0
 
     def debug(self, msg, *args, **kwargs):
         if self.debugmode:
@@ -184,6 +185,8 @@ class Assembler():
             return self.syms[local_name]
         elif name in self.syms:
             return self.syms[name]
+        elif self.is_directive(name):
+            return self.run_directive(name)
         else:
             if self.pass1: # don't complain on pass1 if not defined yet
                 return 65535 # default address: max
@@ -591,7 +594,8 @@ class Assembler():
         return ['b', 'c', 'sp'].index(t.value)
 
     def gen_adr(self, t):
-        lit8 = lit16 = None
+        lit8 = None
+        lit16 = None
 
         # Count number of indirects 
         num_indirect = 0
@@ -676,6 +680,36 @@ class Assembler():
 
 
     # Directives
+
+    # Declare start address for variables
+    # .varstart $8000
+    def direc_varstart(self):
+        t = self.tok.next()
+        self.varaddr = self.get_literal16(t)
+
+    # Declare a variable
+    # myvar = .var word
+    # myvar = .var array 256 [byte]
+    def direc_var(self):
+        addr = self.varaddr
+        number = 1
+        size = 1
+
+        t = self.tok.next()
+        if not t.type == 'text': self.error("Bad type")
+        if t.value == 'array':
+            number = self.get_literal16(self.tok.next())
+            t = self.tok.next()
+
+        if t:
+            if t.value == 'byte':
+                size = 1
+            elif t.value == 'word':
+                size = 2
+        self.varaddr += number*size
+        return addr
+
+
 
     def direc_byte(self):
         t = self.tok.next()
