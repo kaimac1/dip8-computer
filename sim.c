@@ -4,9 +4,67 @@
 #include <string.h>
 #include <time.h>
 #include <sys/time.h>
+
+
+
+/***************************************************************************/
+// 
+/***************************************************************************/
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/select.h>
+#include <termios.h>
+
+struct termios orig_termios;
+
+void reset_terminal_mode()
+{
+    tcsetattr(0, TCSANOW, &orig_termios);
+}
+
+void set_conio_terminal_mode()
+{
+    struct termios new_termios;
+
+    /* take two copies - one for now, one for later */
+    tcgetattr(0, &orig_termios);
+    memcpy(&new_termios, &orig_termios, sizeof(new_termios));
+
+    /* register cleanup handler, and set the new terminal mode */
+    atexit(reset_terminal_mode);
+    cfmakeraw(&new_termios);
+    tcsetattr(0, TCSANOW, &new_termios);
+}
+
+int kbhit()
+{
+    struct timeval tv = { 0L, 0L };
+    fd_set fds;
+    FD_ZERO(&fds);
+    FD_SET(0, &fds);
+    return select(1, &fds, NULL, NULL, &tv) > 0;
+}
+
+int getch()
+{
+    int r;
+    unsigned char c;
+    if ((r = read(0, &c, sizeof(c))) < 0) {
+        return r;
+    } else {
+        return c;
+    }
+}
+
+/***************************************************************************/
+
+
+
+
 #define CPU_FREQ 4000000
 #define ROM_SIZE 65536
 #define MEM_SIZE 65536
+
 
 // Decoder/ALU ROMs
 uint8_t dec0[ROM_SIZE], dec1[ROM_SIZE], dec2[ROM_SIZE];
@@ -50,9 +108,29 @@ void memwr(uint16_t addr, uint8_t data) {
     if (addr == 0xFF03) {
         // UART
         putchar(data);
+        if (data == 0x0a) {
+            putchar(0x0d);
+        }
         fflush(stdout);
     }
 }
+// Read from memory/peripheral
+uint8_t memrd(uint16_t addr) {
+    if (addr == 0xFF03) {
+        if (kbhit()) {
+            memory[0xFF01] &= ~0x01; // clear RX rdy
+            uint8_t c = getch();
+            if (c == 0x03) halted = true;
+            return c;
+        }
+    } else if (addr == 0xFF01) {
+        if (kbhit()) {
+            memory[0xFF01] |= 0x01;
+        }
+    }
+    return memory[addr];
+}
+
 
 void run(void) {
 
@@ -172,7 +250,7 @@ void clock_cycle(void) {
     // dbus writers
     uint8_t dbus;
     if (sig_memrd) {
-        dbus = memory[abus];
+        dbus = memrd(abus);
     } else if (sig_alu) {
         uint8_t alu_a = sig_regoe ? regs[sig_regsel] : 0;
         dbus = do_alu(alu_a, sig_opsel, sig_setflags);
@@ -254,7 +332,9 @@ int main(int argc, char *argv[]) {
     fclose(f);
 
     // Run simulation
+    set_conio_terminal_mode();
     run();
+    reset_terminal_mode();
 
     printf("\n---\nStatistics:\n");
     printf("    %d instructions\n", instructions);
@@ -276,3 +356,8 @@ int main(int argc, char *argv[]) {
     
     return 0;
 }
+
+
+
+
+
