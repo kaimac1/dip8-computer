@@ -1,28 +1,16 @@
-/*  Example backend for vbcc, it models a generic 32bit RISC or CISC
-    CPU.
-
-    Configurable at build-time are:
-    - number of (32bit) general-purpose-registers
-    - number of (64bit) floating-point-registers
-    - number of (8bit) condition-code-registers
-    - mechanism for stack-arguments (moving ot fixed sp)
-
-    It allows to select as run-time-options:
-    - two- or three-address code
-    - memory operands or load-store-architecture
-    - number of register-arguments
-    - number of caller-save-registers
-*/
-
 #include "dt.h"
-
-/* internally used by the backend */
-#define NUM_GPRS 8
-#define FIRST_GPR 1
-#define LAST_GPR (FIRST_GPR+NUM_GPRS-1)
 
 /*  The number of registers of the target machine.                  */
 #define MAXR 8
+
+#define REG_X  1
+#define REG_Y  2
+#define REG_BH 3
+#define REG_BL 4
+#define REG_CH 5
+#define REG_CL 6
+#define REG_B  7
+#define REG_C  8
 
 
 /*  This struct can be used to implement machine-specific           */
@@ -49,15 +37,8 @@ struct AddressingMode{
 /*  pointer.                                                        */
 #define MINADDI2P CHAR
 
-/*  If the bytes of an integer are ordered most significant byte    */
-/*  byte first and then decreasing set BIGENDIAN to 1.              */
-#define BIGENDIAN 0
-
-/*  If the bytes of an integer are ordered lest significant byte    */
-/*  byte first and then increasing set LITTLEENDIAN to 1.           */
-#define LITTLEENDIAN 1
-
-/*  Note that BIGENDIAN and LITTLEENDIAN are mutually exclusive.    */
+#define BIGENDIAN       0
+#define LITTLEENDIAN    1
 
 /*  If switch-statements should be generated as a sequence of       */
 /*  SUB,TST,BEQ ICs rather than COMPARE,BEQ ICs set this to 1.      */

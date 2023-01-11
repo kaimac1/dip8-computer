@@ -687,9 +687,19 @@ class Assembler():
         t = self.tok.next()
         self.varaddr = self.get_literal16(t)
 
+
+    def typesize(self, t):
+        size = 0
+        if t:
+            if t.value == 'byte':
+                size = 1
+            elif t.value == 'word':
+                size = 2        
+        return size
+
     # Declare a variable
     # myvar = .var word
-    # myvar = .var array 256 [byte]
+    # myvar = .var 256 [byte]
     def direc_var(self):
         addr = self.varaddr
         number = 1
@@ -697,15 +707,13 @@ class Assembler():
 
         t = self.tok.next()
         if not t.type == 'text': self.error("Bad type")
-        if t.value == 'array':
-            number = self.get_literal16(self.tok.next())
+        size = self.typesize(t)
+        if size == 0:
+            size = 1
+            number = self.get_literal16(t)
             t = self.tok.next()
-
-        if t:
-            if t.value == 'byte':
-                size = 1
-            elif t.value == 'word':
-                size = 2
+            if t:
+                size = self.typesize(t)
         self.varaddr += number*size
         return addr
 
