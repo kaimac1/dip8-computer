@@ -264,6 +264,11 @@ int dangerous_IC(struct IC *p) {
 int cost_savings(struct IC *p, int r, struct obj *o) {
 
     int c = p->code;
+
+    // Try not to keep things in BH/BL/CH/CL as these are better used as 
+    // 16-bit registers
+    if (r == REG_BH || r == REG_BL || r == REG_CH || r == REG_CL) return 0;
+
     if (o->flags & VKONST) return 0;
     if (o->flags & DREFOBJ) return 4;
     if (c==SETRETURN && r==p->z.reg  && !(o->flags&DREFOBJ)) return 3;
@@ -295,7 +300,7 @@ void dbgobj(struct obj o) {
     int f = o.flags;
     if (f & KONST) printf("KONST ");
     if (f & VAR) printf("VAR ");
-    if (f & SCRATCH) printf("SCRATCH ");
+    //if (f & SCRATCH) printf("SCRATCH ");
     if (f & DREFOBJ) printf("DREF ");
     if (f & REG) printf("REG (%s) ", regnames[o.reg]);
     if (f & VARADR) printf("VARADR ");
@@ -367,6 +372,10 @@ static int allocate_reg_for_type(int t, int spillreg) {
     t &= NQ;
     printf("allocating zreg for type %s, used: x:%d y:%d b:%d c:%d\n", typname[t], regs[REG_X], regs[REG_Y], regs[REG_B], regs[REG_C]);
 
+    // Can't use B or C if one of the constituent 8-bit regs is in use
+    int b_used = regs[REG_B] | regs[REG_BL] | regs[REG_BH];
+    int c_used = regs[REG_C] | regs[REG_CL] | regs[REG_CH];
+
     if (t == CHAR) {
         if (!regs[REG_X]) {
             regs[REG_X] = 1;
@@ -382,11 +391,11 @@ static int allocate_reg_for_type(int t, int spillreg) {
         }
     }
     if (t == SHORT || t == INT || t == POINTER) {
-        if (!regs[REG_B]) {
+        if (!b_used) {
             regs[REG_B] = 1;
             return REG_B;
         }
-        if (!regs[REG_C]) {
+        if (!c_used) {
             regs[REG_C] = 1;
             return REG_C;
         }
@@ -953,17 +962,6 @@ static void function_top(FILE *f,struct Var *v,long offset) {
             //emit(f,"\t.global\t%s%s\n",idprefix,v->identifier);
         }
 
-        if (!strcmp("main", v->identifier)) {
-            emit(f, "\n");
-            emit(f, "\t;bare-metal setup\n");
-            emit(f, "\t.varstart $4000\n");
-            emit(f, "\tmov b, #%d\n", initial_sp);
-            emit(f, "\tmov sp, b\n");
-            emit(f, "\tcall main\n");
-            emit(f, "\tbrk\n");
-            emit(f, "\n");
-        }
-
         // Label
         emit(f, "%s%s\n",idprefix,v->identifier);
 
@@ -1189,6 +1187,17 @@ static int objs_equal(struct obj a, struct obj b) {
     return 1;
 }
 
+// Return 1 if q1 is a register and the next IC is "freereg q1"
+static int q1_can_be_overwritten(struct IC *p) {
+    if (p->next && p->next->code == FREEREG) {
+        if (isreg(q1) && ((p->next->q1.flags&(REG|DREFOBJ))==REG)) {
+            if (p->next->q1.reg == p->q1.reg) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
 static void emit_arith_operand(struct IC *p, int two_operands, ObjectPart part) {
     int t = p->typf;
@@ -1210,21 +1219,54 @@ static void arithmetic(struct IC *p, int code) {
     if (objs_equal(p->z, p->q1)) {
         two_operands = 1;
     }
-
     printf("arith typesize=%d, 2op=%d\n", typesize, two_operands);
 
-    // Z = Q1 op Q2
-    // turn into:
-    //  R = Q1
-    //  R = R op Q2
-    //  Z = R
-    // FIXME: this doesn't work if the type doesn't fit in a register
+    /* Z = Q1 op Q2
+       options:
+       (note that mov can be a load or store)
+
+       (1) op  Z, Q2        (if Z == Q1)
+
+       (2) mov Z, Q1        (if Z is a register)
+           op  Z, Q2
+
+       (3) op  Q1, Q2       (if Q1 can be overwritten)
+           mov Z, Q1
+      
+       (4) mov Rtemp, Q1    (in general)
+           op  Rtemp, Q2
+           mov Z, Rtemp
+    */
+
+    /* Z = Q1 op Q2
+       turn into:
+        Rz = Q1
+        Rz = Rz op Q2
+        Z  = Rz
+
+       If Z is a register then it will be used for Rz.
+       If Q1 is a register, it can be used for Rz IFF the next IC is "freereg Q1".
+       If Q1 is a register, it will be spilled in the case that a spill is needed.
+
+       FIXME: what about types that don't fit in registers?
+    */
     if (!two_operands) {
-        // Allocate a result register
+        // Allocate a result register (or use Z)
         // If Q1 is a register, spill and use that if necessary
         int spillreg = 0;
-        if (isreg(q1)) spillreg = p->q1.reg;
-        allocate_result_reg(p, spillreg);
+        if (isreg(z)) {
+            // Z is a register - use that
+            zreg = p->z.reg;
+        } else if (isreg(q1) && q1_can_be_overwritten(p)) {
+            printf("Can overwrite q1.\n");
+            // Q1 is a register and about to be freed - use that
+            zreg = p->q1.reg;
+        } else {
+            // Have to allocate a temporary result register
+            // Prefer to use Q1 if a spill is necessary
+            if (isreg(q1)) spillreg = p->q1.reg;
+            allocate_result_reg(p, spillreg);            
+        }
 
         // Load first operand into result register
         load_reg(zreg,&p->q1,t);
@@ -1336,6 +1378,17 @@ static void arithmetic(struct IC *p, int code) {
 
 /*****************************************************************************/
 // Code generation
+
+static void entry(void) {
+    emit(f, "\n");
+    emit(f, "\t;bare-metal setup\n");
+    emit(f, "\t.varstart $4000\n");
+    emit(f, "\tmov b, #%d\n", initial_sp);
+    emit(f, "\tmov sp, b\n");
+    emit(f, "\tcall main\n");
+    emit(f, "\tbrk\n");
+    emit(f, "\n");
+}
 
 
 
@@ -1451,11 +1504,14 @@ void gen_code(FILE *file, struct IC *p, struct Var *v, zmax offset) {
     printf("gen_code, offset=%lu\n", offset);
     localsize = zm2l(offset);
 
+    int line_prev = 0;
     int c, t, i;
     struct IC *m;
     argsize = 0;
     for (c=1;c<=MAXR;c++) regs[c]=regsa[c];
     ret = "\tret\n";
+
+    entry();
 
     // Initial pass (optimise ICs)
     for (m=p;m;m=m->next) {
@@ -1510,6 +1566,12 @@ void gen_code(FILE *file, struct IC *p, struct Var *v, zmax offset) {
 
         printf("\n\n**********************\n");
         dbgic(p);
+
+        // // Interleave source code
+        // if (p->line) {
+        //     if (p->line != line_prev) emit(f, "; file %s line %d\n", p->file, p->line);
+        //     line_prev = p->line;
+        // }
 
         if(c==MOVETOREG){
           load_reg(p->z.reg,&p->q1,regtype[p->z.reg]->flags);

@@ -1,14 +1,12 @@
 ; multiply two 8-bit values together and print the 16-bit result in decimal
 
             ; set up stack pointer
-            mov b, #$8000
+            mov b, #$feff
             mov sp, b
 
-            mov b, #$6969
-            mov c, #$0420
-            call mul16
-
-            brk
+            mov b, #123
+            mov c, #7
+            call 0_mul_u16
 
             ldx mulq3
             call printxh
@@ -87,9 +85,7 @@ mbn8        ror x
             ret
 
 
-;multiply (16x16 bit = 32 bit result)
-; b, c      inputs
-; mulq3:0   output
+
 
 mulin1  .word   0
 mulq0   .byte   0
@@ -98,7 +94,33 @@ mulq2   .byte   0
 mulq3   .byte   0
 
 
-mul16       stb mulin1
+;multiply (16x16=16 bit, unsigned)
+; b, c      inputs
+; b         output
+
+0_mul_u16
+            stb mulin1
+            mov bh, cl
+            call mulb           ; bl.cl
+            stb mulq0           ; q1q0 = bl.cl
+            
+            ldb mulin1
+            mov bh, ch
+            call mulb           ; ch.bl
+            add [mulq1], bl     ; q2q1 += bl.ch
+
+            ldb mulin1
+            mov bl, cl
+            call mulb           ; bh.cl
+            add [mulq1], bl     ; q2q1 += bh.cl
+
+            ldb mulq0
+            ret
+
+
+
+0_mul_u16_to_u32
+            stb mulin1
             mov bh, cl
             call mulb           ; bl.cl
             stb mulq0           ; q1q0 = bl.cl
@@ -127,7 +149,7 @@ mul16       stb mulin1
 
 
 
-UART = $f000
+UART = $ff03
 
 
 ; used by printdx and print db
